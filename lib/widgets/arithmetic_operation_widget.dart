@@ -40,7 +40,7 @@ class ArthOperationWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       'لتأكيد هويتك أجب معنا السؤال التالي',
-                      style: theme.textTheme.headline2,
+                      style: theme.textTheme.headline3,
                     ),
                   ),
                   SizedBox(
@@ -90,7 +90,6 @@ class ArthOperationWidget extends StatelessWidget {
                               child: Center(
                                 child: TextField(
                                   cursorColor: theme.primaryColor,
-                                  maxLength: 2,
                                   decoration: const InputDecoration(
                                       border: OutlineInputBorder(
                                           borderSide: BorderSide.none)),
@@ -118,8 +117,8 @@ class ArthOperationWidget extends StatelessWidget {
 
   Widget circleWidget({required String num, required ThemeData theme}) =>
       Container(
-        width: 70.w,
-        height: 70.h,
+        width: 80.w,
+        height: 80.h,
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -137,7 +136,7 @@ class ArthOperationWidget extends StatelessWidget {
             style: TextStyle(
                 color: theme.primaryColor,
                 fontSize: 32.sp,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w500),
           ),
         ),
       );

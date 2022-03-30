@@ -4,7 +4,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:yalla_njoom/widgets/arithmetic_operation_widget.dart';
 import 'package:yalla_njoom/widgets/bravo_dialog.dart';
 import 'package:yalla_njoom/widgets/custom_dialog.dart';
+import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import 'package:yalla_njoom/widgets/letter_cart.dart';
+import 'package:yalla_njoom/widgets/user_code_dialog.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -19,8 +21,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final String name = 'غزل الحاج';
   final String code = '1000';
   final String coins = '120';
-  final bool isParent = false;
-  final bool isFemale = true;
+  final bool isParent = true;
+  final bool isFemale = false;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -40,12 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showDialog(
                     context: context,
                     builder: (ctx) {
-                      return CustomDialog(
-                        text: 'أدخل الرمز الخاص بك:',
-                        widget: pinCodeCustomDialogWidget(theme),
-                        imagePath: 'assets/images/smiling_star.png',
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      );
+                      return UserCodeDialog(code: 1000);
                     });
               },
             ),
@@ -75,14 +72,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text(
                   'محمد الحاج',
                   style:
-                      theme.textTheme.headline2!.copyWith(color: Colors.white),
+                      theme.textTheme.headline3!.copyWith(color: Colors.white),
                 ),
               if (!isParent)
                 Column(
                   children: [
                     Text(
                       'الاسم: $name',
-                      style: theme.textTheme.headline2!
+                      style: theme.textTheme.headline3!
                           .copyWith(color: Colors.white),
                     ),
                     SizedBox(
@@ -90,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     Text(
                       'الرمز: $code',
-                      style: theme.textTheme.headline2!
+                      style: theme.textTheme.headline3!
                           .copyWith(color: Colors.white),
                     ),
                     SizedBox(
@@ -101,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Text(
                           'الرصيد: $coins',
-                          style: theme.textTheme.headline2!
+                          style: theme.textTheme.headline3!
                               .copyWith(color: Colors.white),
                         ),
                         SizedBox(width: 10.w),
@@ -169,7 +166,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           GestureDetector(
             onTap: () {},
-            child: Image.asset('assets/images/forward_arrow.png'),
+            child: Image.asset(
+              'assets/images/yellow_arrow.png',
+              width: 55.w,
+              height: 48.h,
+            ),
           )
         ],
       );
@@ -184,27 +185,31 @@ class _MyHomePageState extends State<MyHomePage> {
       Row(
         children: [
           Expanded(
-              child: ElevatedButton(
-                  onPressed: confirmButtonFun,
-                  child: Text(
-                    confirmButtonText,
-                    style: theme.textTheme.headline3!
-                        .copyWith(color: Colors.white),
-                  ))),
-          const SizedBox(
-            width: 20,
+              child: DefaultElevatedButton(
+            width: 0,
+            height: 44.h,
+            radius: 12.r,
+            onPressed: confirmButtonFun,
+            child: Text(
+              confirmButtonText,
+              style: theme.textTheme.headline3!.copyWith(color: Colors.white),
+            ),
+          )),
+          SizedBox(
+            width: 20.w,
           ),
           Expanded(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateColor.resolveWith(
-                          (states) => theme.colorScheme.secondary)),
-                  onPressed: cancelButtonFun,
-                  child: Text(
-                    cancelButtonText,
-                    style:
-                        theme.textTheme.headline3!.copyWith(color: Colors.red),
-                  ))),
+              child: DefaultElevatedButton(
+            width: 0,
+            height: 44.h,
+            radius: 12.r,
+            child: Text(
+              cancelButtonText,
+              style: theme.textTheme.headline3!.copyWith(color: Colors.red),
+            ),
+            onPressed: cancelButtonFun,
+            bgColor: theme.colorScheme.secondary,
+          )),
         ],
       );
 
@@ -236,55 +241,59 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 }
   /**CustomDialog(
-                      text: 'هل لديك حساب؟',
-                      widget: confirmButtonsCustomDialogWidget(
-                        theme: theme,
-                        confirmButtonFun: () {},
-                        confirmButtonText: 'نعم',
-                        cancelButtonFun: () {},
-                        cancelButtonText: 'لا',
-                      ),
-                      imagePath: 'assets/images/glasses_star.png',
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    );*/
+                        text: 'هل لديك حساب؟',
+                        spaceBeforeWidget: 20.h,
+                        widget: confirmButtonsCustomDialogWidget(
+                          theme: theme,
+                          confirmButtonFun: () {},
+                          confirmButtonText: 'نعم',
+                          cancelButtonFun: () {},
+                          cancelButtonText: 'لا',
+                        ),
+                        imagePath: 'assets/images/glasses_star.png',
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      );*/
 
   /**
   * CustomDialog(
-                      text: 'أدخل الرمز الخاص بك',
-                      widget: pinCodeCustomDialogWidget(theme),
-                      imagePath: 'assets/images/smiling_star.png',
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    );
+                        text: 'أدخل الرمز الخاص بك',
+                        spaceBeforeWidget: 10.h,
+                        widget: pinCodeCustomDialogWidget(theme),
+                        imagePath: 'assets/images/smiling_star.png',
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      );
   */
 
   /**
    * CustomDialog(
-                      text: 'الرمز خاطئ',
-                      widget: confirmButtonsCustomDialogWidget(
-                        theme: theme,
-                        confirmButtonFun: () {},
-                        confirmButtonText: 'حاول مرة أخرى',
-                        cancelButtonFun: () {},
-                        cancelButtonText: 'إلغاء',
-                      ),
-                      imagePath: 'assets/images/crying_star.png',
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                    );
+                        text: 'الرمز خاطئ',
+                        spaceBeforeWidget: 20.h,
+                        widget: confirmButtonsCustomDialogWidget(
+                          theme: theme,
+                          confirmButtonFun: () {},
+                          confirmButtonText: 'حاول مرة أخرى',
+                          cancelButtonFun: () {},
+                          cancelButtonText: 'إلغاء',
+                        ),
+                        imagePath: 'assets/images/crying_star.png',
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      );
    */
 
   /**
-   * CustomDialog(
-                      text: 'الإجابة خاطئة',
-                      widget: confirmButtonsCustomDialogWidget(
-                        theme: theme,
-                        confirmButtonFun: () {},
-                        confirmButtonText: 'حاول مرة أخرى',
-                        cancelButtonFun: () {},
-                        cancelButtonText: 'إلغاء',
-                      ),
-                      imagePath: 'assets/images/crying_star.png',
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                    );
+   *  CustomDialog(
+                        text: 'الإجابة خاطئة',
+                        spaceBeforeWidget: 20.h,
+                        widget: confirmButtonsCustomDialogWidget(
+                          theme: theme,
+                          confirmButtonFun: () {},
+                          confirmButtonText: 'حاول مرة أخرى',
+                          cancelButtonFun: () {},
+                          cancelButtonText: 'إلغاء',
+                        ),
+                        imagePath: 'assets/images/crying_star.png',
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      );
    */
 
 // showDialog(
