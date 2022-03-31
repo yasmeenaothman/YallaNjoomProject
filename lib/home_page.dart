@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:yalla_njoom/widgets/arithmetic_operation_widget.dart';
 import 'package:yalla_njoom/widgets/bravo_dialog.dart';
+import 'package:yalla_njoom/widgets/child_info_dialog.dart';
 import 'package:yalla_njoom/widgets/custom_dialog.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import 'package:yalla_njoom/widgets/letter_cart.dart';
@@ -30,24 +31,9 @@ class _MyHomePageState extends State<MyHomePage> {
       textDirection: TextDirection.rtl,
       child: SafeArea(
         child: Scaffold(
-          drawer: drawerWidget(theme),
-          appBar: AppBar(),
-          body: Center(
-            child: GestureDetector(
-              child: const Icon(
-                Icons.ads_click,
-                size: 60,
-              ),
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return UserCodeDialog(code: 1000);
-                    });
-              },
-            ),
-          ),
-        ),
+            drawer: drawerWidget(theme),
+            appBar: AppBar(),
+            body: LetterCard(letter: 'أ', imagePath: 'assets/images/lion.png')),
       ),
     );
   }

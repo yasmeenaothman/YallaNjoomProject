@@ -31,23 +31,34 @@ class LetterCard extends StatelessWidget {
         ),
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Image.asset('assets/images/lion.png'),
-            Container(
-              width: 116.w,
-              height: 242.h,
-              decoration: const BoxDecoration(
-                color: Color(0xFF034C1B),
-              ),
-              child: Center(
-                  child: Text(
-                'أ',
-                style: TextStyle(
-                    fontFamily: 'Urdu', fontSize: 147.sp, color: Colors.white),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  child: Image.asset(
+                'assets/images/lion.png',
+                width: 168.w,
+                height: 165.h,
               )),
-            ),
-          ]),
+              Container(
+                width: 163.w,
+                height: 242.h,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF034C1B),
+                ),
+                child: Center(
+                  child: Text(
+                    'ي',
+                    style: TextStyle(
+                        fontFamily: 'Urdu',
+                        height: 0.7.h,
+                        fontSize: 191.sp,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

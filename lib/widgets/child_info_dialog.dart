@@ -32,8 +32,8 @@ class ChildInfoDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'اسم الطفل',
-                    style: theme.textTheme.headline1,
+                    'اسم الطفل:',
+                    style: theme.textTheme.headline2,
                   ),
                   TextField(
                     onChanged: (v) {},
@@ -45,14 +45,14 @@ class ChildInfoDialog extends StatelessWidget {
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: theme.primaryColor)),
                     ),
-                    style: theme.textTheme.headline2,
+                    style: theme.textTheme.headline3,
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   Text(
-                    'رمز الطفل',
-                    style: theme.textTheme.headline1,
+                    'رمز الطفل:',
+                    style: theme.textTheme.headline2,
                   ),
                   Directionality(
                     textDirection: TextDirection.ltr,
