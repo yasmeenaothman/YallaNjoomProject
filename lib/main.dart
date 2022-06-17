@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yalla_njoom/home_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/screens/splash_screen.dart';
 
 void main() {
   runApp(
@@ -19,13 +19,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: appThemeData(),
-      home: const MyHomePage(),
-    );
+    return MaterialApp(theme: _buildThemeData(), home: const SplashScreen());
   }
 
-  ThemeData appThemeData() {
+  ThemeData _buildThemeData() {
     return ThemeData(
       fontFamily: 'Tajawal',
       primaryColor: primaryColor,

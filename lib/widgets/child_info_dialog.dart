@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:yalla_njoom/widgets/pin_code_widget.dart';
 
 class ChildInfoDialog extends StatelessWidget {
   const ChildInfoDialog({Key? key}) : super(key: key);
@@ -54,27 +55,9 @@ class ChildInfoDialog extends StatelessWidget {
                     'رمز الطفل:',
                     style: theme.textTheme.headline2,
                   ),
-                  Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: PinCodeTextField(
-                      autoFocus: true,
-                      pinTheme: PinTheme(
-                          disabledColor: theme.primaryColor,
-                          selectedColor: theme.primaryColor,
-                          errorBorderColor: theme.primaryColor,
-                          selectedFillColor: theme.primaryColor,
-                          activeColor: theme.primaryColor,
-                          inactiveColor: theme.primaryColor,
-                          activeFillColor: theme.primaryColor,
-                          inactiveFillColor: theme.primaryColor),
-                      onChanged: (e) {},
-                      appContext: context,
-                      length: 4,
-                      cursorColor: theme.primaryColor,
-                      textStyle: TextStyle(color: theme.primaryColor),
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    ),
-                  ),
+                  PinCodeWidget(
+                    onChanged: (value) {},
+                  )
                 ],
               ),
             ),

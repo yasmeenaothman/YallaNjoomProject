@@ -1,36 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:yalla_njoom/widgets/letter_cart_widget.dart';
+import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class ParentsHomeScreen extends StatelessWidget {
+  const ParentsHomeScreen({Key? key}) : super(key: key);
   final String name = 'غزل الحاج';
   final String code = '1000';
   final String coins = '120';
   final bool isParent = true;
   final bool isFemale = false;
+  final bool allChildren =
+      false; //TODO: must be a list of parents' children not a bool
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-            drawer: drawerWidget(theme),
-            appBar: AppBar(),
-            body: const LetterCardWidget(
-                letter: 'أ', imagePath: 'assets/images/lion.png')),
-      ),
-    );
+    return ScaffoldWithBackground(
+        drawer: drawerWidget(theme),
+        appBarIsVisible: true,
+        floatingActionButton: SizedBox(
+          width: 50.w,
+          height: 50.h,
+          child: FittedBox(
+            child: FloatingActionButton(
+              onPressed: () {
+                //TODO: go to addchildinfoscreen
+              },
+              backgroundColor: theme.primaryColor,
+              child: const Icon(
+                Icons.add_rounded,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        body: Center(
+          heightFactor: 3,
+          child: allChildren
+              ? Container() //TODO: must add a list of parents' children
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset('assets/images/unhappy_star.png'),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      'لم يتم إضافة أي طفل',
+                      style:
+                          theme.textTheme.headline1!.copyWith(fontSize: 20.sp),
+                    )
+                  ],
+                ),
+        ));
   }
 
   Drawer drawerWidget(ThemeData theme) {

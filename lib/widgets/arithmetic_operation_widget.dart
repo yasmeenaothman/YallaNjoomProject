@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
+import 'package:yalla_njoom/widgets/default_elevated_button.dart';
+
+import 'custom_dialog.dart';
 
 class ArthOperationWidget extends StatelessWidget {
   final String firstNum;
@@ -19,7 +23,7 @@ class ArthOperationWidget extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              bottom: 95.h,
+              bottom: 175.h,
               child: Image.asset('assets/images/smart_star.png'),
             ),
             Container(
@@ -100,6 +104,51 @@ class ArthOperationWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  DefaultElevatedButton(
+                    width: 129.w,
+                    height: 44.h,
+                    radius: 12.r,
+                    onPressed: () {
+                      //TODO: Do the verfication operation
+                      Navigator.of(context).pop();
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (ctx) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: 160.h,
+                                ),
+                                CustomDialog(
+                                  text: 'الإجابة خاطئة',
+                                  spaceBeforeWidget: 20.h,
+                                  widget: ConfirmButtonWidget(
+                                    confirmButtonFun: () {
+                                      //TODO: show arthmetic operation dialog again
+                                    },
+                                    confirmButtonText: 'حاول مرة أخرى',
+                                    cancelButtonFun: () {
+                                      //TODO: pop this dialog and go to UserTypeScreen
+                                    },
+                                    cancelButtonText: 'إلغاء',
+                                  ),
+                                  imagePath: 'assets/images/crying_star.png',
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Text(
+                      'تأكيد',
+                      style: theme.textTheme.headline3!
+                          .copyWith(color: Colors.white),
+                    ),
+                  )
                   // Image.asset('assets/images/yellow_circle.png'),
                 ],
               ),

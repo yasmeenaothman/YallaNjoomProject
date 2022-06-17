@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BravoDialog extends StatelessWidget {
   final String imagePath;
-  final String text;
-  final double height;
   final Widget? widget;
   const BravoDialog({
     Key? key,
     required this.imagePath,
-    required this.text,
-    required this.height,
     this.widget,
   }) : super(key: key);
 
@@ -24,7 +21,7 @@ class BravoDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 40, left: 20, right: 30),
             width: 325,
-            height: height,
+            height: widget == null ? 149.h : 258.h,
             decoration: BoxDecoration(
               color: theme.primaryColor,
               borderRadius: BorderRadius.circular(20),
@@ -38,7 +35,9 @@ class BravoDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('أحسنت'),
-                      Text(text),
+                      Text(
+                        widget == null ? 'الإجابة صحيحة' : 'النطق صحيح',
+                      ),
                       widget ?? const SizedBox(),
                     ],
                   )),

@@ -40,7 +40,7 @@ class UserCodeDialog extends StatelessWidget {
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      'الكود الخاص بك',
+                      'الرمز الخاص بك',
                       style: theme.textTheme.headline2,
                     ),
                     Text(

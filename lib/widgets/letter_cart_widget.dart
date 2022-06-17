@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LetterCard extends StatelessWidget {
-  const LetterCard({Key? key, required this.letter, required this.imagePath})
+class LetterCardWidget extends StatelessWidget {
+  const LetterCardWidget(
+      {Key? key, required this.letter, required this.imagePath})
       : super(key: key);
   final String letter;
   final String imagePath;
@@ -48,7 +49,7 @@ class LetterCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'ي',
+                    letter,
                     style: TextStyle(
                         fontFamily: 'Urdu',
                         height: 0.7.h,
