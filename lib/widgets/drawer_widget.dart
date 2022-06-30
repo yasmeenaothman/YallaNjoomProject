@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -91,16 +93,22 @@ class DrawerWidget extends StatelessWidget {
                   style: theme.textTheme.headline3,
                 ),
               ),
-              ListTile(
-                horizontalTitleGap: 0,
-                leading: Image.asset(
-                  'assets/images/logout.png',
-                  width: 20,
-                  height: 20,
+              GestureDetector(
+                onTap: () {
+                  AppRouter.router.pushNamedWithReplacementFunction(
+                      DoYouHaveAccScreen.routeName);
+                },
+                child: ListTile(
+                  horizontalTitleGap: 0,
+                  leading: Image.asset(
+                    'assets/images/logout.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  title: Text('تسجيل الخروج',
+                      style: theme.textTheme.headline3!
+                          .copyWith(color: Colors.grey[700])),
                 ),
-                title: Text('تسجيل الخروج',
-                    style: theme.textTheme.headline3!
-                        .copyWith(color: Colors.grey[700])),
               ),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:yalla_njoom/home_page.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/screens/bravo_screen.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
         AddChildInfoScreen.routeName: (context) => const AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),
-        DoYouHaveAccScreen.routeName: (context) => const DoYouHaveAccScreen()
+        DoYouHaveAccScreen.routeName: (context) => const DoYouHaveAccScreen(),
+        ChildHomeScreen.routeName: (context) => const ChildHomeScreen()
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;

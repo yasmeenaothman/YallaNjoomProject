@@ -9,9 +9,7 @@ import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
 class ParentsHomeScreen extends StatelessWidget {
   const ParentsHomeScreen({Key? key}) : super(key: key);
-
   static const String routeName = 'ParentsHomeScreen';
-
   final bool allChildren =
       false; //TODO: must be a list of parents' children not a bool
   @override

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/widgets/default_button.dart';
@@ -21,7 +22,7 @@ class EnterYourCodeScreen extends StatefulWidget {
 }
 
 class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
-  bool isParent = true;
+  bool isParent = false;
   bool codeTrue = true;
   String userCode = '';
   @override
@@ -61,7 +62,8 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
                     ParentsHomeScreen.routeName);
               } else {
                 //TODO:  go to ChildHomePage
-
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    ChildHomeScreen.routeName);
               }
             } else {
               showDialog(
