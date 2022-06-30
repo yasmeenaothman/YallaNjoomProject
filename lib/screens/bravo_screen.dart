@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/screens/parents_home_screen.dart';
+
 import 'package:yalla_njoom/widgets/bravo_dialog.dart';
 import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
 
+import '../models/my_flutter_app.dart';
+import '../routers/app_router.dart';
+
 class BravoScreen extends StatelessWidget {
+  static const String routeName = 'BravoScreen';
+
   const BravoScreen({Key? key, required this.isPronunciationWidget})
       : super(key: key);
   final bool isPronunciationWidget;
@@ -26,12 +33,13 @@ class BravoScreen extends StatelessWidget {
                 height: 50.h,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w),
-                child: const DefaultCirculeAvatar(
-                  padding: 15,
-                  imagePath: 'assets/images/close.png',
-                ),
-              ),
+                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                  child: DefaultCirculeAvatar(
+                    onTap: () => AppRouter.router
+                        .pushNamedWithReplacementFunction(
+                            ParentsHomeScreen.routeName),
+                    iconData: MyFlutterApp.cancel,
+                  )),
               Expanded(
                 child: BravoDialog(
                   imagePath: 'assets/images/lion.png',

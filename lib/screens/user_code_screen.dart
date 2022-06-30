@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 import 'package:yalla_njoom/widgets/user_code_dialog.dart';
 
 class UserCodeScreen extends StatelessWidget {
   const UserCodeScreen({Key? key}) : super(key: key);
+  static const String routeName = 'UserCodeScreen';
 
   @override
   Widget build(BuildContext context) {

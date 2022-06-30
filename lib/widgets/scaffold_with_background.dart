@@ -11,7 +11,7 @@ class ScaffoldWithBackground extends StatelessWidget {
       this.floatingActionButton = null})
       : super(key: key);
   final Widget body;
-  final Drawer? drawer;
+  final Widget drawer;
   final bool appBarIsVisible;
   final Widget? floatingActionButton;
   @override

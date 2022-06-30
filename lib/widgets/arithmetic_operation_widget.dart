@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
-import 'package:yalla_njoom/widgets/default_elevated_button.dart';
+import 'package:yalla_njoom/widgets/default_button.dart';
 
 import 'custom_dialog.dart';
 
@@ -107,7 +109,7 @@ class ArthOperationWidget extends StatelessWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  DefaultElevatedButton(
+                  DefaultButton(
                     width: 129.w,
                     height: 44.h,
                     radius: 12.r,
@@ -128,6 +130,7 @@ class ArthOperationWidget extends StatelessWidget {
                                   spaceBeforeWidget: 20.h,
                                   widget: ConfirmButtonWidget(
                                     confirmButtonFun: () {
+                                      print('Yanlış cevap');
                                       //TODO: show arthmetic operation dialog again
                                     },
                                     confirmButtonText: 'حاول مرة أخرى',

@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/home_page.dart';
+import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/add_child_info_screen.dart';
+import 'package:yalla_njoom/screens/bravo_screen.dart';
+import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
+import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
+import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/splash_screen.dart';
+import 'package:yalla_njoom/screens/user_type_screen.dart';
+import 'package:yalla_njoom/screens/user_code_screen.dart';
+import 'package:yalla_njoom/widgets/arithmetic_operation_widget.dart';
+import 'package:yalla_njoom/widgets/bravo_dialog.dart';
+import 'package:yalla_njoom/widgets/custom_dialog.dart';
 
 void main() {
   runApp(
     ScreenUtilInit(
-      builder: () {
+      builder: (context, child) {
         return const MyApp();
       },
       designSize: const Size(375, 812),
@@ -19,7 +32,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: _buildThemeData(), home: const SplashScreen());
+    return MaterialApp(
+      theme: _buildThemeData(),
+      navigatorKey: AppRouter.router.routerKey,
+      routes: {
+        '/': (context) => const SplashScreen(),
+        MyHomePage.routeName: (context) => const MyHomePage(),
+        UserCodeScreen.routeName: (context) => const UserCodeScreen(),
+        ParentsHomeScreen.routeName: (context) => const ParentsHomeScreen(),
+        EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
+        AddChildInfoScreen.routeName: (context) => const AddChildInfoScreen(),
+        UserTypeScreen.routeName: (context) => const UserTypeScreen(),
+        DoYouHaveAccScreen.routeName: (context) => const DoYouHaveAccScreen()
+      },
+      onGenerateRoute: (routeSettings) {
+        String? name = routeSettings.name;
+        var arguments = routeSettings.arguments;
+        return MaterialPageRoute(builder: (context) {
+          if (name == BravoScreen.routeName) {
+            return BravoScreen(
+              isPronunciationWidget: arguments as bool,
+            );
+          } else {
+            return const Scaffold(
+              body: Text('ERROR 404!'),
+            );
+          }
+        });
+      },
+    );
   }
 
   ThemeData _buildThemeData() {

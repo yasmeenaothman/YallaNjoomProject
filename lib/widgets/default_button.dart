@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DefaultElevatedButton extends StatelessWidget {
+class DefaultButton extends StatelessWidget {
   final Widget child;
   final Color bgColor;
   final BoxShadow boxShadow;
@@ -10,7 +10,7 @@ class DefaultElevatedButton extends StatelessWidget {
   final double width;
   final double height;
 
-  const DefaultElevatedButton({
+  const DefaultButton({
     Key? key,
     required this.child,
     this.bgColor = const Color(0xFF074785),
@@ -27,7 +27,7 @@ class DefaultElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:onPressed,
+      onTap: onPressed,
       child: Container(
           width: width,
           height: height,

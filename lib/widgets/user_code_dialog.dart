@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yalla_njoom/widgets/default_elevated_button.dart';
+
+import 'package:yalla_njoom/widgets/default_button.dart';
 
 class UserCodeDialog extends StatelessWidget {
   final int code;
@@ -59,7 +60,7 @@ class UserCodeDialog extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 20.0.w),
-                      child: DefaultElevatedButton(
+                      child: DefaultButton(
                           child: Text(
                             'التالي',
                             style: theme.textTheme.headline3!

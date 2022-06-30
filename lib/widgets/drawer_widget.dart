@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:yalla_njoom/widgets/letter_cart_widget.dart';
-
-class MyHomePage extends StatefulWidget {
-  static const String routeName = 'HomePage';
-  const MyHomePage({
+class DrawerWidget extends StatelessWidget {
+  const DrawerWidget({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   final String name = 'غزل الحاج';
   final String code = '1000';
   final String coins = '120';
   final bool isParent = true;
   final bool isFemale = false;
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-            drawer: drawerWidget(theme),
-            appBar: AppBar(),
-            body: const LetterCardWidget(
-                letter: 'أ', imagePath: 'assets/images/lion.png')),
-      ),
-    );
-  }
-
-  Drawer drawerWidget(ThemeData theme) {
     return Drawer(
       backgroundColor: theme.colorScheme.secondary,
       child: Column(children: [
