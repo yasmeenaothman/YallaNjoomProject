@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/parents_home_screen.dart';
+import 'package:yalla_njoom/screens/user_type_screen.dart';
 import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
 import 'package:yalla_njoom/widgets/default_button.dart';
 
@@ -10,7 +11,8 @@ import 'custom_dialog.dart';
 class ArthOperationWidget extends StatelessWidget {
   final String firstNum;
   final String secondNum;
-  const ArthOperationWidget(
+  bool codeTrue = true;
+  ArthOperationWidget(
       {Key? key, required this.firstNum, required this.secondNum})
       : super(key: key);
 
@@ -115,36 +117,45 @@ class ArthOperationWidget extends StatelessWidget {
                     radius: 12.r,
                     onPressed: () {
                       //TODO: Do the verfication operation
-                      Navigator.of(context).pop();
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (ctx) {
-                            return Column(
-                              children: [
-                                SizedBox(
-                                  height: 160.h,
-                                ),
-                                CustomDialog(
-                                  text: 'الإجابة خاطئة',
-                                  spaceBeforeWidget: 20.h,
-                                  widget: ConfirmButtonWidget(
-                                    confirmButtonFun: () {
-                                      print('Yanlış cevap');
-                                      //TODO: show arthmetic operation dialog again
-                                    },
-                                    confirmButtonText: 'حاول مرة أخرى',
-                                    cancelButtonFun: () {
-                                      //TODO: pop this dialog and go to UserTypeScreen
-                                    },
-                                    cancelButtonText: 'إلغاء',
+                      if (codeTrue) {
+                        AppRouter.router.pushNamedWithReplacementFunction(
+                            ParentsHomeScreen.routeName);
+                      } else {
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (ctx) {
+                              return Column(
+                                children: [
+                                  SizedBox(
+                                    height: 260.h,
                                   ),
-                                  imagePath: 'assets/images/crying_star.png',
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                ),
-                              ],
-                            );
-                          });
+                                  CustomDialog(
+                                    text: 'الإجابة خاطئة',
+                                    spaceBeforeWidget: 20.h,
+                                    widget: ConfirmButtonWidget(
+                                      confirmButtonFun: () {
+                                        AppRouter.router.pop();
+                                      },
+                                      confirmButtonText: 'حاول مرة أخرى',
+                                      cancelButtonFun: () {
+                                        AppRouter.router.pop();
+                                        AppRouter.router
+                                            .pop(); //should use another way to delete all the screen and move to UserTypeScreen ama vaktim yok
+                                        AppRouter.router
+                                            .pushNamedWithReplacementFunction(
+                                                UserTypeScreen.routeName);
+                                      },
+                                      cancelButtonText: 'إلغاء',
+                                    ),
+                                    imagePath: 'assets/images/crying_star.png',
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                  ),
+                                ],
+                              );
+                            });
+                      }
                     },
                     child: Text(
                       'تأكيد',

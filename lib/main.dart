@@ -8,13 +8,11 @@ import 'package:yalla_njoom/screens/bravo_screen.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
+import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/splash_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
 import 'package:yalla_njoom/screens/user_code_screen.dart';
-import 'package:yalla_njoom/widgets/arithmetic_operation_widget.dart';
-import 'package:yalla_njoom/widgets/bravo_dialog.dart';
-import 'package:yalla_njoom/widgets/custom_dialog.dart';
 
 void main() {
   runApp(

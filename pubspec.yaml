@@ -93,5 +93,20 @@ flutter:
     - family: MyFlutterApp6
       fonts:
         - asset: assets/fonts/MyFlutterApp6.ttf
+    - family: MyFlutterApp7
+      fonts:
+       - asset: assets/fonts/MyFlutterApp7.ttf
+    - family: MyFlutterApp8
+      fonts:
+       - asset: assets/fonts/MyFlutterApp8.ttf
+    - family: MyFlutterApp9
+      fonts:
+       - asset: assets/fonts/MyFlutterApp9.ttf
+    - family: MyFlutterApp10
+      fonts:
+       - asset: assets/fonts/MyFlutterApp10.ttf
+    - family: MyFlutterApp11
+      fonts:
+        - asset: assets/fonts/MyFlutterApp11.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

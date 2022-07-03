@@ -17,7 +17,10 @@ class UserCodeScreen extends StatelessWidget {
         SizedBox(
           height: 160.h,
         ),
-        const UserCodeDialog(code: 1000),
+        const UserCodeDialog(
+          code: 1000,
+          isParent: true,
+        ),
       ],
     ));
   }

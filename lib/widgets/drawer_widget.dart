@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 
+import '../models/my_flutter_app.dart';
+
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
     Key? key,
@@ -22,47 +24,26 @@ class DrawerWidget extends StatelessWidget {
           color: theme.primaryColor,
           child: Center(
             child: Column(children: [
-              CircleAvatar(
-                radius: 50.r,
-                child: Image.asset(
-                    'assets/images/${isFemale ? 'girl.png' : 'boy.png'}'),
-              ),
+              _buildCircleAvatar(),
               SizedBox(
                 height: 20.h,
               ),
-              if (isParent)
-                Text(
-                  'محمد الحاج',
-                  style:
-                      theme.textTheme.headline3!.copyWith(color: Colors.white),
-                ),
+              if (isParent) _buildDrawerTextWidget(theme, text: 'محمد الحاج'),
               if (!isParent)
                 Column(
                   children: [
-                    Text(
-                      'الاسم: $name',
-                      style: theme.textTheme.headline3!
-                          .copyWith(color: Colors.white),
-                    ),
+                    _buildDrawerTextWidget(theme, text: 'الاسم: $name'),
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(
-                      'الرمز: $code',
-                      style: theme.textTheme.headline3!
-                          .copyWith(color: Colors.white),
-                    ),
+                    _buildDrawerTextWidget(theme, text: 'الرمز: $code'),
                     SizedBox(
                       height: 10.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'الرصيد: $coins',
-                          style: theme.textTheme.headline3!
-                              .copyWith(color: Colors.white),
-                        ),
+                        _buildDrawerTextWidget(theme, text: 'الرصيد: $coins'),
                         SizedBox(width: 10.w),
                         Image.asset('assets/images/coin.png'),
                       ],
@@ -80,40 +61,52 @@ class DrawerWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                horizontalTitleGap: 0,
-                leading: Image.asset(
-                  'assets/images/home_page.png',
-                  width: 20,
-                  height: 20,
-                  color: theme.primaryColor,
-                ),
-                title: Text(
-                  'الصفحة الرئيسية',
-                  style: theme.textTheme.headline3,
-                ),
-              ),
+              _buildListTile(theme,
+                  icon: MyFlutterApp.home, text: 'الصفحة الرئيسية'),
               GestureDetector(
                 onTap: () {
                   AppRouter.router.pushNamedWithReplacementFunction(
                       DoYouHaveAccScreen.routeName);
                 },
-                child: ListTile(
-                  horizontalTitleGap: 0,
-                  leading: Image.asset(
-                    'assets/images/logout.png',
-                    width: 20,
-                    height: 20,
-                  ),
-                  title: Text('تسجيل الخروج',
-                      style: theme.textTheme.headline3!
-                          .copyWith(color: Colors.grey[700])),
-                ),
+                child: _buildListTile(theme,
+                    icon: MyFlutterApp.logout, text: 'تسجيل الخروج'),
               ),
             ],
           ),
         )
       ]),
+    );
+  }
+
+  ListTile _buildListTile(
+    ThemeData theme, {
+    required icon,
+    required text,
+  }) {
+    return ListTile(
+      horizontalTitleGap: 0,
+      leading: Icon(
+        icon,
+        color: theme.primaryColor,
+      ),
+      title: Text(
+        text,
+        style: theme.textTheme.headline3,
+      ),
+    );
+  }
+
+  Text _buildDrawerTextWidget(ThemeData theme, {required text}) {
+    return Text(
+      text,
+      style: theme.textTheme.headline3!.copyWith(color: Colors.white),
+    );
+  }
+
+  CircleAvatar _buildCircleAvatar() {
+    return CircleAvatar(
+      radius: 50.r,
+      child: Image.asset('assets/images/${isFemale ? 'girl.png' : 'boy.png'}'),
     );
   }
 }

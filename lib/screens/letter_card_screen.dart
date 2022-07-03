@@ -41,7 +41,7 @@ class LetterCardScreen extends StatelessWidget {
             DefaultCirculeAvatar(
               onTap: () => AppRouter.router.pushNamedWithReplacementFunction(
                   ParentsHomeScreen.routeName),
-              iconData: MyFlutterApp.volumeMedium, //TODO: change the icon
+              iconData: MyFlutterApp.music,
             ),
             SizedBox(height: 10.h),
             DefaultCirculeAvatar(

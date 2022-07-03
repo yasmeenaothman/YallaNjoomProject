@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yalla_njoom/models/kid.dart';
 
 /// be attentive if the pressFun was shared don't repeate it
 class DummyData {
@@ -15,6 +16,23 @@ class DummyData {
       example2: 'assets/images/num222.png',
       example3: 'assets/images/num22.png',
     ),
+  ];
+  List<Kid> kids = [
+    Kid(
+      name: 'غزل الحاج',
+      imageUrl: 'assets/images/girl.png',
+      code: 'A 10',
+    ),
+    Kid(
+      name: 'ياسمين عثمان ',
+      imageUrl: 'assets/images/girl.png',
+      code: 'A 13',
+    ),
+    Kid(
+      name: 'ياسمين عثمان ',
+      imageUrl: 'assets/images/girl.png',
+      code: 'A 13',
+    )
   ];
   List<TypeEducation> types = [
     TypeEducation(

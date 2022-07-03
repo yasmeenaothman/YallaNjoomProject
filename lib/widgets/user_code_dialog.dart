@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/widgets/default_button.dart';
+import '../routers/app_router.dart';
+import '../screens/child_home_screen.dart';
 
 class UserCodeDialog extends StatelessWidget {
+  const UserCodeDialog({Key? key, required this.code, required this.isParent})
+      : super(key: key);
+  final bool isParent;
   final int code;
-  const UserCodeDialog({Key? key, required this.code}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -67,7 +70,15 @@ class UserCodeDialog extends StatelessWidget {
                                 .copyWith(color: Colors.white),
                           ),
                           radius: 10.r,
-                          onPressed: () {},
+                          onPressed: () {
+                            if (isParent) {
+                              AppRouter.router.pushNamedWithReplacementFunction(
+                                  ParentsHomeScreen.routeName);
+                            } else {
+                              AppRouter.router.pushNamedWithReplacementFunction(
+                                  ChildHomeScreen.routeName);
+                            }
+                          },
                           width: 178.w,
                           height: 44.h),
                     ),

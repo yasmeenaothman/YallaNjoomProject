@@ -9,6 +9,11 @@ class MyFlutterApp {
   static const _kFontFam4 = 'MyFlutterApp4';
   static const _kFontFam5 = 'MyFlutterApp5';
   static const _kFontFam6 = 'MyFlutterApp6';
+  static const _kFontFam7 = 'MyFlutterApp7';
+  static const _kFontFam8 = 'MyFlutterApp8';
+  static const _kFontFam9 = 'MyFlutterApp9';
+  static const _kFontFam10 = 'MyFlutterApp10';
+  static const _kFontFam11 = 'MyFlutterApp11';
   static const String? _kFontPkg = null;
 
   static const IconData cancel =
@@ -23,4 +28,14 @@ class MyFlutterApp {
       IconData(0xe800, fontFamily: _kFontFam5, fontPackage: _kFontPkg);
   static const IconData arrowRight_2 =
       IconData(0xe801, fontFamily: _kFontFam6, fontPackage: _kFontPkg);
+  static const IconData music =
+      IconData(0xe800, fontFamily: _kFontFam7, fontPackage: _kFontPkg);
+  static const IconData home =
+      IconData(0xe800, fontFamily: _kFontFam8, fontPackage: _kFontPkg);
+  static const IconData games =
+      IconData(0xe800, fontFamily: _kFontFam9, fontPackage: _kFontPkg);
+  static const IconData logout =
+      IconData(0xe800, fontFamily: _kFontFam10, fontPackage: _kFontPkg);
+  static const IconData search =
+      IconData(0xe800, fontFamily: _kFontFam11, fontPackage: _kFontPkg);
 }

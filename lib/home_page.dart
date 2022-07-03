@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:yalla_njoom/models/my_flutter_app.dart';
 import 'package:yalla_njoom/widgets/letter_cart_widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -104,10 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               ListTile(
                 horizontalTitleGap: 0,
-                leading: Image.asset(
-                  'assets/images/home_page.png',
-                  width: 20,
-                  height: 20,
+                leading: Icon(
+                  MyFlutterApp.home,
                   color: theme.primaryColor,
                 ),
                 title: Text(
@@ -117,11 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ListTile(
                 horizontalTitleGap: 0,
-                leading: Image.asset(
-                  'assets/images/logout.png',
-                  width: 20,
-                  height: 20,
-                ),
+                leading: Icon(MyFlutterApp.logout),
                 title: Text('تسجيل الخروج',
                     style: theme.textTheme.headline3!
                         .copyWith(color: Colors.grey[700])),
