@@ -26,84 +26,87 @@ class ParentsHomeScreen extends StatelessWidget {
         body: Center(
           heightFactor: 3,
           child: allChildren
-              ? Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 15.w, bottom: 33.h),
-                        child: Text(
-                          'قائمة الأطفال',
-                          softWrap: true,
-                          textDirection: TextDirection.rtl,
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontFamily: 'Tajawal',
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF074785),
-                          ),
-                        ),
-                      ),
-                      // TODO: make the search bar here
-                      Material(
-                        elevation: 10,
-                        shadowColor: const Color(0x2B074785),
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: TextField(
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 15.h, horizontal: 20.w),
-                            isDense: true,
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                                borderSide: const BorderSide(
-                                    width: 0.8, color: Colors.transparent)),
-                            hintText: "البحث",
-                            hintStyle: TextStyle(
-                              fontSize: 12.sp,
-                              fontFamily: 'Tajawal',
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0x784B4B4B),
-                            ),
-                            suffixIcon: Padding(
-                              padding: EdgeInsets.only(left: 14.w),
-                              child: const Icon(
-                                MyFlutterApp.search,
-                                size: 22,
-                                color: Color(0xFF074785),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => DefaultKidCard(
-                          kid: DummyData.dummyData.kids[index],
-                        ),
-                        separatorBuilder: (context, index) => SizedBox(
-                          height: 20.h,
-                        ),
-                        itemCount: DummyData.dummyData.kids.length,
-                      ),
-                    ],
-                  ),
-                )
+              ? _buildChildrenListWidget()
               //TODO: must add a list of parents' children
               : _buildNoChildAddedWidget(theme),
         ));
+  }
+
+  Padding _buildChildrenListWidget() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: 15.w, bottom: 33.h),
+            child: Text(
+              'قائمة الأطفال',
+              softWrap: true,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontFamily: 'Tajawal',
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF074785),
+              ),
+            ),
+          ),
+          // TODO: make the search bar here
+          Material(
+            elevation: 10,
+            shadowColor: const Color(0x2B074785),
+            borderRadius: BorderRadius.circular(10.r),
+            child: TextField(
+              maxLines: 1,
+              decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+                isDense: true,
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                    borderSide: const BorderSide(
+                        width: 0.8, color: Colors.transparent)),
+                hintText: "البحث",
+                hintStyle: TextStyle(
+                  fontSize: 12.sp,
+                  fontFamily: 'Tajawal',
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0x784B4B4B),
+                ),
+                suffixIcon: Padding(
+                  padding: EdgeInsets.only(left: 14.w),
+                  child: const Icon(
+                    MyFlutterApp.search,
+                    size: 22,
+                    color: Color(0xFF074785),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => DefaultKidCard(
+              kid: DummyData.dummyData.kids[index],
+            ),
+            separatorBuilder: (context, index) => SizedBox(
+              height: 20.h,
+            ),
+            itemCount: DummyData.dummyData.kids.length,
+          ),
+        ],
+      ),
+    );
   }
 
   Column _buildNoChildAddedWidget(ThemeData theme) {

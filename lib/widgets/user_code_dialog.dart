@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
-import 'package:yalla_njoom/widgets/default_button.dart';
+import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import '../routers/app_router.dart';
 import '../screens/child_home_screen.dart';
 
@@ -63,24 +63,25 @@ class UserCodeDialog extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 20.0.w),
-                      child: DefaultButton(
-                          child: Text(
-                            'التالي',
-                            style: theme.textTheme.headline3!
-                                .copyWith(color: Colors.white),
-                          ),
-                          radius: 10.r,
-                          onPressed: () {
-                            if (isParent) {
-                              AppRouter.router.pushNamedWithReplacementFunction(
-                                  ParentsHomeScreen.routeName);
-                            } else {
-                              AppRouter.router.pushNamedWithReplacementFunction(
-                                  ChildHomeScreen.routeName);
-                            }
-                          },
-                          width: 178.w,
-                          height: 44.h),
+                      child: DefaultElevatedButton(
+                        top: 0,
+                        child: Text(
+                          'التالي',
+                          style: theme.textTheme.headline3!
+                              .copyWith(color: Colors.white),
+                        ),
+                        radius: 10.r,
+                        onPressed: () {
+                          if (isParent) {
+                            AppRouter.router.pushNamedWithReplacementFunction(
+                                ParentsHomeScreen.routeName);
+                          } else {
+                            AppRouter.router.pushNamedWithReplacementFunction(
+                                ChildHomeScreen.routeName);
+                          }
+                        },
+                        size: Size(178.w, 44.h),
+                      ),
                     ),
                   ],
                 ),

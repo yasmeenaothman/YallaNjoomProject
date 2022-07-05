@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'default_button.dart';
+import 'default_elevated_button.dart';
 
 class ConfirmButtonWidget extends StatelessWidget {
   const ConfirmButtonWidget({
@@ -21,10 +21,10 @@ class ConfirmButtonWidget extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-            child: DefaultButton(
-          width: 0,
-          height: 44.h,
+            child: DefaultElevatedButton(
+          size: Size(0, 44.h),
           radius: 12.r,
+          top: 0,
           onPressed: confirmButtonFun,
           child: Text(
             confirmButtonText,
@@ -35,9 +35,9 @@ class ConfirmButtonWidget extends StatelessWidget {
           width: 20.w,
         ),
         Expanded(
-            child: DefaultButton(
-          width: 0,
-          height: 44.h,
+            child: DefaultElevatedButton(
+          top: 0,
+          size: Size(0, 44.h),
           radius: 12.r,
           child: Text(
             cancelButtonText,

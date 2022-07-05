@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/screens/examples_screen.dart';
+import 'package:yalla_njoom/screens/letters_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 
 import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
@@ -28,7 +30,7 @@ class LetterCardScreen extends StatelessWidget {
                 child: DefaultCirculeAvatar(
                   onTap: () => AppRouter.router
                       .pushNamedWithReplacementFunction(
-                          ParentsHomeScreen.routeName),
+                          LettersScreen.routeName),
                   iconData: MyFlutterApp.cancel,
                 )),
             SizedBox(height: 17.h),
@@ -39,8 +41,8 @@ class LetterCardScreen extends StatelessWidget {
             ),
             SizedBox(height: 10.h),
             DefaultCirculeAvatar(
-              onTap: () => AppRouter.router.pushNamedWithReplacementFunction(
-                  ParentsHomeScreen.routeName),
+              onTap: () => AppRouter.router
+                  .pushNamedWithReplacementFunction(ExamplesScreen.routeName),
               iconData: MyFlutterApp.music,
             ),
             SizedBox(height: 10.h),
@@ -51,8 +53,8 @@ class LetterCardScreen extends StatelessWidget {
             ),
             SizedBox(height: 10.h),
             DefaultCirculeAvatar(
-              onTap: () => AppRouter.router.pushNamedWithReplacementFunction(
-                  ParentsHomeScreen.routeName),
+              onTap: () => AppRouter.router
+                  .pushNamedWithReplacementFunction(LettersScreen.routeName),
               iconData: MyFlutterApp.arrowRight_2,
             ),
             SizedBox(height: 30.h),

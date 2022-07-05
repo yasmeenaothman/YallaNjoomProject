@@ -1,10 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:yalla_njoom/models/kid.dart';
+import 'example.dart';
+import 'kid.dart';
+import 'letters.dart';
 
 /// be attentive if the pressFun was shared don't repeate it
 class DummyData {
   DummyData._();
   static DummyData dummyData = DummyData._();
+  List<Kid> kids = [
+    Kid(
+      name: 'غزل الحاج',
+      imageUrl: 'assets/images/lion.png',
+      code: 'A 10',
+    ),
+    Kid(
+      name: 'ياسمين عثمان ',
+      imageUrl: 'assets/images/lion.png',
+      code: 'A 13',
+    ),
+    Kid(
+      name: 'ياسمين عثمان ',
+      imageUrl: 'assets/images/lion.png',
+      code: 'A 13',
+    )
+  ];
+  List<Number> numbers = [
+    Number(
+      name: 'رقم واحد',
+      imageUrl: 'assets/images/1.png',
+      isLocked: false,
+    ),
+    Number(
+      name: 'رقم اثنان',
+      imageUrl: 'assets/images/1.png',
+      isLocked: true,
+    ),
+    Number(
+      name: 'رقم ثلاثة',
+      imageUrl: 'assets/images/1.png',
+      isLocked: true,
+    ),
+  ];
+  List<Letter> letters = [
+    Letter(
+      name: 'حرف الألف',
+      imageUrl: 'assets/images/ألف.png',
+      isLocked: false,
+    ),
+    Letter(
+      name: 'حرف الباء',
+      imageUrl: 'assets/images/باء.png',
+      isLocked: true,
+    ),
+    Letter(
+      name: 'حرف التاء',
+      imageUrl: 'assets/images/ألف.png',
+      isLocked: true,
+    ),
+  ];
   List<Example> examples = [
     Example(
       example1: 'assets/images/num1.png',
@@ -16,23 +69,6 @@ class DummyData {
       example2: 'assets/images/num222.png',
       example3: 'assets/images/num22.png',
     ),
-  ];
-  List<Kid> kids = [
-    Kid(
-      name: 'غزل الحاج',
-      imageUrl: 'assets/images/girl.png',
-      code: 'A 10',
-    ),
-    Kid(
-      name: 'ياسمين عثمان ',
-      imageUrl: 'assets/images/girl.png',
-      code: 'A 13',
-    ),
-    Kid(
-      name: 'ياسمين عثمان ',
-      imageUrl: 'assets/images/girl.png',
-      code: 'A 13',
-    )
   ];
   List<TypeEducation> types = [
     TypeEducation(
@@ -73,15 +109,4 @@ class TypeEducation {
       required this.name,
       required this.bgColor,
       required this.pressFun});
-}
-
-class Example {
-  Example({
-    this.id = '',
-    required this.example1,
-    required this.example2,
-    required this.example3,
-  });
-
-  String id, example1, example2, example3;
 }

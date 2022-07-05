@@ -4,14 +4,15 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
 import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
-import 'package:yalla_njoom/widgets/default_button.dart';
+import 'package:yalla_njoom/widgets/default_elevated_button.dart';
+import 'package:yalla_njoom/widgets/user_code_dialog.dart';
 
 import 'custom_dialog.dart';
 
 class ArthOperationWidget extends StatelessWidget {
   final String firstNum;
   final String secondNum;
-  bool codeTrue = true;
+  bool answerTrue = true;
   ArthOperationWidget(
       {Key? key, required this.firstNum, required this.secondNum})
       : super(key: key);
@@ -111,15 +112,28 @@ class ArthOperationWidget extends StatelessWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  DefaultButton(
-                    width: 129.w,
-                    height: 44.h,
+                  DefaultElevatedButton(
+                    size: Size(129.w, 44.h),
+                    top: 0,
                     radius: 12.r,
                     onPressed: () {
                       //TODO: Do the verfication operation
-                      if (codeTrue) {
-                        AppRouter.router.pushNamedWithReplacementFunction(
-                            ParentsHomeScreen.routeName);
+                      if (answerTrue) {
+                        AppRouter.router.pop();
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (ctx) {
+                              return Column(
+                                children: [
+                                  SizedBox(
+                                    height: 260.h,
+                                  ),
+                                  const UserCodeDialog(
+                                      code: 1000, isParent: true)
+                                ],
+                              );
+                            });
                       } else {
                         showDialog(
                             context: context,

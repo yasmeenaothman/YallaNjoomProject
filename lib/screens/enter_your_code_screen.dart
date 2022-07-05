@@ -7,7 +7,7 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
-import 'package:yalla_njoom/widgets/default_button.dart';
+import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import 'package:yalla_njoom/widgets/pin_code_widget.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 import '../widgets/confirm_button_widget.dart';
@@ -48,9 +48,9 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
         SizedBox(
           height: 50.h,
         ),
-        DefaultButton(
-          width: 129.w,
-          height: 44.h,
+        DefaultElevatedButton(
+          top: 0,
+          size: Size(129.w, 48.h),
           radius: 12.r,
           onPressed: () {
             //TODO: If the userCode was ture then go to ParentsHomePage or ChildHomePage

@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/home_page.dart';
+import 'package:yalla_njoom/models/dummy_data.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/screens/bravo_screen.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
+import 'package:yalla_njoom/screens/child_tracker_screen.dart';
+import 'package:yalla_njoom/screens/display_number_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
+import 'package:yalla_njoom/screens/examples_screen.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
+import 'package:yalla_njoom/screens/letters_screen.dart';
+import 'package:yalla_njoom/screens/numbers_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/splash_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
@@ -43,7 +49,12 @@ class MyApp extends StatelessWidget {
         AddChildInfoScreen.routeName: (context) => const AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),
         DoYouHaveAccScreen.routeName: (context) => const DoYouHaveAccScreen(),
-        ChildHomeScreen.routeName: (context) => const ChildHomeScreen()
+        ChildHomeScreen.routeName: (context) => const ChildHomeScreen(),
+        ChildTrackerScreen.routeName: (context) => const ChildTrackerScreen(),
+        LettersScreen.routeName: (context) => const LettersScreen(),
+        NumbersScreen.routeName: (context) => const NumbersScreen(),
+        LetterCardScreen.routeName: (context) => const LetterCardScreen(),
+        ExamplesScreen.routeName: (context) => const ExamplesScreen()
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;
@@ -53,6 +64,8 @@ class MyApp extends StatelessWidget {
             return BravoScreen(
               isPronunciationWidget: arguments as bool,
             );
+          } else if (name == DisplayNumberScreen.routeName) {
+            return DisplayNumberScreen(imageUrl: arguments as String);
           } else {
             return const Scaffold(
               body: Text('ERROR 404!'),

@@ -14,6 +14,8 @@ class MyFlutterApp {
   static const _kFontFam9 = 'MyFlutterApp9';
   static const _kFontFam10 = 'MyFlutterApp10';
   static const _kFontFam11 = 'MyFlutterApp11';
+  static const _kFontFam12 = 'MyFlutterApp12';
+  static const _kFontFam13 = 'MyFlutterApp13';
   static const String? _kFontPkg = null;
 
   static const IconData cancel =
@@ -38,4 +40,8 @@ class MyFlutterApp {
       IconData(0xe800, fontFamily: _kFontFam10, fontPackage: _kFontPkg);
   static const IconData search =
       IconData(0xe800, fontFamily: _kFontFam11, fontPackage: _kFontPkg);
+  static const IconData star =
+      IconData(0xe800, fontFamily: _kFontFam12, fontPackage: _kFontPkg);
+  static const IconData starFill =
+      IconData(0xe800, fontFamily: _kFontFam13, fontPackage: _kFontPkg);
 }

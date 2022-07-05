@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
+import 'package:yalla_njoom/screens/parents_home_screen.dart';
 
 import '../models/my_flutter_app.dart';
 
@@ -61,8 +63,15 @@ class DrawerWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildListTile(theme,
-                  icon: MyFlutterApp.home, text: 'الصفحة الرئيسية'),
+              GestureDetector(
+                onTap: () {
+                  AppRouter.router.pushNamedWithReplacementFunction(isParent
+                      ? ParentsHomeScreen.routeName
+                      : ChildHomeScreen.routeName);
+                },
+                child: _buildListTile(theme,
+                    icon: MyFlutterApp.home, text: 'الصفحة الرئيسية'),
+              ),
               GestureDetector(
                 onTap: () {
                   AppRouter.router.pushNamedWithReplacementFunction(

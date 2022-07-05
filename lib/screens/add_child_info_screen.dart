@@ -10,7 +10,7 @@ import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
 import '../widgets/custom_dialog.dart';
 import '../widgets/default_circular_avatar.dart';
-import '../widgets/default_button.dart';
+import '../widgets/default_elevated_button.dart';
 
 class AddChildInfoScreen extends StatelessWidget {
   static const String routeName = 'AddChildInfoScreen';
@@ -43,9 +43,9 @@ class AddChildInfoScreen extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.center,
-              child: DefaultButton(
-                width: 129.w,
-                height: 44.h,
+              child: DefaultElevatedButton(
+                top: 0,
+                size: Size(129.w, 44.h),
                 radius: 12.r,
                 onPressed: () {
                   //TODO: if the code was false show customDialog
