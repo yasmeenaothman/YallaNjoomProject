@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/home_page.dart';
 import 'package:yalla_njoom/models/dummy_data.dart';
+import 'package:yalla_njoom/models/kid.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/screens/bravo_screen.dart';
@@ -10,11 +11,14 @@ import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/child_tracker_screen.dart';
 import 'package:yalla_njoom/screens/display_number_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
+import 'package:yalla_njoom/screens/edit_child_profile_screen.dart';
 import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
 import 'package:yalla_njoom/screens/examples_screen.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
+import 'package:yalla_njoom/screens/music_screen.dart';
 import 'package:yalla_njoom/screens/numbers_screen.dart';
+import 'package:yalla_njoom/screens/operation_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/splash_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
@@ -54,7 +58,9 @@ class MyApp extends StatelessWidget {
         LettersScreen.routeName: (context) => const LettersScreen(),
         NumbersScreen.routeName: (context) => const NumbersScreen(),
         LetterCardScreen.routeName: (context) => const LetterCardScreen(),
-        ExamplesScreen.routeName: (context) => const ExamplesScreen()
+        ExamplesScreen.routeName: (context) => const ExamplesScreen(),
+        MusicScreen.routeName: (context) => const MusicScreen(),
+        OperationScreen.routeName: (context) => const OperationScreen(),
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;
@@ -66,6 +72,8 @@ class MyApp extends StatelessWidget {
             );
           } else if (name == DisplayNumberScreen.routeName) {
             return DisplayNumberScreen(imageUrl: arguments as String);
+          } else if (name == EditKidProfile.routeName) {
+            return EditKidProfile(kid: arguments as Kid);
           } else {
             return const Scaffold(
               body: Text('ERROR 404!'),

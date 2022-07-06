@@ -34,6 +34,7 @@ dependencies:
   pin_code_fields: ^7.3.0
   flutter_rating_bar: ^4.0.1
 
+
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -115,5 +116,8 @@ flutter:
     - family: MyFlutterApp13
       fonts:
         - asset: assets/fonts/MyFlutterApp13.ttf
+    - family: MyFlutterApp14
+      fonts:
+        - asset: assets/fonts/MyFlutterApp14.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

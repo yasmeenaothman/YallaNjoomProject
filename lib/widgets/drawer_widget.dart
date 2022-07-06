@@ -3,18 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
+import 'package:yalla_njoom/screens/edit_child_profile_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 
+import '../models/kid.dart';
 import '../models/my_flutter_app.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
-    Key? key,
-  }) : super(key: key);
+  const DrawerWidget({Key? key, this.isParent = true}) : super(key: key);
   final String name = 'غزل الحاج';
   final String code = '1000';
   final String coins = '120';
-  final bool isParent = true;
+  final bool isParent;
   final bool isFemale = false;
   @override
   Widget build(BuildContext context) {
@@ -72,6 +72,19 @@ class DrawerWidget extends StatelessWidget {
                 child: _buildListTile(theme,
                     icon: MyFlutterApp.home, text: 'الصفحة الرئيسية'),
               ),
+              if (!isParent)
+                GestureDetector(
+                  onTap: () {
+                    AppRouter.router.pushNamedWithReplacementFunction(
+                        EditKidProfile.routeName,
+                        Kid(
+                            imageUrl: 'assets/images/kid_img.png',
+                            name: 'غزل',
+                            code: '1000'));
+                  },
+                  child: _buildListTile(theme,
+                      icon: MyFlutterApp.logout, text: 'تعديل'),
+                ),
               GestureDetector(
                 onTap: () {
                   AppRouter.router.pushNamedWithReplacementFunction(

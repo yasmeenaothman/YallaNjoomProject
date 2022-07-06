@@ -45,9 +45,10 @@ class NumbersScreen extends StatelessWidget {
                   ),
                   size: Size(double.infinity, 75.h),
                   boxShadow: BoxShadow(
-                      offset: Offset(3, 6.h),
-                      blurRadius: 9.r,
-                      color: const Color(0x4D074785)),
+                    offset: Offset(3, 6.h),
+                    blurRadius: 9.r,
+                    color: const Color(0x4D074785),
+                  ),
                   radius: 20.r,
                   top: 0,
                 ),

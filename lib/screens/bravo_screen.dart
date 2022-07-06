@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
+import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 
 import 'package:yalla_njoom/widgets/bravo_dialog.dart';
@@ -37,7 +39,7 @@ class BravoScreen extends StatelessWidget {
                   child: DefaultCirculeAvatar(
                     onTap: () => AppRouter.router
                         .pushNamedWithReplacementFunction(
-                            ParentsHomeScreen.routeName),
+                            ChildHomeScreen.routeName),
                     iconData: MyFlutterApp.cancel,
                   )),
               Expanded(
@@ -71,6 +73,9 @@ class BravoScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              AppRouter.router.pushNamedWithReplacementFunction(
+                LetterCardScreen.routeName,
+              );
               //TODO: go to the next letter
             },
             child: Image.asset(

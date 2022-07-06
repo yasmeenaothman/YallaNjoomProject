@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/bravo_screen.dart';
+import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
+import 'package:yalla_njoom/widgets/toast_dialog_widget.dart';
 
 import '../widgets/container_with_image.dart';
 import '../widgets/container_with_text.dart';
@@ -23,8 +26,8 @@ class ExamplesScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.w, 20.h, 0, 0),
             child: DefaultCirculeAvatar(
               onTap: () {
-                AppRouter.router
-                    .pushNamedWithReplacementFunction(LettersScreen.routeName);
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    LetterCardScreen.routeName);
               },
             ),
           ),
@@ -32,20 +35,45 @@ class ExamplesScreen extends StatelessWidget {
             height: 230.h,
           ),
           const ContainerWithText(),
-          Image.asset('assets/images/happy.png'),
+          GestureDetector(
+            child: Image.asset('assets/images/happy.png'),
+            onTap: () {},
+          ),
           SizedBox(
             height: 10.h,
           ),
           Stack(
             clipBehavior: Clip.none,
             children: [
-              Image.asset('assets/images/carrot.png'),
+              GestureDetector(
+                  child: Image.asset('assets/images/carrot.png'),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        barrierColor: Colors.black,
+                        builder: (ctx) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 260.h,
+                              ),
+                              const ToastDialogWidget()
+                            ],
+                          );
+                        });
+                  }),
               Positioned(
                 bottom: 78.h,
                 left: 175.w,
-                child: Image.asset(
-                  'assets/images/impressed.png',
-                ),
+                child: GestureDetector(
+                    child: Image.asset(
+                      'assets/images/impressed.png',
+                    ),
+                    onTap: () {
+                      AppRouter.router.pushNamedWithReplacementFunction(
+                          BravoScreen.routeName, false);
+                    }),
               ),
             ],
           )

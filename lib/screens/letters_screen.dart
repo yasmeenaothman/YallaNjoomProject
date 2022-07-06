@@ -27,14 +27,15 @@ class LettersScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-                AppRouter.router.pushNamedFunction(LetterCardScreen.routeName);
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    LetterCardScreen.routeName);
               },
               child: DefaultStackWidget(
                 imagePath: 'assets/images/lion.png', // 1_flower.png for number
                 btn: DefaultElevatedButton(
                   onPressed: () {
-                    AppRouter.router
-                        .pushNamedFunction(LetterCardScreen.routeName);
+                    AppRouter.router.pushNamedWithReplacementFunction(
+                        LetterCardScreen.routeName);
                   },
                   //const Color(0xFFFFA4AC) number color
                   bgColor: const Color(0xFF074785), // letter color

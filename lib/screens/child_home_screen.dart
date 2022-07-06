@@ -73,16 +73,16 @@ class ChildHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return ScaffoldWithBackground(
-      drawer: const DrawerWidget(),
+      drawer: const DrawerWidget(
+        isParent: false,
+      ),
       appBarIsVisible: true,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
         child: ListView.separated(
           padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
           itemBuilder: (context, index) => GestureDetector(
-            onTap: () {
-              AppRouter.router.pushNamedFunction(LettersScreen.routeName);
-            },
+            onTap: DummyData.dummyData.types[index].pressFun,
             child: DefaultStackWidget(
               imagePath: DummyData.dummyData.types[index].image,
               btn: DefaultElevatedButton(
@@ -91,9 +91,7 @@ class ChildHomeScreen extends StatelessWidget {
                         fontSize: 22.sp,
                         color: Colors.white,
                         fontWeight: FontWeight.w500)),
-                onPressed: () {
-                  navigateToScreen(index: index);
-                },
+                onPressed: DummyData.dummyData.types[index].pressFun,
                 size: Size(double.infinity, 63.h),
                 boxShadow: BoxShadow(
                     offset: Offset(3, 6.h),
@@ -113,20 +111,22 @@ class ChildHomeScreen extends StatelessWidget {
     );
   }
 
-  void navigateToScreen({required int index}) {
-    switch (index) {
-      case 0:
-        AppRouter.router.pushNamedFunction(LettersScreen.routeName);
-        break;
-      case 1:
-        AppRouter.router.pushNamedFunction(NumbersScreen.routeName);
-        break;
-      case 2:
-        break;
-      case 3:
-        break;
-      case 4:
-        break;
-    }
-  }
+  // void navigateToScreen({required int index}) {
+  //   switch (index) {
+  //     case 0:
+  //       AppRouter.router
+  //           .pushNamedWithReplacementFunction(LettersScreen.routeName);
+  //       break;
+  //     case 1:
+  //       AppRouter.router
+  //           .pushNamedWithReplacementFunction(NumbersScreen.routeName);
+  //       break;
+  //     case 2:
+  //       break;
+  //     case 3:
+  //       break;
+  //     case 4:
+  //       break;
+  //   }
+  // }
 }
