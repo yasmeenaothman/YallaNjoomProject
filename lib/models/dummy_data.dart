@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:yalla_njoom/models/kid.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/exercises_screen.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
 import 'package:yalla_njoom/screens/numbers_screen.dart';
 import 'package:yalla_njoom/screens/operation_screen.dart';
@@ -21,9 +22,9 @@ class DummyData {
   // TODO: from provider
   Example selectedExample = Example(
     id: 'حرف الألف',
-    example1: 'assets/images/carrot',
-    example2: 'assets/images/peace',
-    example3: 'assets/images/bear',
+    example1: 'assets/images/carrot.png',
+    example2: 'assets/images/peace.png',
+    example3: 'assets/images/bear.png',
   ); // i will make method return the selected example from the table based on selected letter
 
   List<Example> otherExamples = [
@@ -124,7 +125,29 @@ class DummyData {
         image: 'assets/images/exer_img.png',
         name: 'مسائل عامة',
         bgColor: const Color(0xFF2FB0FD),
-        pressFun: () {}),
+        pressFun: () {
+          AppRouter.router
+              .pushNamedWithReplacementFunction(ExercisesScreen.routeName, [
+            Example(
+              id: 'حرف الباء',
+              example1: 'assets/images/happy.png',
+              example2: 'assets/images/lion.png',
+              example3: 'assets/images/duck.png',
+            ),
+            Example(
+              id: 'حرف التاء',
+              example1: 'assets/images/bird.png',
+              example2: 'assets/images/games.png',
+              example3: 'assets/images/video.png',
+            ),
+            Example(
+              id: 'حرف الثاء',
+              example1: 'assets/images/operations.png',
+              example2: 'assets/images/letters.png',
+              example3: 'assets/images/numbers.png',
+            ),
+          ]);
+        }),
   ];
   List<TypeEducation> types = [
     TypeEducation(

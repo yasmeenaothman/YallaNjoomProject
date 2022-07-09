@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContainerWithText extends StatelessWidget {
-  const ContainerWithText({Key? key}) : super(key: key);
+  const ContainerWithText({
+    Key? key,
+  }) : super(key: key);
 
   /// here only text name is different so you should make it on variable
   @override

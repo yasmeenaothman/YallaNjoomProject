@@ -7,21 +7,22 @@ class ScaffoldWithBackground extends StatelessWidget {
       required this.body,
       this.drawer = const Drawer(),
       this.appBarIsVisible = false,
+      this.bgImage = 'assets/images/background.png',
       // ignore: avoid_init_to_null
       this.floatingActionButton = null})
       : super(key: key);
   final Widget body;
   final Widget drawer;
+  final String bgImage;
   final bool appBarIsVisible;
   final Widget? floatingActionButton;
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/background.png'),
-              fit: BoxFit.cover)),
+      decoration: BoxDecoration(
+          image:
+              DecorationImage(image: AssetImage(bgImage), fit: BoxFit.cover)),
       child: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,

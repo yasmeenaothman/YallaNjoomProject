@@ -16,12 +16,12 @@ class OperationScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
         child: ListView.separated(
-          padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
+          padding: EdgeInsets.only(top: 120.h, bottom: 65.h),
           itemBuilder: (context, index) => DefaultStackWidget(
             bottom: 30.h,
             imagePath: DummyData.dummyData.operationTypes[index].image,
             btn: DefaultElevatedButton(
-              onPressed: () {},
+              onPressed: DummyData.dummyData.operationTypes[index].pressFun,
               child: Text(DummyData.dummyData.operationTypes[index].name,
                   style: TextStyle(
                       fontSize: 22.sp,

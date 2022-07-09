@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/example_numbers_bg.dart';
 
 import '../models/my_flutter_app.dart';
 import '../widgets/default_circular_avatar.dart';
@@ -41,7 +43,10 @@ class DisplayNumberScreen extends StatelessWidget {
                     ),
                   ),
                   DefaultCirculeAvatar(
-                    onTap: () {},
+                    onTap: () {
+                      AppRouter.router.pushNamedWithReplacementFunction(
+                          ExampleNumbers.routeName);
+                    },
                     iconData: MyFlutterApp.arrowRight_2,
                     iconColor: const Color(0xFF034C1B),
                     bgColor: const Color(0xFFDBECC2),

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yalla_njoom/screens/parents_home_screen.dart';
-import 'package:yalla_njoom/widgets/default_elevated_button.dart';
-import '../routers/app_router.dart';
-import '../screens/child_home_screen.dart';
 
 class ToastDialogWidget extends StatelessWidget {
   const ToastDialogWidget({
@@ -17,7 +13,6 @@ class ToastDialogWidget extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Center(
         child: Stack(
-          alignment: Alignment.bottomCenter,
           clipBehavior: Clip.none,
           children: [
             Container(
