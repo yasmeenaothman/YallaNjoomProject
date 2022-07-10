@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
-import '../routers/app_router.dart';
-import '../screens/child_home_screen.dart';
 
 class UserCodeDialog extends StatelessWidget {
-  const UserCodeDialog({Key? key, required this.code, required this.isParent})
+  const UserCodeDialog({Key? key, required this.code, required this.onPressed})
       : super(key: key);
-  final bool isParent;
-  final int code;
+  final String code;
+  final Function() onPressed;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -71,15 +68,7 @@ class UserCodeDialog extends StatelessWidget {
                               .copyWith(color: Colors.white),
                         ),
                         radius: 10.r,
-                        onPressed: () {
-                          if (isParent) {
-                            AppRouter.router.pushNamedWithReplacementFunction(
-                                ParentsHomeScreen.routeName);
-                          } else {
-                            AppRouter.router.pushNamedWithReplacementFunction(
-                                ChildHomeScreen.routeName);
-                          }
-                        },
+                        onPressed: onPressed,
                         size: Size(178.w, 44.h),
                       ),
                     ),

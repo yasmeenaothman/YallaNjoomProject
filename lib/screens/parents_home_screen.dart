@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/widgets/drawer_widget.dart';
@@ -12,15 +13,19 @@ import '../models/my_flutter_app.dart';
 import '../widgets/default_kid_card.dart';
 
 class ParentsHomeScreen extends StatelessWidget {
-  const ParentsHomeScreen({Key? key}) : super(key: key);
+  const ParentsHomeScreen({Key? key, required this.parentModel})
+      : super(key: key);
   static const String routeName = 'ParentsHomeScreen';
+  final ParentModel parentModel;
   final bool allChildren =
       true; //TODO: must be a list of parents' children not a bool
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return ScaffoldWithBackground(
-        drawer: const DrawerWidget(),
+        drawer: DrawerWidget(
+          userModel: parentModel,
+        ),
         appBarIsVisible: true,
         floatingActionButton: _buildFabWidget(theme),
         body: Center(

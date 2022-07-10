@@ -55,6 +55,9 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/models/user_model.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
 import 'package:yalla_njoom/screens/numbers_screen.dart';
@@ -66,15 +69,17 @@ import '../widgets/drawer_widget.dart';
 import '../widgets/scaffold_with_background.dart';
 
 class ChildHomeScreen extends StatelessWidget {
-  const ChildHomeScreen({Key? key}) : super(key: key);
+  const ChildHomeScreen({Key? key, required this.childModel}) : super(key: key);
   static const String routeName = 'ChildHomeScreen';
+  final ChildModel childModel;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return ScaffoldWithBackground(
-      drawer: const DrawerWidget(
+      drawer: DrawerWidget(
         isParent: false,
+        userModel: childModel,
       ),
       appBarIsVisible: true,
       body: Padding(
@@ -110,23 +115,4 @@ class ChildHomeScreen extends StatelessWidget {
       ),
     );
   }
-
-  // void navigateToScreen({required int index}) {
-  //   switch (index) {
-  //     case 0:
-  //       AppRouter.router
-  //           .pushNamedWithReplacementFunction(LettersScreen.routeName);
-  //       break;
-  //     case 1:
-  //       AppRouter.router
-  //           .pushNamedWithReplacementFunction(NumbersScreen.routeName);
-  //       break;
-  //     case 2:
-  //       break;
-  //     case 3:
-  //       break;
-  //     case 4:
-  //       break;
-  //   }
-  // }
 }

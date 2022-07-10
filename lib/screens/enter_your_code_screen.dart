@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/helpers/firestore_helper.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
@@ -52,7 +55,8 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
           top: 0,
           size: Size(129.w, 48.h),
           radius: 12.r,
-          onPressed: () {
+          onPressed: () async {
+            await FirestoreHelper.firestoreHelper.getUserByCode(userCode);
             //TODO: If the userCode was ture then go to ParentsHomePage or ChildHomePage
             //TODO: If the userCode was false then show CustomDialog
             if (codeTrue) {

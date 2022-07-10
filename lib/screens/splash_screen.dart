@@ -1,16 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
-import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
-import 'package:yalla_njoom/screens/user_type_screen.dart';
-import 'package:yalla_njoom/widgets/arithmetic_operation_widget.dart';
-
-import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
-
-import '../widgets/custom_dialog.dart';
 import 'do_u_have_acc_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,6 +17,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    Provider.of<FirestoreProvider>(context, listen: false).initUsersCodes();
     Timer(const Duration(seconds: 3), () {
       AppRouter.router
           .pushNamedWithReplacementFunction(DoYouHaveAccScreen.routeName);

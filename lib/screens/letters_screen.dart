@@ -17,8 +17,6 @@ class LettersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return ScaffoldWithBackground(
-      drawer: const DrawerWidget(),
-      appBarIsVisible: true,
       body: Directionality(
         textDirection: TextDirection.ltr,
         child: Padding(

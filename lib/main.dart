@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:yalla_njoom/home_page.dart';
 import 'package:yalla_njoom/models/dummy_data.dart';
 import 'package:yalla_njoom/models/example.dart';
 import 'package:yalla_njoom/models/kid.dart';
+import 'package:yalla_njoom/models/user_model.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/screens/bravo_screen.dart';
@@ -29,12 +33,16 @@ import 'package:yalla_njoom/screens/user_code_screen.dart';
 import 'screens/example_numbers_bg.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    ScreenUtilInit(
-      builder: (context, child) {
-        return const MyApp();
-      },
-      designSize: const Size(375, 812),
+    ChangeNotifierProvider<FirestoreProvider>(
+      create: (context) => FirestoreProvider(),
+      child: ScreenUtilInit(
+        builder: (context, child) {
+          return const MyApp();
+        },
+        designSize: const Size(375, 812),
+      ),
     ),
   );
 }
@@ -49,15 +57,12 @@ class MyApp extends StatelessWidget {
       theme: _buildThemeData(),
       navigatorKey: AppRouter.router.routerKey,
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) => const FirebaseConfiguration(),
         MyHomePage.routeName: (context) => const MyHomePage(),
-        UserCodeScreen.routeName: (context) => const UserCodeScreen(),
-        ParentsHomeScreen.routeName: (context) => const ParentsHomeScreen(),
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
         AddChildInfoScreen.routeName: (context) => const AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),
         DoYouHaveAccScreen.routeName: (context) => const DoYouHaveAccScreen(),
-        ChildHomeScreen.routeName: (context) => const ChildHomeScreen(),
         ChildTrackerScreen.routeName: (context) => const ChildTrackerScreen(),
         LettersScreen.routeName: (context) => const LettersScreen(),
         NumbersScreen.routeName: (context) => const NumbersScreen(),
@@ -77,8 +82,12 @@ class MyApp extends StatelessWidget {
             );
           } else if (name == DisplayNumberScreen.routeName) {
             return DisplayNumberScreen(imageUrl: arguments as String);
-          } else if (name == EditKidProfile.routeName) {
-            return EditKidProfile(kid: arguments as Kid);
+          } else if (name == ParentsHomeScreen.routeName) {
+            return ParentsHomeScreen(parentModel: arguments as ParentModel);
+          } else if (name == ChildHomeScreen.routeName) {
+            return ChildHomeScreen(childModel: arguments as ChildModel);
+          } else if (name == EditChildProfile.routeName) {
+            return EditChildProfile(childModel: arguments as ChildModel);
           } else if (name == ExercisesScreen.routeName) {
             return ExercisesScreen(examples: arguments as List<Example>);
           } else if (name == ExamplesScreen.routeName) {
@@ -118,6 +127,33 @@ class MyApp extends StatelessWidget {
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500),
           ),
+    );
+  }
+}
+
+class FirebaseConfiguration extends StatelessWidget {
+  const FirebaseConfiguration({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<FirebaseApp>(
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            backgroundColor: Colors.red,
+            body: Center(
+              child: Text(snapshot.error.toString()),
+            ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return const SplashScreen();
+        }
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
+      },
+      future: Firebase.initializeApp(),
     );
   }
 }

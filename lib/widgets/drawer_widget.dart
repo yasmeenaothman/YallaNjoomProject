@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
@@ -10,10 +11,11 @@ import '../models/kid.dart';
 import '../models/my_flutter_app.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key, this.isParent = true}) : super(key: key);
-  final String name = 'غزل الحاج';
-  final String code = '1000';
+  const DrawerWidget({Key? key, this.isParent = true, required this.userModel})
+      : super(key: key);
+  final UserModel userModel;
   final String coins = '120';
+
   final bool isParent;
   final bool isFemale = false;
   @override
@@ -30,15 +32,18 @@ class DrawerWidget extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              if (isParent) _buildDrawerTextWidget(theme, text: 'محمد الحاج'),
+              if (isParent)
+                _buildDrawerTextWidget(theme, text: 'user_' + userModel.code!),
               if (!isParent)
                 Column(
                   children: [
-                    _buildDrawerTextWidget(theme, text: 'الاسم: $name'),
+                    _buildDrawerTextWidget(theme,
+                        text: 'الاسم: ${(userModel as ChildModel).name}'),
                     SizedBox(
                       height: 10.h,
                     ),
-                    _buildDrawerTextWidget(theme, text: 'الرمز: $code'),
+                    _buildDrawerTextWidget(theme,
+                        text: 'الرمز: ${(userModel as ChildModel).code}'),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -76,11 +81,7 @@ class DrawerWidget extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     AppRouter.router.pushNamedWithReplacementFunction(
-                        EditKidProfile.routeName,
-                        Kid(
-                            imageUrl: 'assets/images/kid_img.png',
-                            name: 'غزل',
-                            code: '1000'));
+                        EditChildProfile.routeName, userModel as ChildModel);
                   },
                   child: _buildListTile(theme,
                       icon: MyFlutterApp.logout, text: 'تعديل'),

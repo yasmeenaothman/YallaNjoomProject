@@ -2,16 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/helpers/firestore_helper.dart';
+import 'package:yalla_njoom/models/user_model.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
+import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
 
 import '../models/kid.dart';
 import '../widgets/default_elevated_button.dart';
 
-class EditKidProfile extends StatelessWidget {
-  EditKidProfile({Key? key, required this.kid}) : super(key: key);
-  Kid kid;
-  static String routeName = 'EditKidProfile';
+class EditChildProfile extends StatelessWidget {
+  EditChildProfile({Key? key, required this.childModel}) : super(key: key);
+  ChildModel childModel;
+  static String routeName = 'EditChildProfile';
+  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
+    controller = TextEditingController(text: childModel.name);
     return Scaffold(
       body: Directionality(
         textDirection: TextDirection.rtl,
@@ -27,7 +35,7 @@ class EditKidProfile extends StatelessWidget {
               ),
               //TODO:make the image.network because it token from firebase
               Image.asset(
-                kid.imageUrl!,
+                childModel.imageUrl!,
                 height: 127.h,
                 width: 127.w,
               ),
@@ -47,7 +55,7 @@ class EditKidProfile extends StatelessWidget {
                 height: 10.h,
               ),
               Text(
-                kid.code!,
+                childModel.code!,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontFamily: 'Tajawal',
@@ -73,6 +81,7 @@ class EditKidProfile extends StatelessWidget {
               ),
               // SizedBox(height: 10.h,),
               TextField(
+                controller: controller,
                 maxLines: 1,
                 cursorColor: const Color(0x82074785),
                 cursorHeight: 24.h,
@@ -83,11 +92,10 @@ class EditKidProfile extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
-                decoration: InputDecoration(
-                  hintText: kid.name!,
-                  enabledBorder: const UnderlineInputBorder(
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0x45544F4F))),
-                  focusedBorder: const UnderlineInputBorder(
+                  focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFF074785)),
                   ),
                 ),
@@ -96,7 +104,17 @@ class EditKidProfile extends StatelessWidget {
                 height: 50.h,
               ),
               DefaultElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  ChildModel childModel = ChildModel(
+                      name: controller!.text,
+                      imageUrl: 'assets/images/kid_img.png',
+                      code: this.childModel.code);
+                  Provider.of<FirestoreProvider>(context, listen: false)
+                      .updateChildInfo(childModel);
+                  AppRouter.router.pop();
+                  AppRouter.router.pushNamedWithReplacementFunction(
+                      ChildHomeScreen.routeName, childModel);
+                },
                 top: 5.h,
                 radius: 10.r,
                 boxShadow: const BoxShadow(color: Colors.white),

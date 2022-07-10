@@ -27,21 +27,17 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cloud_firestore: ^3.2.1
   cupertino_icons: ^1.0.2
+  firebase_core: ^1.19.1
   flutter:
     sdk: flutter
+  flutter_rating_bar: ^4.0.1
   flutter_screenutil: ^5.5.3+2
   pin_code_fields: ^7.3.0
-  flutter_rating_bar: ^4.0.1
-
+  provider: ^6.0.3
 
 dev_dependencies:
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
@@ -97,16 +93,16 @@ flutter:
         - asset: assets/fonts/MyFlutterApp6.ttf
     - family: MyFlutterApp7
       fonts:
-       - asset: assets/fonts/MyFlutterApp7.ttf
+        - asset: assets/fonts/MyFlutterApp7.ttf
     - family: MyFlutterApp8
       fonts:
-       - asset: assets/fonts/MyFlutterApp8.ttf
+        - asset: assets/fonts/MyFlutterApp8.ttf
     - family: MyFlutterApp9
       fonts:
-       - asset: assets/fonts/MyFlutterApp9.ttf
+        - asset: assets/fonts/MyFlutterApp9.ttf
     - family: MyFlutterApp10
       fonts:
-       - asset: assets/fonts/MyFlutterApp10.ttf
+        - asset: assets/fonts/MyFlutterApp10.ttf
     - family: MyFlutterApp11
       fonts:
         - asset: assets/fonts/MyFlutterApp11.ttf

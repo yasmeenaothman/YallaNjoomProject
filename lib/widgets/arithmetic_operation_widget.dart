@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/helpers/firestore_helper.dart';
+import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
@@ -7,6 +12,8 @@ import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import 'package:yalla_njoom/widgets/user_code_dialog.dart';
 
+import '../helpers/my_methods.dart';
+import '../providers/firestore_provider.dart';
 import 'custom_dialog.dart';
 
 class ArthOperationWidget extends StatelessWidget {
@@ -116,10 +123,11 @@ class ArthOperationWidget extends StatelessWidget {
                     size: Size(129.w, 44.h),
                     top: 0,
                     radius: 12.r,
-                    onPressed: () {
+                    onPressed: () async {
                       //TODO: Do the verfication operation
                       if (answerTrue) {
                         AppRouter.router.pop();
+                        String code = await generateNewCode(context);
                         showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -129,8 +137,18 @@ class ArthOperationWidget extends StatelessWidget {
                                   SizedBox(
                                     height: 260.h,
                                   ),
-                                  const UserCodeDialog(
-                                      code: 1000, isParent: true)
+                                  UserCodeDialog(
+                                    code: code,
+                                    onPressed: () {
+                                      Provider.of<FirestoreProvider>(ctx,
+                                              listen: false)
+                                          .addUser(
+                                              ParentModel(code: code).toMap());
+                                      AppRouter.router
+                                          .pushNamedWithReplacementFunction(
+                                              ParentsHomeScreen.routeName);
+                                    },
+                                  )
                                 ],
                               );
                             });
