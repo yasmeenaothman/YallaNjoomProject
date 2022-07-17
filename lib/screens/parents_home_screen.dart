@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/helpers/firestore_helper.dart';
 import 'package:yalla_njoom/models/user_model.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/widgets/drawer_widget.dart';
@@ -12,32 +15,42 @@ import '../models/dummy_data.dart';
 import '../models/my_flutter_app.dart';
 import '../widgets/default_kid_card.dart';
 
-class ParentsHomeScreen extends StatelessWidget {
-  const ParentsHomeScreen({Key? key, required this.parentModel})
-      : super(key: key);
+class ParentsHomeScreen extends StatefulWidget {
+  const ParentsHomeScreen({
+    Key? key,
+  }) : super(key: key);
   static const String routeName = 'ParentsHomeScreen';
-  final ParentModel parentModel;
-  final bool allChildren =
-      true; //TODO: must be a list of parents' children not a bool
+
+  @override
+  State<ParentsHomeScreen> createState() => _ParentsHomeScreenState();
+}
+
+class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
+  String searchQuery = '';
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    return ScaffoldWithBackground(
-        drawer: DrawerWidget(
-          userModel: parentModel,
-        ),
-        appBarIsVisible: true,
-        floatingActionButton: _buildFabWidget(theme),
-        body: Center(
-          heightFactor: 3,
-          child: allChildren
-              ? _buildChildrenListWidget()
-              //TODO: must add a list of parents' children
-              : _buildNoChildAddedWidget(theme),
-        ));
+
+    return Consumer<FirestoreProvider>(
+      builder: (context, firestoreProvider, x) {
+        return ScaffoldWithBackground(
+            drawer: DrawerWidget(
+              userModel: firestoreProvider.userModel,
+            ),
+            appBarIsVisible: true,
+            floatingActionButton: _buildFabWidget(theme),
+            body: Center(
+              heightFactor: 3,
+              child: firestoreProvider.parentsChildren.isNotEmpty
+                  ? _buildChildrenListWidget(firestoreProvider)
+                  : _buildNoChildWidget(theme, 'لم يتم إضافة أي طفل'),
+            ));
+      },
+    );
   }
 
-  Padding _buildChildrenListWidget() {
+  Padding _buildChildrenListWidget(FirestoreProvider firestoreProvider) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
       child: Column(
@@ -63,6 +76,13 @@ class ParentsHomeScreen extends StatelessWidget {
             shadowColor: const Color(0x2B074785),
             borderRadius: BorderRadius.circular(10.r),
             child: TextField(
+              onChanged: (query) {
+                searchQuery = query;
+                setState(() {});
+                print(query);
+                firestoreProvider.getNamesDetailList(
+                    query, firestoreProvider.userModel.code);
+              },
               maxLines: 1,
               decoration: InputDecoration(
                 contentPadding:
@@ -98,23 +118,67 @@ class ParentsHomeScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => DefaultKidCard(
-              kid: DummyData.dummyData.kids[index],
-            ),
-            separatorBuilder: (context, index) => SizedBox(
-              height: 20.h,
-            ),
-            itemCount: DummyData.dummyData.kids.length,
-          ),
+          searchQuery.isNotEmpty
+              ? firestoreProvider.searchResutl.isNotEmpty
+                  ? resultExist(firestoreProvider)
+                  : Center(
+                      child: _buildNoChildWidget(
+                          Theme.of(context), 'لا يوجد نتيجة'),
+                    )
+              : childrenList(firestoreProvider),
+
+          // Expanded(
+          //   child: ListView.separated(
+          //     itemBuilder: (context, index) {
+          //       return firestoreProvider.searchResutl.isNotEmpty
+          //           ? DefaultKidCard(
+          //               childModel: firestoreProvider.searchResutl[index])
+          //           : DefaultKidCard(
+          //               childModel: firestoreProvider.parentsChildren[index]);
+          //     },
+          //     separatorBuilder: (context, index) => SizedBox(
+          //       height: 20.h,
+          //     ),
+          //     itemCount: firestoreProvider.searchResutl.isNotEmpty
+          //         ? firestoreProvider.searchResutl.length
+          //         : firestoreProvider.parentsChildren.length,
+          //   ),
+          // ),
         ],
       ),
     );
   }
 
-  Column _buildNoChildAddedWidget(ThemeData theme) {
+  Expanded childrenList(FirestoreProvider firestoreProvider) {
+    return Expanded(
+      child: ListView.separated(
+        itemBuilder: (context, index) {
+          return DefaultKidCard(
+              childModel: firestoreProvider.parentsChildren[index]);
+        },
+        separatorBuilder: (context, index) => SizedBox(
+          height: 20.h,
+        ),
+        itemCount: firestoreProvider.parentsChildren.length,
+      ),
+    );
+  }
+
+  Expanded resultExist(FirestoreProvider firestoreProvider) {
+    return Expanded(
+      child: ListView.separated(
+          itemBuilder: (context, index) {
+            return DefaultKidCard(
+                childModel: firestoreProvider.searchResutl[index]);
+          },
+          separatorBuilder: (context, index) => SizedBox(
+                height: 20.h,
+              ),
+          itemCount: firestoreProvider.searchResutl.length),
+    );
+  }
+
+  Column _buildNoChildWidget(ThemeData theme, String text) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -123,7 +187,7 @@ class ParentsHomeScreen extends StatelessWidget {
           height: 10.h,
         ),
         Text(
-          'لم يتم إضافة أي طفل',
+          text,
           style: theme.textTheme.headline1!.copyWith(fontSize: 20.sp),
         )
       ],

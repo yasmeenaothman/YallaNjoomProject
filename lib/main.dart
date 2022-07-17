@@ -4,9 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/home_page.dart';
-import 'package:yalla_njoom/models/dummy_data.dart';
 import 'package:yalla_njoom/models/example.dart';
-import 'package:yalla_njoom/models/kid.dart';
 import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
@@ -28,8 +26,7 @@ import 'package:yalla_njoom/screens/operation_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/splash_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
-import 'package:yalla_njoom/screens/user_code_screen.dart';
-
+import 'package:yalla_njoom/screens/videos_screen.dart';
 import 'screens/example_numbers_bg.dart';
 
 void main() {
@@ -60,7 +57,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const FirebaseConfiguration(),
         MyHomePage.routeName: (context) => const MyHomePage(),
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
-        AddChildInfoScreen.routeName: (context) => const AddChildInfoScreen(),
+        AddChildInfoScreen.routeName: (context) => AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),
         DoYouHaveAccScreen.routeName: (context) => const DoYouHaveAccScreen(),
         ChildTrackerScreen.routeName: (context) => const ChildTrackerScreen(),
@@ -71,6 +68,8 @@ class MyApp extends StatelessWidget {
         MusicScreen.routeName: (context) => const MusicScreen(),
         OperationScreen.routeName: (context) => const OperationScreen(),
         ExampleNumbers.routeName: (context) => const ExampleNumbers(),
+        ParentsHomeScreen.routeName: (context) => const ParentsHomeScreen(),
+        VideosScreen.routeName: (context) => const VideosScreen()
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;
@@ -82,8 +81,6 @@ class MyApp extends StatelessWidget {
             );
           } else if (name == DisplayNumberScreen.routeName) {
             return DisplayNumberScreen(imageUrl: arguments as String);
-          } else if (name == ParentsHomeScreen.routeName) {
-            return ParentsHomeScreen(parentModel: arguments as ParentModel);
           } else if (name == ChildHomeScreen.routeName) {
             return ChildHomeScreen(childModel: arguments as ChildModel);
           } else if (name == EditChildProfile.routeName) {

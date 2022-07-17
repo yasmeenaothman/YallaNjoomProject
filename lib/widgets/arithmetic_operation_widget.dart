@@ -16,13 +16,27 @@ import '../helpers/my_methods.dart';
 import '../providers/firestore_provider.dart';
 import 'custom_dialog.dart';
 
-class ArthOperationWidget extends StatelessWidget {
-  final String firstNum;
-  final String secondNum;
-  bool answerTrue = true;
-  ArthOperationWidget(
-      {Key? key, required this.firstNum, required this.secondNum})
+class ArthOperationWidget extends StatefulWidget {
+  final Function onPressed;
+  const ArthOperationWidget({Key? key, required this.onPressed})
       : super(key: key);
+
+  @override
+  State<ArthOperationWidget> createState() => _ArthOperationWidgetState();
+}
+
+class _ArthOperationWidgetState extends State<ArthOperationWidget> {
+  bool answerTrue = true;
+  int? firstNum;
+  int? secondNum;
+  num? machineAnswer;
+  String? userAnswer;
+  @override
+  void initState() {
+    firstNum = getRandomNumber(11);
+    secondNum = getRandomNumber(10);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +86,7 @@ class ArthOperationWidget extends StatelessWidget {
                         children: [
                           circleWidget(
                               child: Text(
-                                firstNum,
+                                firstNum.toString(),
                                 style: numberTextStyle(theme),
                               ),
                               theme: theme),
@@ -82,7 +96,7 @@ class ArthOperationWidget extends StatelessWidget {
                           ),
                           circleWidget(
                               child: Text(
-                                secondNum,
+                                secondNum.toString(),
                                 style: numberTextStyle(theme),
                               ),
                               theme: theme),
@@ -99,6 +113,10 @@ class ArthOperationWidget extends StatelessWidget {
                                 shadowColor: const Color(0x28000000),
                                 child: Center(
                                   child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      userAnswer = value;
+                                    },
                                     maxLength: 2,
                                     cursorColor: theme.primaryColor,
                                     decoration: InputDecoration(
@@ -123,70 +141,16 @@ class ArthOperationWidget extends StatelessWidget {
                     size: Size(129.w, 44.h),
                     top: 0,
                     radius: 12.r,
-                    onPressed: () async {
-                      //TODO: Do the verfication operation
-                      if (answerTrue) {
-                        AppRouter.router.pop();
-                        String code = await generateNewCode(context);
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (ctx) {
-                              return Column(
-                                children: [
-                                  SizedBox(
-                                    height: 260.h,
-                                  ),
-                                  UserCodeDialog(
-                                    code: code,
-                                    onPressed: () {
-                                      Provider.of<FirestoreProvider>(ctx,
-                                              listen: false)
-                                          .addUser(
-                                              ParentModel(code: code).toMap());
-                                      AppRouter.router
-                                          .pushNamedWithReplacementFunction(
-                                              ParentsHomeScreen.routeName);
-                                    },
-                                  )
-                                ],
-                              );
-                            });
-                      } else {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (ctx) {
-                              return Column(
-                                children: [
-                                  SizedBox(
-                                    height: 260.h,
-                                  ),
-                                  CustomDialog(
-                                    text: 'الإجابة خاطئة',
-                                    spaceBeforeWidget: 20.h,
-                                    widget: ConfirmButtonWidget(
-                                      confirmButtonFun: () {
-                                        AppRouter.router.pop();
-                                      },
-                                      confirmButtonText: 'حاول مرة أخرى',
-                                      cancelButtonFun: () {
-                                        AppRouter.router.pop();
-                                        AppRouter.router
-                                            .pop(); //should use another way to delete all the screen and move to UserTypeScreen ama vaktim yok
-                                        AppRouter.router
-                                            .pushNamedWithReplacementFunction(
-                                                UserTypeScreen.routeName);
-                                      },
-                                      cancelButtonText: 'إلغاء',
-                                    ),
-                                    imagePath: 'assets/images/crying_star.png',
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                  ),
-                                ],
-                              );
-                            });
+                    onPressed: () {
+                      machineAnswer = firstNum! * secondNum!;
+                      if (userAnswer != null) {
+                        if (userAnswer!.isNotEmpty) {
+                          if (userAnswer == machineAnswer.toString()) {
+                            widget.onPressed(true);
+                          } else {
+                            widget.onPressed(false);
+                          }
+                        }
                       }
                     },
                     child: Text(
@@ -238,4 +202,8 @@ class ArthOperationWidget extends StatelessWidget {
             ]),
         child: Center(child: child),
       );
+
+  getRandomNumber(range) {
+    return Random().nextInt(range);
+  }
 }

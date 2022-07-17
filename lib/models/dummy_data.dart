@@ -7,8 +7,9 @@ import 'package:yalla_njoom/screens/exercises_screen.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
 import 'package:yalla_njoom/screens/numbers_screen.dart';
 import 'package:yalla_njoom/screens/operation_screen.dart';
+import 'package:yalla_njoom/screens/videos_screen.dart';
 import 'example.dart';
-import 'letters.dart';
+import 'language.dart';
 
 /// be attentive if the pressFun was shared don't repeate it
 class DummyData {
@@ -16,7 +17,10 @@ class DummyData {
   static DummyData dummyData = DummyData._();
   Letter selectedLatter = Letter(
     name: 'حرف الألف',
-    imageUrl: 'assets/images/ألف.png',
+    sound: 'assets/audio/music.mp3',
+    song: 'assets/audio/music.mp3',
+    shape: 'أ',
+    //imageUrl: 'assets/images/ألف.png',
     isLocked: false,
   );
   // TODO: from provider
@@ -67,34 +71,49 @@ class DummyData {
   List<Number> numbers = [
     Number(
       name: 'رقم واحد',
-      imageUrl: 'assets/images/1.png',
+      audio: 'assets/audio/music.mp3',
+      shape: '1',
+      // imageUrl: 'assets/images/1.png',
       isLocked: false,
     ),
     Number(
       name: 'رقم اثنان',
-      imageUrl: 'assets/images/1.png',
+      audio: 'assets/audio/music.mp3',
+      shape: '2',
+      // imageUrl: 'assets/images/1.png',
       isLocked: true,
     ),
     Number(
       name: 'رقم ثلاثة',
-      imageUrl: 'assets/images/1.png',
+      audio: 'assets/audio/music.mp3',
+      shape: '3',
+      //imageUrl: 'assets/images/1.png',
       isLocked: true,
     ),
   ];
   List<Letter> letters = [
     Letter(
       name: 'حرف الألف',
-      imageUrl: 'assets/images/ألف.png',
+      sound: 'assets/audio/music.mp3',
+      song: 'assets/audio/music.mp3',
+      shape: 'أ',
+      //imageUrl: 'assets/images/ألف.png',
       isLocked: false,
     ),
     Letter(
       name: 'حرف الباء',
-      imageUrl: 'assets/images/باء.png',
+      sound: 'assets/audio/music.mp3',
+      song: 'assets/audio/music.mp3',
+      shape: 'ب',
+      //imageUrl: 'assets/images/باء.png',
       isLocked: true,
     ),
     Letter(
       name: 'حرف التاء',
-      imageUrl: 'assets/images/ألف.png',
+      sound: 'assets/audio/music.mp3',
+      song: 'assets/audio/music.mp3',
+      shape: 'ت',
+      //imageUrl: 'assets/images/ألف.png',
       isLocked: true,
     ),
   ];
@@ -178,7 +197,9 @@ class DummyData {
         image: 'assets/images/video.png',
         name: 'فيديو',
         bgColor: const Color(0xFFF1854F),
-        pressFun: () {}),
+        pressFun: () {
+          AppRouter.router.pushNamedFunction(VideosScreen.routeName);
+        }),
     TypeEducation(
         image: 'assets/images/games.png',
         name: 'ألعاب',

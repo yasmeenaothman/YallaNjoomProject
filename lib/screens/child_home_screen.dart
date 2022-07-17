@@ -101,7 +101,7 @@ class ChildHomeScreen extends StatelessWidget {
                 boxShadow: BoxShadow(
                     offset: Offset(3, 6.h),
                     blurRadius: 9.r,
-                    color: const Color(0x4D074785)),
+                    color: theme.primaryColor),
                 radius: 20.r,
                 bgColor: DummyData.dummyData.types[index].bgColor,
               ),

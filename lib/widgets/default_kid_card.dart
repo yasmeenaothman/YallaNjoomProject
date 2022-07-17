@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_tracker_screen.dart';
 import 'package:yalla_njoom/widgets/image_with_border.dart';
 
-import '../models/kid.dart';
-
 class DefaultKidCard extends StatelessWidget {
-  Kid kid;
-  DefaultKidCard({Key? key, required this.kid}) : super(key: key);
+  ChildModel childModel;
+  DefaultKidCard({Key? key, required this.childModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class DefaultKidCard extends StatelessWidget {
               children: [
                 /// for image will be shared
                 ImageWithBorder(
-                  imageUrl: kid.imageUrl!,
+                  imageUrl: childModel.imageUrl!,
                 ),
                 SizedBox(
                   width: 25.w,
@@ -37,14 +36,14 @@ class DefaultKidCard extends StatelessWidget {
                     children: [
                       ///textStyle i will take from theme
                       Text(
-                        'الاسم : ${kid.name}',
+                        'الاسم : ${childModel.name}',
                         style: TextStyle(
                             color: const Color(0xFF074785),
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        ' الرمز : ${kid.code}',
+                        ' الرمز : ${childModel.code}',
                         style: TextStyle(
                             color: const Color(0xFF074785),
                             fontSize: 18.sp,

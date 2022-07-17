@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yalla_njoom/widgets/pin_code_widget.dart';
 
 class ChildInfoDialog extends StatelessWidget {
-  const ChildInfoDialog({Key? key}) : super(key: key);
-
+  const ChildInfoDialog(
+      {Key? key, required this.onCodeChanged, required this.onNameChanged})
+      : super(key: key);
+  final Function(String) onNameChanged;
+  final Function(String) onCodeChanged;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -36,7 +39,7 @@ class ChildInfoDialog extends StatelessWidget {
                     style: theme.textTheme.headline2,
                   ),
                   TextField(
-                    onChanged: (v) {},
+                    onChanged: onNameChanged,
                     cursorColor: theme.primaryColor,
                     autofocus: true,
                     decoration: InputDecoration(
@@ -55,7 +58,7 @@ class ChildInfoDialog extends StatelessWidget {
                     style: theme.textTheme.headline2,
                   ),
                   PinCodeWidget(
-                    onChanged: (value) {},
+                    onChanged: onCodeChanged,
                   )
                 ],
               ),

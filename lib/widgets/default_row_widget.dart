@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../models/letters.dart';
+import '../models/language.dart';
 import '../models/my_flutter_app.dart';
 
 class DefaultRowWidget extends StatelessWidget {
   Language language;
   bool? isLetter;
+
   DefaultRowWidget({
     Key? key,
     required this.language,
@@ -19,7 +20,7 @@ class DefaultRowWidget extends StatelessWidget {
     return language.isLocked
         ? Stack(
             children: [
-              giveRow(),
+              giveRow(context),
               Positioned.fill(
                 child: Container(
                     decoration: BoxDecoration(
@@ -29,7 +30,7 @@ class DefaultRowWidget extends StatelessWidget {
               )
             ],
           )
-        : giveRow();
+        : giveRow(context);
   }
 
   Widget giveRatingBar({required double initialRating}) {
@@ -53,7 +54,7 @@ class DefaultRowWidget extends StatelessWidget {
     );
   }
 
-  Widget giveRow() {
+  Widget giveRow(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -90,8 +91,15 @@ class DefaultRowWidget extends StatelessWidget {
         Container(
           width: 74.w,
           height: 75.h,
-          child: Image.asset(
-            language.imageUrl!, //'assets/images/ألف.png',
+          child: Center(
+            child: Text(
+              language.shape!,
+              style: TextStyle(
+                  fontSize: 55.sp,
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'UrdType',
+                  height: 1.0),
+            ),
           ),
           decoration: BoxDecoration(
               color: Color(isLetter! ? 0xFFFFDDAB : 0xFFFFDCD4),
