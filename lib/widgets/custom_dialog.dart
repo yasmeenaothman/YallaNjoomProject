@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomDialog extends StatelessWidget {
+class CustomDialog extends StatefulWidget {
   final String text;
   final String imagePath;
   final Widget widget;
@@ -17,6 +17,31 @@ class CustomDialog extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<CustomDialog> createState() => _CustomDialogState();
+}
+
+class _CustomDialogState extends State<CustomDialog>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+    controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return Directionality(
@@ -28,10 +53,14 @@ class CustomDialog extends StatelessWidget {
           children: [
             Positioned(
               bottom: 85.h,
-              child: Image.asset(
-                imagePath,
-                height: 185.6.h,
-                width: 188.4.w,
+              child: RotationTransition(
+                turns:
+                    Tween<double>(begin: -0.05, end: 0.05).animate(animation),
+                child: Image.asset(
+                  widget.imagePath,
+                  height: 185.6.h,
+                  width: 188.4.w,
+                ),
               ),
             ),
             Container(
@@ -47,14 +76,14 @@ class CustomDialog extends StatelessWidget {
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: crossAxisAlignment,
+                crossAxisAlignment: widget.crossAxisAlignment,
                 children: [
                   Text(
-                    text,
+                    widget.text,
                     style: theme.textTheme.headline1,
                   ),
-                  SizedBox(height: spaceBeforeWidget),
-                  widget
+                  SizedBox(height: widget.spaceBeforeWidget),
+                  widget.widget
                 ],
               ),
             ),

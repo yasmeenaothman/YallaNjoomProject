@@ -34,6 +34,7 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
       return ScaffoldWithBackground(
           body: Column(
         children: [
+          //TODO: WE HAVE TO ADD CANCEL BUTTON HERE TO NAVIGATE TO THE PREVIOUS PAGE..!
           SizedBox(
             height: 260.h,
           ),
@@ -64,8 +65,6 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
                       : ChildModel.fromMap(querySnapshot.docs[0].data())
                   : null;
 
-              //TODO: If the userCode was ture then go to ParentsHomePage or ChildHomePage
-              //TODO: If the userCode was false then show CustomDialog
               if (currentUser != null) {
                 if (currentUser.isParent) {
                   provider.initUser(currentUser.toMap());

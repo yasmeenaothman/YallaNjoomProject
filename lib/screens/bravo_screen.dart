@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/models/user_model.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
@@ -10,53 +13,90 @@ import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
 import '../models/my_flutter_app.dart';
 import '../routers/app_router.dart';
 
-class BravoScreen extends StatelessWidget {
+class BravoScreen extends StatefulWidget {
   static const String routeName = 'BravoScreen';
 
-  const BravoScreen({Key? key, required this.isPronunciationWidget})
+  const BravoScreen(
+      {Key? key, required this.isPronunciationWidget, required this.onPressed})
       : super(key: key);
   final bool isPronunciationWidget;
+  final Function() onPressed;
+
+  @override
+  State<BravoScreen> createState() => _BravoScreenState();
+}
+
+class _BravoScreenState extends State<BravoScreen>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeOutExpo);
+    controller.forward();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bravo_background.png'),
-              fit: BoxFit.fitHeight)),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 50.h,
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            ScaleTransition(
+              child: Image.asset(
+                'assets/images/bravo_background.png',
+                fit: BoxFit.fitHeight,
               ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.w),
-                  child: DefaultCirculeAvatar(
-                    onTap: () => AppRouter.router
-                        .pushNamedWithReplacementFunction(
-                            ChildHomeScreen.routeName),
-                    iconData: MyFlutterApp.cancel,
-                  )),
-              Expanded(
-                child: BravoDialog(
-                  imagePath: 'assets/images/lion.png',
-                  widget:
-                      isPronunciationWidget ? bravoBottomWidget(theme) : null,
+              scale: Tween<double>(begin: 1, end: 1.5).animate(animation),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 50.h,
                 ),
-              )
-            ],
-          ),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.w),
+                    child: DefaultCirculeAvatar(
+                      onTap: () => AppRouter.router
+                          .pushNamedWithReplacementFunction(
+                              ChildHomeScreen.routeName,
+                              Provider.of<FirestoreProvider>(context,
+                                      listen: false)
+                                  .userModel as ChildModel),
+                      iconData: MyFlutterApp.cancel,
+                    )),
+                Expanded(
+                  child: BravoDialog(
+                    imagePath: 'assets/images/lion.png',
+                    widget: bravoBottomWidget(
+                        theme, 'هيا ننتقل للمثال التالي', widget.onPressed),
+                    isPronunciationWidget: widget.isPronunciationWidget,
+                  ),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Column bravoBottomWidget(ThemeData theme) => Column(
+  Column bravoBottomWidget(
+          ThemeData theme, String text, Function() onPressed) =>
+      Column(
         children: [
           SizedBox(
             height: 30.h,
@@ -64,7 +104,7 @@ class BravoScreen extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              'هيا ننتقل للحرف التالي',
+              text,
               style: theme.textTheme.headline1!.copyWith(color: Colors.white),
             ),
           ),
@@ -72,12 +112,7 @@ class BravoScreen extends StatelessWidget {
             height: 40.h,
           ),
           GestureDetector(
-            onTap: () {
-              AppRouter.router.pushNamedWithReplacementFunction(
-                LetterCardScreen.routeName,
-              );
-              //TODO: go to the next letter
-            },
+            onTap: onPressed,
             child: Image.asset(
               'assets/images/yellow_arrow.png',
               width: 55.w,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +15,19 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
   @override
   void initState() {
     Provider.of<FirestoreProvider>(context, listen: false).initUsersCodes();
+    controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+    controller.repeat();
     Timer(const Duration(seconds: 3), () {
       AppRouter.router
           .pushNamedWithReplacementFunction(DoYouHaveAccScreen.routeName);
@@ -26,14 +36,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ScaffoldWithBackground(
         body: Center(
-      child: Image.asset(
-        'assets/images/logo.png',
-        width: 222.51.w,
-        height: 203.79.h,
-        fit: BoxFit.cover,
+      child: ScaleTransition(
+        scale: Tween<double>(begin: 0, end: 1).animate(animation),
+        child: RotationTransition(
+          turns: Tween<double>(begin: 0, end: 1).animate(animation),
+          child: Image.asset(
+            'assets/images/logo.png',
+            width: 222.51.w,
+            height: 203.79.h,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     ));
   }

@@ -4,9 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BravoDialog extends StatelessWidget {
   final String imagePath;
   final Widget? widget;
+  final bool isPronunciationWidget;
   const BravoDialog({
     Key? key,
     required this.imagePath,
+    required this.isPronunciationWidget,
     this.widget,
   }) : super(key: key);
 
@@ -21,7 +23,7 @@ class BravoDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 40, left: 20, right: 30),
             width: 325,
-            height: widget == null ? 149.h : 258.h,
+            height: 258.h,
             decoration: BoxDecoration(
               color: theme.primaryColor,
               borderRadius: BorderRadius.circular(20),
@@ -36,7 +38,7 @@ class BravoDialog extends StatelessWidget {
                     children: [
                       const Text('أحسنت'),
                       Text(
-                        widget == null ? 'الإجابة صحيحة' : 'النطق صحيح',
+                        !isPronunciationWidget ? 'الإجابة صحيحة' : 'النطق صحيح',
                       ),
                       widget ?? const SizedBox(),
                     ],

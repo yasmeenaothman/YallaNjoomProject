@@ -1,3 +1,4 @@
+import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
@@ -20,45 +21,89 @@ class NumbersScreen extends StatelessWidget {
       body: Directionality(
         textDirection: TextDirection.ltr,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-          child: ListView.separated(
-            padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () {
-                AppRouter.router.pushNamedWithReplacementFunction(
-                    DisplayNumberScreen.routeName, 'assets/images/one.png');
-              },
-              child: DefaultStackWidget(
-                imagePath:
-                    'assets/images/1_flower.png', // 1_flower.png for number
-                btn: DefaultElevatedButton(
-                  onPressed: () {
-                    AppRouter.router.pushNamedWithReplacementFunction(
-                        DisplayNumberScreen.routeName, 'assets/images/one.png');
-                  },
-                  //const Color(0xFFFFA4AC) number color
-                  bgColor: const Color(0xFFFFA4AC), // letter color
-                  child: DefaultRowWidget(
-                    language: DummyData.dummyData.numbers[index],
-                  ),
-                  size: Size(double.infinity, 75.h),
-                  boxShadow: BoxShadow(
-                    offset: Offset(3, 6.h),
-                    blurRadius: 9.r,
-                    color: const Color(0x4D074785),
-                  ),
-                  radius: 20.r,
-                  top: 0,
-                ),
-                bottom: 35,
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
+            child: AnimationList(
+              padding: EdgeInsets.only(top: 50.h),
+              children: DummyData.dummyData.numbers
+                  .map(
+                    (e) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: 50.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          AppRouter.router.pushNamedWithReplacementFunction(
+                              DisplayNumberScreen.routeName,
+                              'assets/images/one.png');
+                        },
+                        child: DefaultStackWidget(
+                          imagePath:
+                              'assets/images/1_flower.png', // 1_flower.png for number
+                          btn: DefaultElevatedButton(
+                            onPressed: () {
+                              AppRouter.router.pushNamedWithReplacementFunction(
+                                  DisplayNumberScreen.routeName,
+                                  'assets/images/one.png');
+                            },
+                            //const Color(0xFFFFA4AC) number color
+                            bgColor: const Color(0xFFFFA4AC), // letter color
+                            child: DefaultRowWidget(
+                              language: e,
+                            ),
+                            size: Size(double.infinity, 75.h),
+                            boxShadow: BoxShadow(
+                              offset: Offset(3, 6.h),
+                              blurRadius: 9.r,
+                              color: const Color(0x4D074785),
+                            ),
+                            radius: 20.r,
+                            top: 0,
+                          ),
+                          bottom: 35,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            )
+
+            // ListView.separated(
+            //   padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
+            //   itemBuilder: (context, index) => GestureDetector(
+            //     onTap: () {
+            //       AppRouter.router.pushNamedWithReplacementFunction(
+            //           DisplayNumberScreen.routeName, 'assets/images/one.png');
+            //     },
+            //     child: DefaultStackWidget(
+            //       imagePath:
+            //           'assets/images/1_flower.png', // 1_flower.png for number
+            //       btn: DefaultElevatedButton(
+            //         onPressed: () {
+            //           AppRouter.router.pushNamedWithReplacementFunction(
+            //               DisplayNumberScreen.routeName, 'assets/images/one.png');
+            //         },
+            //         //const Color(0xFFFFA4AC) number color
+            //         bgColor: const Color(0xFFFFA4AC), // letter color
+            //         child: DefaultRowWidget(
+            //           language: DummyData.dummyData.numbers[index],
+            //         ),
+            //         size: Size(double.infinity, 75.h),
+            //         boxShadow: BoxShadow(
+            //           offset: Offset(3, 6.h),
+            //           blurRadius: 9.r,
+            //           color: const Color(0x4D074785),
+            //         ),
+            //         radius: 20.r,
+            //         top: 0,
+            //       ),
+            //       bottom: 35,
+            //     ),
+            //   ),
+            //   separatorBuilder: (context, index) => SizedBox(
+            //     height: 100.h,
+            //   ),
+            //   itemCount: DummyData.dummyData.numbers.length,
+            // ),
+
             ),
-            separatorBuilder: (context, index) => SizedBox(
-              height: 100.h,
-            ),
-            itemCount: DummyData.dummyData.numbers.length,
-          ),
-        ),
       ),
     );
   }

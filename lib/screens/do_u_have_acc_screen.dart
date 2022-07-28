@@ -31,8 +31,7 @@ class DoYouHaveAccScreen extends StatelessWidget {
               },
               confirmButtonText: 'نعم',
               cancelButtonFun: () {
-                AppRouter.router
-                    .pushNamedWithReplacementFunction(UserTypeScreen.routeName);
+                AppRouter.router.pushNamedFunction(UserTypeScreen.routeName);
               },
               cancelButtonText: 'لا',
             ),

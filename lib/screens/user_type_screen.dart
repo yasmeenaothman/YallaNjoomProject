@@ -15,9 +15,34 @@ import '../widgets/confirm_button_widget.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/default_circular_avatar.dart';
 
-class UserTypeScreen extends StatelessWidget {
+class UserTypeScreen extends StatefulWidget {
   const UserTypeScreen({Key? key}) : super(key: key);
   static const String routeName = 'UserTypeScreen';
+
+  @override
+  State<UserTypeScreen> createState() => _UserTypeScreenState();
+}
+
+class _UserTypeScreenState extends State<UserTypeScreen>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.linear);
+    controller.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +122,6 @@ class UserTypeScreen extends StatelessWidget {
                             ),
                             ArthOperationWidget(
                               onPressed: (result) async {
-                                //TODO: Do the verfication operation
                                 if (result) {
                                   AppRouter.router.pop();
                                   String code = await generateNewCode(context);
@@ -190,36 +214,43 @@ class UserTypeScreen extends StatelessWidget {
       required Color bgColor,
       required String text,
       required Function() onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Container(
-            width: 180.w,
-            height: 180.h,
-            child: Image.asset(
-              'assets/images/' + imageName,
-            ),
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: Theme.of(context).primaryColor,
-                    offset: Offset(0.w, 3.h),
-                    blurRadius: 6.r)
-              ],
-              color: bgColor,
-              shape: BoxShape.circle,
-            ),
+    return SlideTransition(
+      position: Tween<Offset>(begin: const Offset(-3, 0), end: Offset.zero)
+          .animate(animation),
+      child: RotationTransition(
+        turns: Tween<double>(begin: 0, end: 2).animate(animation),
+        child: GestureDetector(
+          onTap: onTap,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                width: 180.w,
+                height: 180.h,
+                child: Image.asset(
+                  'assets/images/' + imageName,
+                ),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context).primaryColor,
+                        offset: Offset(0.w, 3.h),
+                        blurRadius: 6.r)
+                  ],
+                  color: bgColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                child: Text(
+                  text,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              )
+            ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.headline1,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

@@ -18,6 +18,7 @@ import 'package:yalla_njoom/screens/edit_child_profile_screen.dart';
 import 'package:yalla_njoom/screens/enter_your_code_screen.dart';
 import 'package:yalla_njoom/screens/examples_screen.dart';
 import 'package:yalla_njoom/screens/exercises_screen.dart';
+import 'package:yalla_njoom/screens/games_screen.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
 import 'package:yalla_njoom/screens/music_screen.dart';
@@ -27,6 +28,7 @@ import 'package:yalla_njoom/screens/parents_home_screen.dart';
 import 'package:yalla_njoom/screens/splash_screen.dart';
 import 'package:yalla_njoom/screens/user_type_screen.dart';
 import 'package:yalla_njoom/screens/videos_screen.dart';
+import 'package:yalla_njoom/screens/voice_screen.dart';
 import 'screens/example_numbers_bg.dart';
 
 void main() {
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
       theme: _buildThemeData(),
       navigatorKey: AppRouter.router.routerKey,
       routes: {
-        '/': (context) => const FirebaseConfiguration(),
+        '/': (context) => FirebaseConfiguration(),
         MyHomePage.routeName: (context) => const MyHomePage(),
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
         AddChildInfoScreen.routeName: (context) => AddChildInfoScreen(),
@@ -69,7 +71,8 @@ class MyApp extends StatelessWidget {
         OperationScreen.routeName: (context) => const OperationScreen(),
         ExampleNumbers.routeName: (context) => const ExampleNumbers(),
         ParentsHomeScreen.routeName: (context) => const ParentsHomeScreen(),
-        VideosScreen.routeName: (context) => const VideosScreen()
+        VideosScreen.routeName: (context) => const VideosScreen(),
+        GamesScreen.routeName: (context) => GamesScreen()
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;
@@ -77,7 +80,8 @@ class MyApp extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           if (name == BravoScreen.routeName) {
             return BravoScreen(
-              isPronunciationWidget: arguments as bool,
+              isPronunciationWidget: (arguments as List)[0] as bool,
+              onPressed: arguments[1] as Function(),
             );
           } else if (name == DisplayNumberScreen.routeName) {
             return DisplayNumberScreen(imageUrl: arguments as String);

@@ -1,3 +1,4 @@
+import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -22,49 +23,95 @@ class LettersScreen extends StatelessWidget {
       body: Directionality(
         textDirection: TextDirection.ltr,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-          child: ListView.separated(
-            padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () {
-                Provider.of<FirestoreProvider>(context, listen: false)
-                    .setSelectedLanguage(DummyData.dummyData.letters[index]);
-                AppRouter.router.pushNamedWithReplacementFunction(
-                    LetterCardScreen.routeName);
-              },
-              child: DefaultStackWidget(
-                //TODO: use the example here
-                imagePath: 'assets/images/lion.png', // 1_flower.png for number
-                btn: DefaultElevatedButton(
-                  onPressed: () {
-                    Provider.of<FirestoreProvider>(context, listen: false)
-                        .setSelectedLanguage(
-                            DummyData.dummyData.letters[index]);
-                    AppRouter.router.pushNamedWithReplacementFunction(
-                        LetterCardScreen.routeName);
-                  },
-                  //const Color(0xFFFFA4AC) number color
-                  bgColor: const Color(0xFF074785), // letter color
-                  child: DefaultRowWidget(
-                    language: DummyData.dummyData.letters[index],
-                  ),
-                  size: Size(double.infinity, 75.h),
-                  boxShadow: BoxShadow(
-                      offset: Offset(3, 6.h),
-                      blurRadius: 9.r,
-                      color: const Color(0x4D074785)),
-                  radius: 20.r,
-                  top: 0,
-                ),
-                bottom: 35,
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
+            child: AnimationList(
+              padding: EdgeInsets.only(top: 50.h),
+              children: DummyData.dummyData.letters
+                  .map(
+                    (e) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: 50.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          Provider.of<FirestoreProvider>(context, listen: false)
+                              .setSelectedLanguage(e);
+                          AppRouter.router.pushNamedWithReplacementFunction(
+                              LetterCardScreen.routeName);
+                        },
+                        child: DefaultStackWidget(
+                          //TODO: use the example here
+                          imagePath:
+                              'assets/images/lion.png', // 1_flower.png for number
+                          btn: DefaultElevatedButton(
+                            onPressed: () {
+                              Provider.of<FirestoreProvider>(context,
+                                      listen: false)
+                                  .setSelectedLanguage(e);
+                              AppRouter.router.pushNamedWithReplacementFunction(
+                                  LetterCardScreen.routeName);
+                            },
+                            //const Color(0xFFFFA4AC) number color
+                            bgColor: const Color(0xFF074785), // letter color
+                            child: DefaultRowWidget(
+                              language: e,
+                            ),
+                            size: Size(double.infinity, 75.h),
+                            boxShadow: BoxShadow(
+                                offset: Offset(3, 6.h),
+                                blurRadius: 9.r,
+                                color: const Color(0x4D074785)),
+                            radius: 20.r,
+                            top: 0,
+                          ),
+                          bottom: 35,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            )
+            // ListView.separated(
+            //   padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
+            //   itemBuilder: (context, index) => GestureDetector(
+            //     onTap: () {
+            //       Provider.of<FirestoreProvider>(context, listen: false)
+            //           .setSelectedLanguage(DummyData.dummyData.letters[index]);
+            //       AppRouter.router.pushNamedWithReplacementFunction(
+            //           LetterCardScreen.routeName);
+            //     },
+            //     child: DefaultStackWidget(
+            //       //TODO: use the example here
+            //       imagePath: 'assets/images/lion.png', // 1_flower.png for number
+            //       btn: DefaultElevatedButton(
+            //         onPressed: () {
+            //           Provider.of<FirestoreProvider>(context, listen: false)
+            //               .setSelectedLanguage(
+            //                   DummyData.dummyData.letters[index]);
+            //           AppRouter.router.pushNamedWithReplacementFunction(
+            //               LetterCardScreen.routeName);
+            //         },
+            //         //const Color(0xFFFFA4AC) number color
+            //         bgColor: const Color(0xFF074785), // letter color
+            //         child: DefaultRowWidget(
+            //           language: DummyData.dummyData.letters[index],
+            //         ),
+            //         size: Size(double.infinity, 75.h),
+            //         boxShadow: BoxShadow(
+            //             offset: Offset(3, 6.h),
+            //             blurRadius: 9.r,
+            //             color: const Color(0x4D074785)),
+            //         radius: 20.r,
+            //         top: 0,
+            //       ),
+            //       bottom: 35,
+            //     ),
+            //   ),
+            //   separatorBuilder: (context, index) => SizedBox(
+            //     height: 100.h,
+            //   ),
+            //   itemCount: DummyData.dummyData.letters.length,
+            // ),
+
             ),
-            separatorBuilder: (context, index) => SizedBox(
-              height: 100.h,
-            ),
-            itemCount: DummyData.dummyData.letters.length,
-          ),
-        ),
       ),
     );
   }
