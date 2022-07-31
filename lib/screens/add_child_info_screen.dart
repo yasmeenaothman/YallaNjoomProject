@@ -76,7 +76,7 @@ class AddChildInfoScreen extends StatelessWidget {
                     if (currentUser != null) {
                       if (!currentUser.isParent) {
                         firestoreProvider.addChildToParent(
-                            firestoreProvider.userModel.code!, {
+                            firestoreProvider.userModel!.code!, {
                           ...currentUser.toMap(),
                           FirestoreHelper.userNameKey: childName,
                           FirestoreHelper.nameSearchKey:

@@ -13,7 +13,7 @@ import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
 import '../models/dummy_data.dart';
 import '../models/my_flutter_app.dart';
-import '../widgets/default_kid_card.dart';
+import '../widgets/default_child_card.dart';
 
 class ParentsHomeScreen extends StatefulWidget {
   const ParentsHomeScreen({
@@ -36,7 +36,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
       builder: (context, firestoreProvider, x) {
         return ScaffoldWithBackground(
             drawer: DrawerWidget(
-              userModel: firestoreProvider.userModel,
+              userModel: firestoreProvider.userModel!,
             ),
             appBarIsVisible: true,
             floatingActionButton: _buildFabWidget(theme),
@@ -81,7 +81,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
                 setState(() {});
                 print(query);
                 firestoreProvider.getNamesDetailList(
-                    query, firestoreProvider.userModel.code);
+                    query, firestoreProvider.userModel!.code);
               },
               maxLines: 1,
               decoration: InputDecoration(
@@ -153,7 +153,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
     return Expanded(
       child: ListView.separated(
         itemBuilder: (context, index) {
-          return DefaultKidCard(
+          return DefaultChildCard(
               childModel: firestoreProvider.parentsChildren[index]);
         },
         separatorBuilder: (context, index) => SizedBox(
@@ -168,7 +168,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
     return Expanded(
       child: ListView.separated(
           itemBuilder: (context, index) {
-            return DefaultKidCard(
+            return DefaultChildCard(
                 childModel: firestoreProvider.searchResutl[index]);
           },
           separatorBuilder: (context, index) => SizedBox(

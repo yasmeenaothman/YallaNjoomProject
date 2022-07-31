@@ -7,7 +7,6 @@ import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/edit_child_profile_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
 
-import '../models/kid.dart';
 import '../models/my_flutter_app.dart';
 
 class DrawerWidget extends StatelessWidget {

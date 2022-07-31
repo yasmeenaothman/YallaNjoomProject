@@ -23,10 +23,10 @@ class MusicScreen extends StatelessWidget {
             ),
             DefaultCirculeAvatar(
               onTap: () async {
-                AppRouter.router
-                    .pushNamedWithReplacementFunction(LettersScreen.routeName);
                 await provider.audioPlayer.stop();
                 await provider.setIsSongPlaying(false);
+                AppRouter.router
+                    .pushNamedWithReplacementFunction(LettersScreen.routeName);
               },
             ),
             SizedBox(

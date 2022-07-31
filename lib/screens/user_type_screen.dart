@@ -32,7 +32,6 @@ class _UserTypeScreenState extends State<UserTypeScreen>
   void initState() {
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
-
     animation = CurvedAnimation(parent: controller, curve: Curves.linear);
     controller.forward();
     super.initState();
@@ -77,12 +76,11 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                                       imageUrl: 'assets/images/kid_img.png',
                                       code: code);
                                   fireStoreProvider.addUser(childModel.toMap());
-                                  fireStoreProvider
-                                      .initUser(childModel.toMap());
+
                                   AppRouter.router
                                       .pushNamedWithReplacementFunction(
-                                          ChildHomeScreen.routeName,
-                                          childModel);
+                                    ChildHomeScreen.routeName,
+                                  );
                                 },
                               )
                             ],

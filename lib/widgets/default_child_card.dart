@@ -5,9 +5,9 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_tracker_screen.dart';
 import 'package:yalla_njoom/widgets/image_with_border.dart';
 
-class DefaultKidCard extends StatelessWidget {
+class DefaultChildCard extends StatelessWidget {
   ChildModel childModel;
-  DefaultKidCard({Key? key, required this.childModel}) : super(key: key);
+  DefaultChildCard({Key? key, required this.childModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

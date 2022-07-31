@@ -75,7 +75,7 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
                   );
                 } else {
                   AppRouter.router.pushNamedWithReplacementFunction(
-                      ChildHomeScreen.routeName, currentUser as ChildModel);
+                      ChildHomeScreen.routeName);
                 }
               } else {
                 showDialog(
