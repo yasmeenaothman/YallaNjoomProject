@@ -104,6 +104,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/helpers/shared_preference_helper.dart';
+import 'package:yalla_njoom/screens/test.dart';
 
 import 'providers/firestore_provider.dart';
 import 'routers/app_router.dart';
@@ -155,7 +156,7 @@ class MyApp extends StatelessWidget {
       theme: _buildThemeData(),
       navigatorKey: AppRouter.router.routerKey,
       routes: {
-        '/': (context) => const FirebaseConfiguration(),
+        '/': (context) => FirebaseConfiguration(),
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
         AddChildInfoScreen.routeName: (context) => AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),
