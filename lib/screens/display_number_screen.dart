@@ -121,8 +121,9 @@ import 'bravo_screen.dart';
 
 class DisplayNumberScreen extends StatefulWidget {
   static String routeName = 'DisplayNumberScreen';
-  DisplayNumberScreen({Key? key, required this.imageUrl}) : super(key: key);
-  String imageUrl;
+  DisplayNumberScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<DisplayNumberScreen> createState() => _DisplayNumberScreenState();
@@ -278,14 +279,19 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                     ),
                   ),
                   PositionedTransition(
-                      rect: RelativeRectTween(
-                        begin: RelativeRect.fromLTRB(0, 250.h, 0, 0),
-                        end: RelativeRect.fromLTRB(0, 300.h, 0, 0),
-                      ).animate(CurvedAnimation(
-                        parent: imageController,
-                        curve: Curves.easeIn,
-                      )),
-                      child: Image.asset(widget.imageUrl))
+                    rect: RelativeRectTween(
+                      begin: RelativeRect.fromLTRB(0, 250.h, 0, 0),
+                      end: RelativeRect.fromLTRB(0, 300.h, 0, 0),
+                    ).animate(CurvedAnimation(
+                      parent: imageController,
+                      curve: Curves.easeIn,
+                    )),
+                    child: Center(
+                        child: Image.asset(
+                      provider.selectedLanguage.shape!,
+                      color: const Color(0xFF034C1B),
+                    )), //widget.imageUrl
+                  )
                 ],
               ),
             ));

@@ -122,6 +122,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_redirect/store_redirect.dart';
 import 'package:yalla_njoom/models/dummy_data.dart';
 import 'package:yalla_njoom/models/example.dart';
@@ -134,6 +135,13 @@ import '../helpers/shared_preference_helper.dart';
 import '../models/game.dart';
 import '../models/language.dart';
 import '../models/voice_model.dart';
+import '../routers/app_router.dart';
+import '../screens/bravo_screen.dart';
+import '../screens/display_number_screen.dart';
+import '../screens/example_numbers_bg.dart';
+import '../screens/examples_screen.dart';
+import '../screens/letter_card_screen.dart';
+import '../widgets/toast_dialog_widget.dart';
 
 class FirestoreProvider extends ChangeNotifier {
   List<dynamic> codes = [];
@@ -146,15 +154,15 @@ class FirestoreProvider extends ChangeNotifier {
   int numOfExampleSol = 0;
   int numOfStar = 0;
   List<int> allStarNum = [];
-  List<dynamic> parentsChildren = [];
-  List<dynamic> searchResutl = [];
   //late File imageFile;
   //List<String> listOfStarAndLockedForSelectedLetter = [];
   /// new ////
-  List<Example> lettersExample =
-      []; //DummyData.dummyData.examples.where((element) => element.isLetterExample).toList();
-  List<Example> numbersExample =
-      []; //DummyData.dummyData.examples.where((element) => !element.isLetterExample).toList();
+  List<Example> lettersExample = DummyData.dummyData.examples
+      .where((element) => element.isLetterExample)
+      .toList(); //[]
+  List<Example> numbersExample = DummyData.dummyData.examples
+      .where((element) => !element.isLetterExample)
+      .toList(); //[]
   List<Game> games =
       []; //DummyData.dummyData.games; //DummyData.dummyData.games;
   Game? selectedGame;
@@ -164,43 +172,22 @@ class FirestoreProvider extends ChangeNotifier {
   AudioPlayer audioPlayer = AudioPlayer();
 
   /// /// ///
-  List<Letter> letters = [
-    Letter(
-      name: 'حرف الألف',
-      sound: 'assets/audio/music.mp3',
-      song: 'assets/audio/music.mp3',
-      shape: 'أ',
-      id_example: 'أ',
-      isLocked: false,
-    ),
-    Letter(
-      name: 'حرف الباء',
-      sound: 'assets/audio/music.mp3',
-      song: 'assets/audio/music.mp3',
-      shape: 'ب',
-      id_example: 'ب',
-      //imageUrl: 'assets/images/باء.png',
-      isLocked: true,
-    ),
-    Letter(
-      name: 'حرف التاء',
-      sound: 'assets/audio/music.mp3',
-      song: 'assets/audio/music.mp3',
-      shape: 'ت',
-      id_example: 'ت',
-      //imageUrl: 'assets/images/ألف.png',
-      isLocked: true,
-    ),
-  ];
-//DummyData.dummyData.letters;//TODO:take this from firebase not from dummy
-  List<Number> numbers =
-      []; //DummyData.dummyData.numbers;//TODO:take this from firebase not from dummy
-  List<Example> examples =
-      []; //DummyData.dummyData.examples;//TODO:take this from firebase not from dummy
+  List<Letter> letters = DummyData
+      .dummyData.letters; //TODO:take this from firebase not from dummy// [];
+  List<Number> numbers = DummyData
+      .dummyData.numbers; //TODO:take this from firebase not from dummy //[];
+  List<Example> examples = DummyData
+      .dummyData.examples; //TODO:take this from firebase not from dummy //[];
   List<Example> examplesWithoutSelected = [];
+  List<Example> letterExamplesWithoutSelected = [];
+  List<Example> numberExamplesWithoutSelected = [];
   //List<Example> examplesWithoutSelected= DummyData.dummyData.examples.getRange(0,DummyData.dummyData.examples.length).toList();
   Uint8List? audiobytes;
   late Language selectedLanguage;
+
+  List<dynamic> parentsChildren = [];
+  List<dynamic> searchResutl = [];
+
   initUsersCodes() async {
     QuerySnapshot<Map<String, dynamic>> allUsersQuerySnapshot =
         await FirestoreHelper.firestoreHelper.getAllUsers();
@@ -224,23 +211,14 @@ class FirestoreProvider extends ChangeNotifier {
         ? ChildModel.fromMap(userMap)
         : ParentModel.fromMap(userMap);
     if (userMap[FirestoreHelper.isParentKey] == false) {
-      addAllLettersToFirestore();
-
-      /// this for one time
-      addAllNumbersToFirestore();
-
-      /// this for one time
-      addExamplesToFirestore();
-
-      /// this for one time
-      addAllGamesToFirestore();
-
-      /// this for one time
-      // getAllStarNumFRomSharedPreference();
-      //getAllExamplesFromFirestore();
+      //addAllNumbersToFirestore(); /// this for one time
+      //  addAllGamesToFirestore();/// this for one time
+      getAllLettersFromFirestore();
+      getAllNumbersFromFirestore();
+      getAllStarNumFRomSharedPreference();
+      getAllExamplesFromFirestore();
       getAllOPenGamesForUser();
     }
-    //userModel!.isParent!?null:getAllStarNumFRomSharedPreference();
     notifyListeners();
   }
 
@@ -265,7 +243,7 @@ class FirestoreProvider extends ChangeNotifier {
             0.80
         ? numOfStar + 2
         : numOfStar + 1;
-    await setOnSharedPreference(selectedLanguage as Letter, numOfStar);
+    await setOnSharedPreference(selectedLanguage, numOfStar);
     notifyListeners();
     print('تم اضافة الصوت بنجاح');
   }
@@ -290,7 +268,8 @@ class FirestoreProvider extends ChangeNotifier {
             ? numOfStar + 1
             : numOfStar
         : numOfStar;
-    await setOnSharedPreference(selectedLanguage as Letter, numOfStar);
+    await setOnSharedPreference(
+        selectedLanguage, numOfStar); //selectedLanguage as Letter
     notifyListeners();
     print('تم تعديل الصوت');
   }
@@ -306,7 +285,7 @@ class FirestoreProvider extends ChangeNotifier {
                     (element) => element.exampleId == selectedLanguage.shape)
                 .numOfSolutions ==
             3
-        ? await setOnSharedPreference(selectedLanguage as Letter, numOfStar + 1)
+        ? await setOnSharedPreference(selectedLanguage, numOfStar + 1)
         : null;
     //int.parse(listOfStarAndLockedForSelectedLetter[1]) + 1
     //setOnSharedPreference(selectedLanguage as Letter,int.parse(listOfStarAndLockedForSelectedLetter[1]) + 1);
@@ -343,8 +322,8 @@ class FirestoreProvider extends ChangeNotifier {
       await FirestoreHelper.firestoreHelper
           .addExampleToFirestore(element.toMap());
     }
-    notifyListeners();
     getAllExamplesFromFirestore();
+    notifyListeners();
   }
 
   getAllExamplesFromFirestore() async {
@@ -404,9 +383,15 @@ class FirestoreProvider extends ChangeNotifier {
   //////////////////////////////////////////
   setSelectedLanguage(Language selectedLanguage) {
     this.selectedLanguage = selectedLanguage;
-    examplesWithoutSelected = examples.getRange(0, examples.length).toList();
-    examplesWithoutSelected
-        .removeWhere((element) => element.id == selectedLanguage.id_example);
+    letterExamplesWithoutSelected =
+        lettersExample.getRange(0, lettersExample.length).toList();
+    numberExamplesWithoutSelected =
+        numbersExample.getRange(0, numbersExample.length).toList();
+    letterExamplesWithoutSelected.removeWhere(
+        (element) => element.exampleId == selectedLanguage.exampleId);
+    numberExamplesWithoutSelected.removeWhere(
+        (element) => element.exampleId == selectedLanguage.exampleId);
+
     print('${examplesWithoutSelected.length} result .....');
     //examplesWithoutSelected= DummyData.dummyData.examples.getRange(0,DummyData.dummyData.examples.length).toList();
     checkIfThereSolutionsToSelectedLang();
@@ -464,7 +449,9 @@ class FirestoreProvider extends ChangeNotifier {
       //SharedPreferenceHelper.sharedHelper.putLetter(element.name!, [element.isLocked.toString(),'0']);
       await SharedPreferenceHelper.sharedHelper.putLetter(element.name!, 0);
     }
-    // getAllStarNumFRomSharedPreference();
+    for (var element in numbers) {
+      await SharedPreferenceHelper.sharedHelper.putLetter(element.name!, 0);
+    }
     notifyListeners();
   }
 
@@ -474,23 +461,28 @@ class FirestoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // getAllStarNumFRomSharedPreference() async {
-  //   //TODO: do same thing(update to coins) with num and vidio
-  //   allStarNum = letters
-  //       .map((e) => SharedPreferenceHelper.sharedHelper.getLetter(e.name!)!)
-  //       .toList();
-  //   /*(userModel as ChildModel).coins = (userModel as ChildModel).coins! + allStarNum.reduce((value, element) => value+element);
-  //   updateChildInfo(userModel as ChildModel);*/
-  //   updateKidCoins(allStarNum.reduce((value, element) => value + element));
-  //   //print('coins equal ${(userModel as ChildModel) .coins!}');
-  //   notifyListeners();
-  // }
+  getAllStarNumFRomSharedPreference() async {
+    //TODO: do same thing(update to coins) with num and vidio
+    allStarNum = letters
+        .map((e) => SharedPreferenceHelper.sharedHelper.getLetter(e.name!)!)
+        .toList();
+    allStarNum.addAll(numbers
+        .map((e) => SharedPreferenceHelper.sharedHelper.getLetter(e.name!)!)
+        .toList());
+    notifyListeners();
+    /*(userModel as ChildModel).coins = (userModel as ChildModel).coins! + allStarNum.reduce((value, element) => value+element);
+    updateChildInfo(userModel as ChildModel);*/
+    updateKidCoins(
+        allStarNum.sum); //allStarNum.fold(0,(value, element) => value+element
+    //print('coins equal ${(userModel as ChildModel) .coins!}');
+    notifyListeners();
+  }
 
-  setOnSharedPreference(Letter letter, int stars) async {
+  setOnSharedPreference(Language language, int stars) async {
     //SharedPreferenceHelper.sharedHelper.putLetter(letter.name!, [letter.isLocked.toString(),stars.toString()]);
-    await SharedPreferenceHelper.sharedHelper.putLetter(letter.name!, stars);
-    // getAllStarNumFRomSharedPreference();
-    getFromSharedPreference(letter.name!);
+    await SharedPreferenceHelper.sharedHelper.putLetter(language.name!, stars);
+    getAllStarNumFRomSharedPreference();
+    getFromSharedPreference(language.name!);
     notifyListeners();
   }
 
@@ -505,13 +497,13 @@ class FirestoreProvider extends ChangeNotifier {
           .addLettersToFirestore(element.toMap());
     }
     notifyListeners();
-    // getAllLettersFromFirestore();
+    getAllLettersFromFirestore();
   }
 
-  // getAllLettersFromFirestore() async {
-  //   letters = await FirestoreHelper.firestoreHelper.getAllLetters();
-  //   notifyListeners();
-  // }
+  getAllLettersFromFirestore() async {
+    letters = await FirestoreHelper.firestoreHelper.getAllLetters();
+    notifyListeners();
+  }
 
   addAllNumbersToFirestore() async {
     for (var element in DummyData.dummyData.numbers) {
@@ -519,13 +511,13 @@ class FirestoreProvider extends ChangeNotifier {
           .addNumbersToFirestore(element.toMap());
     }
     notifyListeners();
-    // getAllNumbersFromFirestore();
+    getAllNumbersFromFirestore();
   }
 
-  // getAllNumbersFromFirestore() async {
-  //   numbers = await FirestoreHelper.firestoreHelper.getAllNumbers();
-  //   notifyListeners();
-  // }
+  getAllNumbersFromFirestore() async {
+    numbers = await FirestoreHelper.firestoreHelper.getAllNumbers();
+    notifyListeners();
+  }
 
   checkGame(Function function) {
     if (!isGameOpen(selectedGame!)) {
@@ -562,18 +554,52 @@ class FirestoreProvider extends ChangeNotifier {
     return openGames.contains(game);
   }
 
-  /*generateNumOfStar(Language language){
-    if(allVoices.any((element) => element.langId==language.name)){
-      numOfStar = allVoices.firstWhere((element) => element.langId==language.name).percentageMatch!>=0.80?numOfStar+2:numOfStar+1;
-      notifyListeners();
+  check(int index, context, List images) async {
+    if (images[0][index] == images[1]) {
+      AppRouter.router.pushNamedWithReplacementFunction(BravoScreen.routeName, [
+        false,
+        () {
+          AppRouter.router.pushNamedWithReplacementFunction(
+              selectedLanguage is Letter
+                  ? ExamplesScreen.routeName
+                  : ExampleNumbers.routeName);
+        },
+        () {
+          AppRouter.router.pushNamedWithReplacementFunction(
+              selectedLanguage is Letter
+                  ? LetterCardScreen.routeName
+                  : DisplayNumberScreen.routeName);
+        },
+      ]);
+      numOfExampleSol == 0
+          ? await addSolution(Solution(
+                  solutionId: '1',
+                  userCode: userModel!.code,
+                  exampleId: selectedLanguage.exampleId)
+              .toMap())
+          : await updateSolution(Solution(
+              solutionId: '1',
+              userCode: userModel!.code,
+              exampleId: selectedLanguage.exampleId));
+
+      print(numOfExampleSol);
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          barrierColor: Colors.black,
+          builder: (ctx) {
+            return Column(
+              children: [
+                SizedBox(
+                  height: 260.h,
+                ),
+                const ToastDialogWidget()
+              ],
+            );
+          });
     }
-    else if(allSolutions.any((element) => element.exampleId==language.shape)){
-      allSolutions.firstWhere((element) => element.exampleId==language.shape).numOfSolutions ==3?numOfStar++:null;
-      notifyListeners();
-    }
-    print('numOfStar = $numOfStar' );
-   // return numOfStar;
-  }*/
+  }
 
   getParentsChildren(String code) async {
     QuerySnapshot<Map<String, dynamic>> parentsChildrenSnapShot =

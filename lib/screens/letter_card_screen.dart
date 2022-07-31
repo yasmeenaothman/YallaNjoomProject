@@ -299,11 +299,11 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                       Tween<Offset>(begin: const Offset(2, 0), end: Offset.zero)
                           .animate(animation),
                   child: LetterCardWidget(
-                      letter: consumerProvider.selectedLanguage.shape!,
-                      imagePath: consumerProvider.examples
+                      letter: provider.selectedLanguage.shape!,
+                      imagePath: provider.examples
                           .firstWhere((element) =>
-                              consumerProvider.selectedLanguage.id_example ==
-                              element.id)
+                              provider.selectedLanguage.exampleId ==
+                              element.exampleId)
                           .img1!))
             ],
           ),

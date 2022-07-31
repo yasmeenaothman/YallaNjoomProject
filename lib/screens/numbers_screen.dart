@@ -255,8 +255,9 @@ class NumbersScreen extends StatelessWidget {
                   child: DefaultStackWidget(
                     imagePath: provider.examples
                         .firstWhere((element) =>
-                            provider.numbers[index].id_example == element.id)
-                        .img1!, // flower1.png for number
+                            provider.numbers[index].exampleId ==
+                            element.exampleId)
+                        .img1!,
                     btn: DefaultElevatedButton(
                       onPressed: () {
                         provider.setSelectedLanguage(provider.numbers[index]);

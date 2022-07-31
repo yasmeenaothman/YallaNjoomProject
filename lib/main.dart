@@ -168,12 +168,13 @@ class MyApp extends StatelessWidget {
         ExamplesScreen.routeName: (context) => ExamplesScreen(),
         MusicScreen.routeName: (context) => const MusicScreen(),
         OperationScreen.routeName: (context) => const OperationScreen(),
-        ExampleNumbers.routeName: (context) => const ExampleNumbers(),
+        ExampleNumbers.routeName: (context) => ExampleNumbers(),
         GamesScreen.routeName: (context) => GamesScreen(),
         ChildHomeScreen.routeName: (context) => const ChildHomeScreen(),
         VideosScreen.routeName: (context) => const VideosScreen(),
         ParentsHomeScreen.routeName: (context) => const ParentsHomeScreen(),
-        EditChildProfile.routeName: (context) => EditChildProfile()
+        EditChildProfile.routeName: (context) => EditChildProfile(),
+        DisplayNumberScreen.routeName: (context) => DisplayNumberScreen()
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;
@@ -185,8 +186,6 @@ class MyApp extends StatelessWidget {
               onPressed: arguments[1] as Function(),
               onTab: arguments[2] as Function(),
             );
-          } else if (name == DisplayNumberScreen.routeName) {
-            return DisplayNumberScreen(imageUrl: arguments as String);
           } else if (name == ExercisesScreen.routeName) {
             return ExercisesScreen(
               isSum: (arguments as List)[0] as bool,

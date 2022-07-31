@@ -9,6 +9,7 @@ class SharedPreferenceHelper {
   }
 
   putLetter(String key, int value) async {
+    // value is number of stars
     bool? isPut = await sharedPreferences?.setInt(key, value);
     print('is put in sharedPreference? $isPut');
   }

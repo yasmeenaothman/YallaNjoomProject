@@ -1,88 +1,3 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:yalla_njoom/routers/app_router.dart';
-// import 'package:yalla_njoom/screens/bravo_screen.dart';
-// import 'package:yalla_njoom/screens/letter_card_screen.dart';
-// import 'package:yalla_njoom/screens/letters_screen.dart';
-// import 'package:yalla_njoom/widgets/toast_dialog_widget.dart';
-
-// import '../widgets/container_with_image.dart';
-// import '../widgets/container_with_text.dart';
-// import '../widgets/default_circular_avatar.dart';
-
-// class ExamplesScreen extends StatelessWidget {
-//   static String routeName = 'ExamplesScreen';
-
-//   const ExamplesScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: ContainerWithImage(
-//         imageName: 'assets/images/background_examples.png',
-//         children: [
-//           Padding(
-//             padding: EdgeInsets.fromLTRB(10.w, 20.h, 0, 0),
-//             child: DefaultCirculeAvatar(
-//               onTap: () {
-//                 AppRouter.router.pushNamedWithReplacementFunction(
-//                     LetterCardScreen.routeName);
-//               },
-//             ),
-//           ),
-//           SizedBox(
-//             height: 230.h,
-//           ),
-//           const ContainerWithText(),
-//           GestureDetector(
-//             child: Image.asset('assets/images/happy.png'),
-//             onTap: () {},
-//           ),
-//           SizedBox(
-//             height: 10.h,
-//           ),
-//           Stack(
-//             clipBehavior: Clip.none,
-//             children: [
-//               GestureDetector(
-//                   child: Image.asset('assets/images/carrot.png'),
-//                   onTap: () {
-//                     showDialog(
-//                         context: context,
-//                         barrierDismissible: false,
-//                         barrierColor: Colors.black,
-//                         builder: (ctx) {
-//                           return Column(
-//                             children: [
-//                               SizedBox(
-//                                 height: 260.h,
-//                               ),
-//                               const ToastDialogWidget()
-//                             ],
-//                           );
-//                         });
-//                   }),
-//               Positioned(
-//                 bottom: 78.h,
-//                 left: 175.w,
-//                 child: GestureDetector(
-//                     child: Image.asset(
-//                       'assets/images/impressed.png',
-//                     ),
-//                     onTap: () {
-//                       AppRouter.router.pushNamedWithReplacementFunction(
-//                           BravoScreen.routeName, false);
-//                     }),
-//               ),
-//             ],
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -108,7 +23,7 @@ class ExamplesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<FirestoreProvider>(context, listen: false);
-    images = generateImageList(provider: provider);
+    images = generateImageList(provider: provider, isLetter: true);
     return Scaffold(
       body: ContainerWithImage(
         imageName: 'assets/images/background_examples.png',
@@ -129,7 +44,7 @@ class ExamplesScreen extends StatelessWidget {
           GestureDetector(
             child: Image.asset(images[0][0]), //'assets/images/happy.png'
             onTap: () {
-              check(0, context);
+              provider.check(0, context, images);
             },
           ),
           SizedBox(
@@ -141,7 +56,7 @@ class ExamplesScreen extends StatelessWidget {
               GestureDetector(
                   child: Image.asset(images[0][1]), //'assets/images/carrot.png'
                   onTap: () {
-                    check(1, context);
+                    provider.check(1, context, images);
                     print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
                   }),
               Positioned(
@@ -152,7 +67,7 @@ class ExamplesScreen extends StatelessWidget {
                       images[0][2],
                     ),
                     onTap: () {
-                      check(2, context);
+                      provider.check(2, context, images);
                     }),
               ),
             ],
@@ -161,33 +76,24 @@ class ExamplesScreen extends StatelessWidget {
       ),
     );
   }
-
-  check(int index, context) async {
-    if (images[0][index] == images[1]) {
-      AppRouter.router.pushNamedWithReplacementFunction(BravoScreen.routeName, [
-        false,
-        () {
-          AppRouter.router
-              .pushNamedWithReplacementFunction(ExamplesScreen.routeName);
-        },
-        () {
-          AppRouter.router
-              .pushNamedWithReplacementFunction(LetterCardScreen.routeName);
+  /*check(int index,context) async {
+    if(images[0][index]==images[1]){
+      AppRouter.router.pushNamedWithReplacementFunction(
+          BravoScreen.routeName, [false,(){
+            AppRouter.router.pushNamedWithReplacementFunction(ExamplesScreen.routeName);
+      },
+        (){
+          AppRouter.router.pushNamedWithReplacementFunction(LetterCardScreen.routeName);
         },
       ]);
-      provider.numOfExampleSol == 0
-          ? await provider.addSolution(Solution(
-                  solutionId: '1',
-                  userCode: provider.userModel!.code,
-                  exampleId: provider.selectedLanguage.id_example)
-              .toMap())
-          : await provider.updateSolution(Solution(
-              solutionId: '1',
-              userCode: provider.userModel!.code,
-              exampleId: provider.selectedLanguage.id_example));
+      provider.numOfExampleSol==0?await provider.addSolution(Solution(solutionId: '1',userCode: provider.userModel!.code
+          ,exampleId: provider.selectedLanguage.exampleId ).toMap())
+          :await provider.updateSolution(Solution(solutionId: '1',userCode: provider.userModel!.code
+          ,exampleId: provider.selectedLanguage.exampleId));
 
       print(provider.numOfExampleSol);
-    } else {
+    }
+    else{
       showDialog(
           context: context,
           barrierDismissible: false,
@@ -203,5 +109,5 @@ class ExamplesScreen extends StatelessWidget {
             );
           });
     }
-  }
+  }*/
 }

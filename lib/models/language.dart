@@ -1,7 +1,13 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+
+import 'example.dart';
+
 class Language {
   String? name;
   String? sound;
-  String id_example;
+  String exampleId;
   String? shape;
   String? soundRecordedPath;
   late bool isLocked;
@@ -9,7 +15,7 @@ class Language {
   Language({
     required this.name,
     required this.sound,
-    required this.id_example,
+    required this.exampleId,
     required this.isLocked,
     required this.shape,
     this.soundRecordedPath,
@@ -20,6 +26,7 @@ class Language {
       "name": name,
       "audio": sound,
       "isLocked": isLocked,
+      "id": exampleId,
       "shape": shape,
       "soundRecordedPath": soundRecordedPath,
     };
@@ -40,7 +47,7 @@ class Letter extends Language {
   : super(
             name: name,
             sound: sound,
-            id_example: id_example,
+            exampleId: id_example,
             isLocked: isLocked,
             shape: shape); //imageUrl: imageUrl,
   Letter.fromMap(Map map)
@@ -48,7 +55,7 @@ class Letter extends Language {
         super(
           name: map["name"],
           sound: map["audio"],
-          id_example: map["id"],
+          exampleId: map["id"],
           //imageUrl: map["imageUrl"],
           isLocked: map["isLocked"],
           shape: map["shape"],
@@ -70,7 +77,7 @@ class Number extends Language {
   : super(
           name: name,
           sound: sound,
-          id_example: id_example,
+          exampleId: id_example,
           isLocked: isLocked,
           shape: shape,
         ); //imageUrl: imageUrl,
@@ -79,7 +86,7 @@ class Number extends Language {
         super(
           name: map["name"],
           sound: map["audio"],
-          id_example: map["id"],
+          exampleId: map["id"],
           isLocked: map["isLocked"],
           shape: map["shape"],
           soundRecordedPath: map["soundRecordedPath"],

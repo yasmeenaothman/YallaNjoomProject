@@ -267,13 +267,13 @@ class FirestoreHelper {
         .set(letterMap);
   }
 
-  // Future<List<Letter>> getAllLetters() async {
-  //   QuerySnapshot querySnapshot =
-  //       await firebaseFirestore.collection(letterCollection).get();
-  //   return querySnapshot.docs
-  //       .map((e) => Letter.fromMap(e.data() as Map<String, dynamic>))
-  //       .toList();
-  // }
+  Future<List<Letter>> getAllLetters() async {
+    QuerySnapshot querySnapshot =
+        await firebaseFirestore.collection(letterCollection).get();
+    return querySnapshot.docs
+        .map((e) => Letter.fromMap(e.data() as Map<String, dynamic>))
+        .toList();
+  }
 
   addNumbersToFirestore(Map<String, dynamic> numberMap) async {
     await firebaseFirestore
@@ -282,11 +282,11 @@ class FirestoreHelper {
         .set(numberMap);
   }
 
-  // Future<List<Number>> getAllNumbers() async {
-  //   QuerySnapshot querySnapshot =
-  //       await firebaseFirestore.collection(numberCollection).get();
-  //   return querySnapshot.docs
-  //       .map((e) => Number.fromMap(e.data() as Map<String, dynamic>))
-  //       .toList();
-  // }
+  Future<List<Number>> getAllNumbers() async {
+    QuerySnapshot querySnapshot =
+        await firebaseFirestore.collection(numberCollection).get();
+    return querySnapshot.docs
+        .map((e) => Number.fromMap(e.data() as Map<String, dynamic>))
+        .toList();
+  }
 }

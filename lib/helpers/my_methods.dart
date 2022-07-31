@@ -23,18 +23,19 @@ generateNumber() {
 
 chooseLetterRandomly(
     {required bool isFirstChoice, required FirestoreProvider provider}) {
-  int index = Random().nextInt(provider.examplesWithoutSelected.length);
+  int index = Random().nextInt(provider.letterExamplesWithoutSelected.length);
   print(
-      '////////////////////////////////////////////${provider.examplesWithoutSelected.length}');
+      '////////////////////////////////////////////${provider.letterExamplesWithoutSelected.length}');
   return isFirstChoice
-      ? provider.examplesWithoutSelected[index].img1
-      : provider.examplesWithoutSelected[index].img2;
+      ? provider.letterExamplesWithoutSelected[index].img1
+      : provider.letterExamplesWithoutSelected[index].img2;
 }
 
-List generateImageList({required FirestoreProvider provider}) {
+List generateImageList(
+    {required FirestoreProvider provider, required bool isLetter}) {
   String imageForSelectedLang = '';
-  Example example = provider.examples.firstWhere(
-      (element) => provider.selectedLanguage.id_example == element.id);
+  Example example = provider.lettersExample.firstWhere(
+      (element) => provider.selectedLanguage.exampleId == element.exampleId);
   switch (provider.numOfExampleSol) {
     case 0:
       imageForSelectedLang = example.img1!;
