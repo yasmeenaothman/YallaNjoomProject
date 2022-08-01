@@ -50,28 +50,49 @@ class ExamplesScreen extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          Stack(
-            clipBehavior: Clip.none,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(
-                  child: Image.asset(images[0][1]), //'assets/images/carrot.png'
-                  onTap: () {
-                    provider.check(1, context, images);
-                    print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
-                  }),
-              Positioned(
-                bottom: 78.h,
-                left: 175.w,
+              Expanded(
                 child: GestureDetector(
-                    child: Image.asset(
-                      images[0][2],
-                    ),
+                    child:
+                        Image.asset(images[0][1]), //'assets/images/carrot.png'
                     onTap: () {
-                      provider.check(2, context, images);
+                      provider.check(1, context, images);
+                      print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
                     }),
               ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    provider.check(2, context, images);
+                  },
+                  child: Image.asset(
+                    images[0][2],
+                  ),
+                ),
+              ),
             ],
-          )
+          ),
+          // Stack(
+          //   clipBehavior: Clip.none,
+          //   children: [
+          //     GestureDetector(
+          //         child: Image.asset(images[0][1]), //'assets/images/carrot.png'
+          //         onTap: () {
+          //           provider.check(1, context, images);
+          //           print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
+          //         }),
+          //     GestureDetector(
+          //       onTap: () {
+          //         provider.check(2, context, images);
+          //       },
+          //       child: Image.asset(
+          //         images[0][2],
+          //       ),
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );

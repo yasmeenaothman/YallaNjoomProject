@@ -476,8 +476,11 @@ class FirestoreProvider extends ChangeNotifier {
 
     /*(userModel as ChildModel).coins = (userModel as ChildModel).coins! + allStarNum.reduce((value, element) => value+element);
     updateChildInfo(userModel as ChildModel);*/
+
     // updateKidCoins(
-    //     allStarNum.sum); //allStarNum.fold(0,(value, element) => value+element
+    //     allStarNum.sum);
+
+    // //allStarNum.fold(0,(value, element) => value+element
     //print('coins equal ${(userModel as ChildModel) .coins!}');
   }
 

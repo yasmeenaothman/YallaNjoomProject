@@ -83,11 +83,14 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import '../models/dummy_data.dart';
+import '../models/my_flutter_app.dart';
 import '../providers/firestore_provider.dart';
+import '../widgets/default_circular_avatar.dart';
 import '../widgets/default_row_widget.dart';
 import '../widgets/default_stack_widget.dart';
 import '../widgets/drawer_widget.dart';
 import '../widgets/scaffold_with_background.dart';
+import 'child_home_screen.dart';
 
 class LettersScreen extends StatelessWidget {
   LettersScreen({Key? key}) : super(key: key);
@@ -105,66 +108,87 @@ class LettersScreen extends StatelessWidget {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-                  child: ListView.separated(
-                    padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
-                    itemBuilder: (context, index) {
-                      indexValue = index;
-                      indexValue++;
-                      return GestureDetector(
-                        onTap: () {
-                          indexValue <= provider.letters.length
-                              ? indexValue
-                              : -1;
-                          provider.setSelectedLanguage(provider.letters[index]);
-                          provider.selectedLanguage.isLocked
-                              ? null
-                              : AppRouter.router
-                                  .pushNamedWithReplacementFunction(
-                                      LetterCardScreen.routeName);
-                        },
-                        child: DefaultStackWidget(
-                          imagePath: provider.lettersExample
-                              .firstWhere((element) =>
-                                  provider.letters[index].exampleId ==
-                                  element.exampleId)
-                              .img1!,
-                          btn: DefaultElevatedButton(
-                            onPressed: () {
-                              provider
-                                  .setSelectedLanguage(provider.letters[index]);
-                              provider.selectedLanguage.isLocked
-                                  ? null
-                                  : AppRouter.router
-                                      .pushNamedWithReplacementFunction(
-                                          LetterCardScreen.routeName);
-                            },
-                            //const Color(0xFFFFA4AC) number color
-                            bgColor: const Color(0xFF074785), // letter color
-                            child: DefaultRowWidget(
-                              language: provider.letters[
-                                  index], //DummyData.dummyData.letters[index]
-                              nextIndex: indexValue < provider.letters.length
-                                  ? indexValue
-                                  : -1,
-                              numOfStar: provider.allStarNum[index],
-                              // provider.allStarNum[index], //provider.numOfStar,
-                            ),
-                            size: Size(double.infinity, 75.h),
-                            boxShadow: BoxShadow(
-                                offset: Offset(3, 6.h),
-                                blurRadius: 9.r,
-                                color: const Color(0x4D074785)),
-                            radius: 20.r,
-                            top: 0,
-                          ),
-                          bottom: 35,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: DefaultCirculeAvatar(
+                          onTap: () => AppRouter.router
+                              .pushNamedWithReplacementFunction(
+                                  ChildHomeScreen.routeName),
+                          iconData: MyFlutterApp.cancel,
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 100.h,
-                    ),
-                    itemCount: provider.letters.length,
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
+                          itemBuilder: (context, index) {
+                            indexValue = index;
+                            indexValue++;
+                            return GestureDetector(
+                              onTap: () {
+                                indexValue <= provider.letters.length
+                                    ? indexValue
+                                    : -1;
+                                provider.setSelectedLanguage(
+                                    provider.letters[index]);
+                                provider.selectedLanguage.isLocked
+                                    ? null
+                                    : AppRouter.router
+                                        .pushNamedWithReplacementFunction(
+                                            LetterCardScreen.routeName);
+                              },
+                              child: DefaultStackWidget(
+                                imagePath: provider.lettersExample
+                                    .firstWhere((element) =>
+                                        provider.letters[index].exampleId ==
+                                        element.exampleId)
+                                    .img1!,
+                                btn: DefaultElevatedButton(
+                                  onPressed: () {
+                                    provider.setSelectedLanguage(
+                                        provider.letters[index]);
+                                    provider.selectedLanguage.isLocked
+                                        ? null
+                                        : AppRouter.router
+                                            .pushNamedWithReplacementFunction(
+                                                LetterCardScreen.routeName);
+                                  },
+                                  //const Color(0xFFFFA4AC) number color
+                                  bgColor:
+                                      const Color(0xFF074785), // letter color
+                                  child: DefaultRowWidget(
+                                    language: provider.letters[
+                                        index], //DummyData.dummyData.letters[index]
+                                    nextIndex:
+                                        indexValue < provider.letters.length
+                                            ? indexValue
+                                            : -1,
+                                    numOfStar: provider.allStarNum[index],
+                                    // provider.allStarNum[index], //provider.numOfStar,
+                                  ),
+                                  size: Size(double.infinity, 75.h),
+                                  boxShadow: BoxShadow(
+                                      offset: Offset(3, 6.h),
+                                      blurRadius: 9.r,
+                                      color: const Color(0x4D074785)),
+                                  radius: 20.r,
+                                  top: 0,
+                                ),
+                                bottom: 35,
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 100.h,
+                          ),
+                          itemCount: provider.letters.length,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
