@@ -116,7 +116,7 @@ class FirestoreHelper {
           .set(userMap);
     } on Exception catch (e) {
       // ignore: avoid_print
-      print(e.toString());
+      print(e.toString() + 'hi iam exceptiom');
     }
   }
 
@@ -260,11 +260,11 @@ class FirestoreHelper {
         .toList();
   }
 
-  addLettersToFirestore(Map<String, dynamic> letterMap) async {
+  addLettersToFirestore(letterMap) async {
     await firebaseFirestore
         .collection(letterCollection)
         .doc(letterMap[languageId])
-        .set(letterMap);
+        .set(letterMap as Map<String, dynamic>);
   }
 
   Future<List<Letter>> getAllLetters() async {

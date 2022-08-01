@@ -165,6 +165,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/models/dummy_data.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -210,7 +211,8 @@ class _VideosScreenState extends State<VideosScreen> {
           Align(
               alignment: Alignment.centerRight,
               child: DefaultCirculeAvatar(
-                onTap: () => AppRouter.router.pop(),
+                onTap: () => AppRouter.router.pushNamedWithReplacementFunction(
+                    ChildHomeScreen.routeName),
                 iconData: MyFlutterApp.cancel,
               )),
           SizedBox(

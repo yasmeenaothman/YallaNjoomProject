@@ -102,7 +102,7 @@ class EditChildProfile extends StatelessWidget {
                         code: (provider.userModel as ChildModel).code);
                     Provider.of<FirestoreProvider>(context, listen: false)
                         .updateChildInfo(childModel);
-                    AppRouter.router.pop();
+
                     AppRouter.router.pushNamedWithReplacementFunction(
                         ChildHomeScreen.routeName);
                   },

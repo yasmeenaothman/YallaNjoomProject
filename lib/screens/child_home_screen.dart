@@ -27,9 +27,8 @@ class ChildHomeScreen extends StatelessWidget {
       builder: (context, provider, x) => ScaffoldWithBackground(
         drawer: provider.userModel == null
             ? const Center(child: CircularProgressIndicator())
-            : DrawerWidget(
+            : const DrawerWidget(
                 isParent: false,
-                userModel: provider.userModel!,
               ),
         appBarIsVisible: true,
         body: Padding(

@@ -61,6 +61,15 @@ class Letter extends Language {
           shape: map["shape"],
           soundRecordedPath: map["soundRecordedPath"],
         );
+  @override
+  toMap() {
+    //Map map = super.toMap();
+    Map<String, dynamic> m = {
+      ...super.toMap(),
+      "song": song,
+    };
+    return m;
+  }
 }
 
 class Number extends Language {

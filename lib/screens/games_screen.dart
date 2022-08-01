@@ -179,6 +179,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:store_redirect/store_redirect.dart';
 import 'package:yalla_njoom/models/user_model.dart';
+import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
 import '../models/game.dart';
@@ -192,12 +193,6 @@ import '../widgets/user_code_dialog.dart';
 class GamesScreen extends StatelessWidget {
   GamesScreen({Key? key}) : super(key: key);
   static const String routeName = 'GamesScreen';
-
-  static const String gameUrl = 'url';
-  static const String gameName = 'name';
-  static const String coinsNeeded = 'coins';
-  static const String gameImg = 'img';
-  //static const String isLocked = 'isLocked';
   late BuildContext _buildContext;
   @override
   Widget build(BuildContext context) {
@@ -213,7 +208,9 @@ class GamesScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.centerRight,
                 child: DefaultCirculeAvatar(
-                  onTap: () => AppRouter.router.pop(),
+                  onTap: () => AppRouter.router
+                      .pushNamedWithReplacementFunction(
+                          ChildHomeScreen.routeName),
                   iconData: MyFlutterApp.cancel,
                 )),
             SizedBox(
@@ -231,9 +228,13 @@ class GamesScreen extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: ((context, index) {
-                  return _buildGameContainer(theme, index, provider, context);
-                }),
+                itemBuilder: (context, index) {
+                  return _buildGameContainer(
+                    theme,
+                    index,
+                    provider,
+                  );
+                },
                 itemCount: provider.games.length,
                 separatorBuilder: (context, index) {
                   return SizedBox(width: 20.w);
@@ -246,8 +247,11 @@ class GamesScreen extends StatelessWidget {
     );
   }
 
-  _buildGameContainer(ThemeData theme, int index, FirestoreProvider provider,
-      BuildContext context) {
+  _buildGameContainer(
+    ThemeData theme,
+    int index,
+    FirestoreProvider provider,
+  ) {
     return Column(
       children: [
         Stack(

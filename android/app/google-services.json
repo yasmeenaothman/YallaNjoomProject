@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "350925673392",
-    "project_id": "yalla-njoom",
-    "storage_bucket": "yalla-njoom.appspot.com"
+    "project_number": "345508545499",
+    "project_id": "temp-8daac",
+    "storage_bucket": "temp-8daac.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:350925673392:android:07e0195952e1b84a157c75",
+        "mobilesdk_app_id": "1:345508545499:android:ab1951195af3a4bd099dfe",
         "android_client_info": {
           "package_name": "com.example.yalla_njoom"
         }
       },
       "oauth_client": [
         {
-          "client_id": "350925673392-9k842s5876fvnjedl9p0ki339c5ooql2.apps.googleusercontent.com",
+          "client_id": "345508545499-a1o3p33gmnd8qo8ctju15cg80dtjj9sn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBaHh8NWJTXH8uMQRAOehI9OpnFpcq-qQs"
+          "current_key": "AIzaSyBhIvUf4SriqB43BOtyl23SVaiIcUepFjQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "350925673392-9k842s5876fvnjedl9p0ki339c5ooql2.apps.googleusercontent.com",
+              "client_id": "345508545499-a1o3p33gmnd8qo8ctju15cg80dtjj9sn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

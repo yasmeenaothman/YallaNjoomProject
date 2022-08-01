@@ -163,8 +163,7 @@ class FirestoreProvider extends ChangeNotifier {
   List<Example> numbersExample = DummyData.dummyData.examples
       .where((element) => !element.isLetterExample)
       .toList(); //[]
-  List<Game> games =
-      []; //DummyData.dummyData.games; //DummyData.dummyData.games;
+  List<Game> games = DummyData.dummyData.games; //DummyData.dummyData.games;
   Game? selectedGame;
   List<Game> openGames = [];
 
@@ -203,6 +202,7 @@ class FirestoreProvider extends ChangeNotifier {
     await FirestoreHelper.firestoreHelper.addUserToFirestore(userMap);
     initUsersCodes();
     addAllLetterToSharedPreference();
+    print('adduser$userMap');
     initUser(userMap);
   }
 
@@ -210,9 +210,16 @@ class FirestoreProvider extends ChangeNotifier {
     userModel = userMap[FirestoreHelper.isParentKey] == false
         ? ChildModel.fromMap(userMap)
         : ParentModel.fromMap(userMap);
+    print('inituser$userMap');
     if (userMap[FirestoreHelper.isParentKey] == false) {
-      //addAllNumbersToFirestore(); /// this for one time
-      //  addAllGamesToFirestore();/// this for one time
+      // addAllNumbersToFirestore();
+      // addAllLettersToFirestore();
+
+      // /// this for one time
+      // addAllGamesToFirestore();
+      // addExamplesToFirestore();
+
+      /// this for one time
       getAllLettersFromFirestore();
       getAllNumbersFromFirestore();
       getAllStarNumFRomSharedPreference();
@@ -332,7 +339,6 @@ class FirestoreProvider extends ChangeNotifier {
         examples.where((element) => element.isLetterExample).toList();
     numbersExample =
         examples.where((element) => !element.isLetterExample).toList();
-    notifyListeners();
   }
 
   addOpenGameToFirestore(openGameMap) async {
@@ -350,9 +356,7 @@ class FirestoreProvider extends ChangeNotifier {
             .toList());
     for (var element in games) {
       element.isLocked = !isGameOpen(element);
-      notifyListeners();
     }
-    notifyListeners();
   }
 
   addAllGamesToFirestore() async {
@@ -469,13 +473,12 @@ class FirestoreProvider extends ChangeNotifier {
     allStarNum.addAll(numbers
         .map((e) => SharedPreferenceHelper.sharedHelper.getLetter(e.name!)!)
         .toList());
-    notifyListeners();
+
     /*(userModel as ChildModel).coins = (userModel as ChildModel).coins! + allStarNum.reduce((value, element) => value+element);
     updateChildInfo(userModel as ChildModel);*/
-    updateKidCoins(
-        allStarNum.sum); //allStarNum.fold(0,(value, element) => value+element
+    // updateKidCoins(
+    //     allStarNum.sum); //allStarNum.fold(0,(value, element) => value+element
     //print('coins equal ${(userModel as ChildModel) .coins!}');
-    notifyListeners();
   }
 
   setOnSharedPreference(Language language, int stars) async {
@@ -502,7 +505,6 @@ class FirestoreProvider extends ChangeNotifier {
 
   getAllLettersFromFirestore() async {
     letters = await FirestoreHelper.firestoreHelper.getAllLetters();
-    notifyListeners();
   }
 
   addAllNumbersToFirestore() async {
@@ -516,7 +518,6 @@ class FirestoreProvider extends ChangeNotifier {
 
   getAllNumbersFromFirestore() async {
     numbers = await FirestoreHelper.firestoreHelper.getAllNumbers();
-    notifyListeners();
   }
 
   checkGame(Function function) {
@@ -538,16 +539,15 @@ class FirestoreProvider extends ChangeNotifier {
       } else {
         function();
       }
-      notifyListeners();
     } else {
       StoreRedirect.redirect(androidAppId: selectedGame!.gameId);
     }
+    notifyListeners();
   }
 
   updateKidCoins(int coins) {
     (userModel as ChildModel).coins = (userModel as ChildModel).coins! + coins;
     updateChildInfo(userModel as ChildModel);
-    notifyListeners();
   }
 
   bool isGameOpen(Game game) {

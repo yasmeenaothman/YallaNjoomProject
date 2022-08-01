@@ -35,9 +35,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
     return Consumer<FirestoreProvider>(
       builder: (context, firestoreProvider, x) {
         return ScaffoldWithBackground(
-            drawer: DrawerWidget(
-              userModel: firestoreProvider.userModel!,
-            ),
+            drawer: const DrawerWidget(),
             appBarIsVisible: true,
             floatingActionButton: _buildFabWidget(theme),
             body: Center(

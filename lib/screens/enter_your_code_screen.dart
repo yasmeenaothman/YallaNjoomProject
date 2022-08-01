@@ -66,8 +66,8 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
                   : null;
 
               if (currentUser != null) {
+                provider.initUser(currentUser.toMap());
                 if (currentUser.isParent) {
-                  provider.initUser(currentUser.toMap());
                   provider.getParentsChildren(currentUser.code!);
                   provider.getNamesDetailList('0', currentUser.code);
                   AppRouter.router.pushNamedWithReplacementFunction(

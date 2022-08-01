@@ -278,8 +278,8 @@ class DummyData {
         name: 'فيديو',
         bgColor: const Color(0xFFF1854F),
         pressFun: () {
-          /*AppRouter.router
-              .pushNamedWithReplacementFunction(VideosScreen.routeName);*/
+          AppRouter.router
+              .pushNamedWithReplacementFunction(VideosScreen.routeName);
         }),
     TypeEducation(
         image: 'assets/images/games.png',

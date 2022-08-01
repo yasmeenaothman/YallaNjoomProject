@@ -5,14 +5,14 @@ class ScaffoldWithBackground extends StatelessWidget {
   const ScaffoldWithBackground(
       {Key? key,
       required this.body,
-      this.drawer = const Drawer(),
+      this.drawer,
       this.appBarIsVisible = false,
       this.bgImage = 'assets/images/background.png',
       // ignore: avoid_init_to_null
       this.floatingActionButton = null})
       : super(key: key);
   final Widget body;
-  final Widget drawer;
+  final Widget? drawer;
   final String bgImage;
   final bool appBarIsVisible;
   final Widget? floatingActionButton;
