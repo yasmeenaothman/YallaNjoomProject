@@ -14,6 +14,7 @@ import '../widgets/container_with_image.dart';
 import '../widgets/default_circular_avatar.dart';
 import '../widgets/toast_dialog_widget.dart';
 import 'bravo_screen.dart';
+import 'letter_card_screen.dart';
 import 'operation_screen.dart';
 
 class ExercisesScreen extends StatelessWidget {
@@ -171,7 +172,9 @@ class ExercisesScreen extends StatelessWidget {
     if (choices[index] == result.abs()) {
       provider.updateKidCoins(2);
       print('coinnnnnnns${(provider.userModel as ChildModel).coins}');
+
       AppRouter.router.pushNamedWithReplacementFunction(BravoScreen.routeName, [
+        false,
         false,
         () {
           AppRouter.router.pushNamedWithReplacementFunction(

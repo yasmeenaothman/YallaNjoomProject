@@ -358,6 +358,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
         //TODO: sure from this widget by wafaa
         AppRouter.router
             .pushNamedWithReplacementFunction(BravoScreen.routeName, [
+          false,
           true,
           () {
             AppRouter.router

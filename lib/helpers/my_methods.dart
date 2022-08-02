@@ -36,7 +36,10 @@ List generateImageList(
   String imageForSelectedLang = '';
   Example example = provider.lettersExample.firstWhere(
       (element) => provider.selectedLanguage.exampleId == element.exampleId);
-  switch (provider.numOfExampleSol) {
+  switch (provider.allSolutions
+      .firstWhere(
+          (element) => element.exampleId == provider.selectedLanguage.exampleId)
+      .numOfSolutions) {
     case 0:
       imageForSelectedLang = example.img1!;
       break;

@@ -142,6 +142,7 @@ class BravoScreen extends StatefulWidget {
 
   const BravoScreen(
       {Key? key,
+      this.lastExample = false,
       required this.isPronunciationWidget,
       required this.onPressed,
       required this.onTab})
@@ -149,6 +150,7 @@ class BravoScreen extends StatefulWidget {
   final bool isPronunciationWidget;
   final Function() onPressed;
   final Function() onTab;
+  final bool lastExample;
 
   @override
   State<BravoScreen> createState() => _BravoScreenState();
@@ -209,6 +211,7 @@ class _BravoScreenState extends State<BravoScreen>
                     widget: bravoBottomWidget(
                         theme, 'هيا ننتقل للمثال التالي', widget.onPressed),
                     isPronunciationWidget: widget.isPronunciationWidget,
+                    lastExample: widget.lastExample,
                   ),
                 )
               ],
@@ -227,7 +230,12 @@ class _BravoScreenState extends State<BravoScreen>
             height: 30.h,
           ),
           Visibility(
-            visible: provider.numOfExampleSol != 3,
+            visible: provider.allSolutions
+                    .firstWhere((element) =>
+                        element.exampleId ==
+                        provider.selectedLanguage.exampleId)
+                    .numOfSolutions !=
+                3,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -237,13 +245,23 @@ class _BravoScreenState extends State<BravoScreen>
             ),
           ),
           Visibility(
-            visible: provider.numOfExampleSol != 3,
+            visible: provider.allSolutions
+                    .firstWhere((element) =>
+                        element.exampleId ==
+                        provider.selectedLanguage.exampleId)
+                    .numOfSolutions !=
+                3,
             child: SizedBox(
               height: 40.h,
             ),
           ),
           Visibility(
-            visible: provider.numOfExampleSol != 3,
+            visible: provider.allSolutions
+                    .firstWhere((element) =>
+                        element.exampleId ==
+                        provider.selectedLanguage.exampleId)
+                    .numOfSolutions !=
+                3,
             child: GestureDetector(
               onTap: onPressed,
               child: Image.asset(

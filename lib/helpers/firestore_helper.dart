@@ -189,24 +189,22 @@ class FirestoreHelper {
         .toList();
   }
 
-  addSolutionToFirestore(Map<String, dynamic> solutionMap) async {
+  addSolutionToFirestore(
+      Map<String, dynamic> solutionMap, String userCode) async {
     await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userCode)
         .collection(solutionCollectionName)
-        .doc(solutionMap[solutionId])
+        .doc(solutionMap["exampleId"])
         .set(solutionMap);
-  }
-
-  updateSolution(Solution solution) async {
-    await firebaseFirestore
-        .collection(solutionCollectionName)
-        .doc(solution.solutionId)
-        .set(solution.toMap());
+    print('pppppppppppppp');
   }
 
   Future<List<Solution>> getAllSolutionsForUser(String userCode) async {
     QuerySnapshot querySnapshot = await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userCode)
         .collection(solutionCollectionName)
-        .where(userCodeKey, isEqualTo: userCode)
         .get();
     return querySnapshot.docs
         .map((e) => Solution.fromMap(e.data() as Map<String, dynamic>))

@@ -182,9 +182,10 @@ class MyApp extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           if (name == BravoScreen.routeName) {
             return BravoScreen(
-              isPronunciationWidget: (arguments as List)[0] as bool,
-              onPressed: arguments[1] as Function(),
-              onTab: arguments[2] as Function(),
+              lastExample: (arguments as List)[0] as bool,
+              isPronunciationWidget: (arguments as List)[1] as bool,
+              onPressed: arguments[2] as Function(),
+              onTab: arguments[3] as Function(),
             );
           } else if (name == ExercisesScreen.routeName) {
             return ExercisesScreen(

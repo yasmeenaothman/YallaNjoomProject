@@ -285,9 +285,27 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                           ),
                     SizedBox(height: 10.h),
                     DefaultCirculeAvatar(
-                      onTap: () => AppRouter.router
-                          .pushNamedWithReplacementFunction(
-                              ExamplesScreen.routeName),
+                      onTap: () {
+                        return provider.allSolutions
+                                    .firstWhere((element) =>
+                                        element.exampleId ==
+                                        provider.selectedLanguage.exampleId)
+                                    .numOfSolutions ==
+                                3
+                            ? AppRouter.router.pushNamedWithReplacementFunction(
+                                BravoScreen.routeName, [
+                                true,
+                                true,
+                                () {},
+                                () {
+                                  AppRouter.router
+                                      .pushNamedWithReplacementFunction(
+                                          LetterCardScreen.routeName);
+                                }
+                              ])
+                            : AppRouter.router.pushNamedWithReplacementFunction(
+                                ExamplesScreen.routeName);
+                      },
                       iconData: MyFlutterApp.arrowRight_2,
                     ),
                   ],
@@ -374,6 +392,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
         //TODO: sure from this widget by wafaa
         AppRouter.router
             .pushNamedWithReplacementFunction(BravoScreen.routeName, [
+          false,
           true,
           () {
             AppRouter.router

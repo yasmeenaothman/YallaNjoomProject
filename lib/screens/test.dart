@@ -13,23 +13,35 @@ class _MyHomePageState extends State<MyHomePage> {
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
-
+  int id = -1;
+  bool? resultState;
+  late List lettersPron;
   @override
   void initState() {
     _initSpeech();
+    lettersPron = [
+      letterMap(['ألف', 'أليف', 'الف']),
+      letterMap(['باء', 'ب']),
+      letterMap(['جيم', 'جي']),
+      letterMap(['ح', 'حاء']),
+    ];
+    print(lettersPron);
     super.initState();
   }
 
   /// This has to happen only once per app
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
-    setState(() {});
   }
+
+  letterMap(List pros) => {'letterId': ++id, 'letterpros': pros};
 
   /// Each time to start a speech recognition session
   void _startListening() async {
-    await _speechToText.listen(onResult: _onSpeechResult);
-    setState(() {});
+    await _speechToText.listen(
+        onResult: _onSpeechResult,
+        localeId: 'ar',
+        listenFor: Duration(seconds: 5));
   }
 
   /// Manually stop the active speech recognition session
@@ -38,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
   /// listen method.
   void _stopListening() async {
     await _speechToText.stop();
+    resultState = (lettersPron[0]['letterpros'] as List).contains(_lastWords);
+    print(resultState);
     setState(() {});
   }
 
@@ -69,18 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(16),
-                child: Text(
-                  // If listening is active show the recognized words
-                  _speechToText.isListening
-                      ? '$_lastWords'
-                      // If listening isn't active but could be tell the user
-                      // how to start it, otherwise indicate that speech
-                      // recognition is not yet ready or not supported on
-                      // the target device
-                      : _speechEnabled
-                          ? 'Tap the microphone to start listening...'
-                          : 'Speech not available',
-                ),
+                child: Text(_lastWords),
               ),
             ),
           ],

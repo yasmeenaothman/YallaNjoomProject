@@ -151,7 +151,7 @@ class FirestoreProvider extends ChangeNotifier {
   bool isSoundPlaying = false;
   bool isSongPlaying = false;
   bool isKidRecordVoice = false;
-  int numOfExampleSol = 0;
+  // int numOfExampleSol = 0;
   int numOfStar = 0;
   List<int> allStarNum = [];
   //late File imageFile;
@@ -212,9 +212,6 @@ class FirestoreProvider extends ChangeNotifier {
         : ParentModel.fromMap(userMap);
     print('inituser$userMap');
     if (userMap[FirestoreHelper.isParentKey] == false) {
-      // addAllNumbersToFirestore();
-      // addAllLettersToFirestore();
-
       // /// this for one time
       // addAllGamesToFirestore();
       // addExamplesToFirestore();
@@ -222,7 +219,9 @@ class FirestoreProvider extends ChangeNotifier {
       /// this for one time
       getAllLettersFromFirestore();
       getAllNumbersFromFirestore();
+      addSolution();
       getAllStarNumFRomSharedPreference();
+      getAllSolutionsForUser();
       getAllExamplesFromFirestore();
       getAllOPenGamesForUser();
     }
@@ -281,36 +280,52 @@ class FirestoreProvider extends ChangeNotifier {
     print('تم تعديل الصوت');
   }
 
-  addSolution(solutionMap) async {
-    await setNumOfExampleSol();
-    solutionMap["numOfSolutions"] = numOfExampleSol;
-    await FirestoreHelper.firestoreHelper.addSolutionToFirestore(solutionMap);
-    await getAllSolutionsForUser(solutionMap["code"]);
-    await getFromSharedPreference(selectedLanguage.name!);
+  addSolution() async {
+    //await setNumOfExampleSol();
+    // solutionMap["numOfSolutions"] = numOfExampleSol;
+    for (var element in letters) {
+      await FirestoreHelper.firestoreHelper.addSolutionToFirestore(
+          Solution(exampleId: element.exampleId).toMap(), userModel!.code!);
+    }
+    for (var element in numbers) {
+      await FirestoreHelper.firestoreHelper.addSolutionToFirestore(
+          Solution(exampleId: element.exampleId).toMap(), userModel!.code!);
+    }
+
+    ///
+    await getAllSolutionsForUser();
+
+    ///solutionMap["code"]
+    /*await getFromSharedPreference(selectedLanguage.name!);
     allSolutions
                 .firstWhere(
                     (element) => element.exampleId == selectedLanguage.shape)
                 .numOfSolutions ==
             3
         ? await setOnSharedPreference(selectedLanguage, numOfStar + 1)
-        : null;
-    //int.parse(listOfStarAndLockedForSelectedLetter[1]) + 1
-    //setOnSharedPreference(selectedLanguage as Letter,int.parse(listOfStarAndLockedForSelectedLetter[1]) + 1);
+        : null;*/
     notifyListeners();
     print('تم اضافة الحل بنجاح');
   }
 
-  getAllSolutionsForUser(userCode) async {
-    allSolutions =
-        await FirestoreHelper.firestoreHelper.getAllSolutionsForUser(userCode);
+  getAllSolutionsForUser() async {
+    allSolutions = await FirestoreHelper.firestoreHelper
+        .getAllSolutionsForUser(userModel!.code!);
+
+    ///
     notifyListeners();
   }
 
   updateSolution(Solution solution) async {
-    await setNumOfExampleSol();
-    solution.numOfSolutions = numOfExampleSol;
-    await FirestoreHelper.firestoreHelper.updateSolution(solution);
-    await getAllSolutionsForUser(solution.userCode);
+    //await setNumOfExampleSol();
+    //solution.numOfSolutions = numOfExampleSol;
+    await FirestoreHelper.firestoreHelper
+        .addSolutionToFirestore(solution.toMap(), userModel!.code!);
+
+    ///updateSolution(solution)
+    await getAllSolutionsForUser();
+
+    ///
     await getFromSharedPreference(selectedLanguage.name!);
     allSolutions
                 .firstWhere(
@@ -398,7 +413,7 @@ class FirestoreProvider extends ChangeNotifier {
 
     print('${examplesWithoutSelected.length} result .....');
     //examplesWithoutSelected= DummyData.dummyData.examples.getRange(0,DummyData.dummyData.examples.length).toList();
-    checkIfThereSolutionsToSelectedLang();
+    // checkIfThereSolutionsToSelectedLang();
     getFromSharedPreference(selectedLanguage.name!);
     notifyListeners();
   }
@@ -413,10 +428,10 @@ class FirestoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setNumOfExampleSol() async {
-    numOfExampleSol++;
-    notifyListeners();
-  }
+  // setNumOfExampleSol() async {
+  //   numOfExampleSol++;
+  //   notifyListeners();
+  // }
 
   playAudio({required bool isSound}) async {
     ByteData bytes = await rootBundle.load(isSound
@@ -439,14 +454,14 @@ class FirestoreProvider extends ChangeNotifier {
         .firstWhereOrNull((element) => element.langId == selectedLanguage.name);
   }
 
-  checkIfThereSolutionsToSelectedLang() {
-    Solution? solution = allSolutions.firstWhereOrNull(
-        (element) => element.exampleId == selectedLanguage.shape);
-    solution == null
-        ? numOfExampleSol = 0
-        : numOfExampleSol = solution.numOfSolutions!;
-    notifyListeners();
-  }
+  // checkIfThereSolutionsToSelectedLang() {
+  //   Solution? solution = allSolutions.firstWhereOrNull(
+  //       (element) => element.exampleId == selectedLanguage.shape);
+  //   solution == null
+  //       ? numOfExampleSol = 0
+  //       : numOfExampleSol = solution.numOfSolutions!;
+  //   notifyListeners();
+  // }
 
   addAllLetterToSharedPreference() async {
     for (var element in letters) {
@@ -559,33 +574,53 @@ class FirestoreProvider extends ChangeNotifier {
 
   check(int index, context, List images) async {
     if (images[0][index] == images[1]) {
-      AppRouter.router.pushNamedWithReplacementFunction(BravoScreen.routeName, [
-        false,
-        () {
-          AppRouter.router.pushNamedWithReplacementFunction(
-              selectedLanguage is Letter
-                  ? ExamplesScreen.routeName
-                  : ExampleNumbers.routeName);
-        },
-        () {
-          AppRouter.router.pushNamedWithReplacementFunction(
-              selectedLanguage is Letter
-                  ? LetterCardScreen.routeName
-                  : DisplayNumberScreen.routeName);
-        },
-      ]);
-      numOfExampleSol == 0
-          ? await addSolution(Solution(
-                  solutionId: '1',
-                  userCode: userModel!.code,
-                  exampleId: selectedLanguage.exampleId)
-              .toMap())
-          : await updateSolution(Solution(
-              solutionId: '1',
-              userCode: userModel!.code,
-              exampleId: selectedLanguage.exampleId));
+      await updateSolution(Solution(
+        /*solutionId: '1',
+              userCode: userModel!.code,*/
+        exampleId: selectedLanguage.exampleId,
+        numOfSolutions: allSolutions
+                .firstWhere((element) =>
+                    element.exampleId == selectedLanguage.exampleId)
+                .numOfSolutions! +
+            1,
+      ));
 
-      print(numOfExampleSol);
+      print(allSolutions
+          .firstWhere(
+              (element) => element.exampleId == selectedLanguage.exampleId)
+          .numOfSolutions);
+      allSolutions
+                  .firstWhere((element) =>
+                      element.exampleId == selectedLanguage.exampleId)
+                  .numOfSolutions ==
+              3
+          ? AppRouter.router
+              .pushNamedWithReplacementFunction(BravoScreen.routeName, [
+              true,
+              true,
+              () {},
+              () {
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    LetterCardScreen.routeName);
+              }
+            ])
+          : AppRouter.router
+              .pushNamedWithReplacementFunction(BravoScreen.routeName, [
+              false,
+              false,
+              () {
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    selectedLanguage is Letter
+                        ? ExamplesScreen.routeName
+                        : ExampleNumbers.routeName);
+              },
+              () {
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    selectedLanguage is Letter
+                        ? LetterCardScreen.routeName
+                        : DisplayNumberScreen.routeName);
+              },
+            ]);
     } else {
       showDialog(
           context: context,

@@ -74,61 +74,8 @@ class ExamplesScreen extends StatelessWidget {
               ),
             ],
           ),
-          // Stack(
-          //   clipBehavior: Clip.none,
-          //   children: [
-          //     GestureDetector(
-          //         child: Image.asset(images[0][1]), //'assets/images/carrot.png'
-          //         onTap: () {
-          //           provider.check(1, context, images);
-          //           print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
-          //         }),
-          //     GestureDetector(
-          //       onTap: () {
-          //         provider.check(2, context, images);
-          //       },
-          //       child: Image.asset(
-          //         images[0][2],
-          //       ),
-          //     ),
-          //   ],
-          // )
         ],
       ),
     );
   }
-  /*check(int index,context) async {
-    if(images[0][index]==images[1]){
-      AppRouter.router.pushNamedWithReplacementFunction(
-          BravoScreen.routeName, [false,(){
-            AppRouter.router.pushNamedWithReplacementFunction(ExamplesScreen.routeName);
-      },
-        (){
-          AppRouter.router.pushNamedWithReplacementFunction(LetterCardScreen.routeName);
-        },
-      ]);
-      provider.numOfExampleSol==0?await provider.addSolution(Solution(solutionId: '1',userCode: provider.userModel!.code
-          ,exampleId: provider.selectedLanguage.exampleId ).toMap())
-          :await provider.updateSolution(Solution(solutionId: '1',userCode: provider.userModel!.code
-          ,exampleId: provider.selectedLanguage.exampleId));
-
-      print(provider.numOfExampleSol);
-    }
-    else{
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          barrierColor: Colors.black,
-          builder: (ctx) {
-            return Column(
-              children: [
-                SizedBox(
-                  height: 260.h,
-                ),
-                const ToastDialogWidget()
-              ],
-            );
-          });
-    }
-  }*/
 }
