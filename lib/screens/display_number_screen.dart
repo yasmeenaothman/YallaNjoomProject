@@ -347,10 +347,12 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
             ? voice.percentageMatch! <= result
                 ? null
                 : provider.updateVoice(
-                    voice.voiceId!, result, voice.percentageMatch!)
+                    Voice(
+                        langId: provider.selectedLanguage.name,
+                        voicePath: fileRecPath,
+                        percentageMatch: result),
+                    voice.percentageMatch!)
             : provider.addVoice(Voice(
-                    voiceId: '1',
-                    userCode: provider.userModel!.code,
                     langId: provider.selectedLanguage.name,
                     voicePath: fileRecPath,
                     percentageMatch: result)

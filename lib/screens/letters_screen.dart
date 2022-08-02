@@ -79,6 +79,7 @@ import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:yalla_njoom/models/solution.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
@@ -167,7 +168,15 @@ class LettersScreen extends StatelessWidget {
                                         indexValue < provider.letters.length
                                             ? indexValue
                                             : -1,
-                                    numOfStar: provider.allStarNum[index],
+                                    numOfStar: provider.allSolutions
+                                        .firstWhere(
+                                          (element) =>
+                                              element.exampleId ==
+                                              provider.letters[index].exampleId,
+                                          orElse: () =>
+                                              Solution(exampleId: 'أ'),
+                                        )
+                                        .numOfStars,
                                     // provider.allStarNum[index], //provider.numOfStar,
                                   ),
                                   size: Size(double.infinity, 75.h),

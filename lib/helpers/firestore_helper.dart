@@ -165,28 +165,51 @@ class FirestoreHelper {
         .update(childModel.toMap());
   }
 
-  addVoiceToFirestore(Map<String, dynamic> voiceMap) async {
+  addVoiceToFirestore(Map<String, dynamic> voiceMap, String userCode) async {
     await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userCode)
+        .collection(voiceCollectionName)
+        .doc(voiceMap["langId"])
+        .set(voiceMap);
+    print('vvvvvvvvvvv');
+    /*await firebaseFirestore
         .collection(voiceCollectionName)
         .doc(voiceMap[voiceId])
-        .set(voiceMap);
-  }
-
-  updateVoice(String voiceId, double percentMatch) async {
-    await firebaseFirestore
-        .collection(voiceCollectionName)
-        .doc(voiceId)
-        .update({percentageMatch: percentMatch});
+        .set(voiceMap);*/
   }
 
   Future<List<Voice>> getAllVoicesForUser(String userCode) async {
     QuerySnapshot querySnapshot = await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userCode)
         .collection(voiceCollectionName)
-        .where(userCodeKey, isEqualTo: userCode)
         .get();
     return querySnapshot.docs
         .map((e) => Voice.fromMap(e.data() as Map<String, dynamic>))
         .toList();
+  }
+
+  updateNumOfStars(int stars, String exampleId, String userCode) async {
+    await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userCode)
+        .collection(solutionCollectionName)
+        .doc(exampleId)
+        .update({"numOfStars": stars});
+    print('update numOfStarsssssssssssssssssss');
+  }
+
+  Future<int> getNumOfStars(String exampleId, String userCode) async {
+    DocumentSnapshot documentSnapshot = await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userCode)
+        .collection(solutionCollectionName)
+        .doc(exampleId)
+        .get();
+    print('update numOfStarsssssssssssssssssss');
+    return Solution.fromMap(documentSnapshot.data() as Map<String, dynamic>)
+        .numOfStars;
   }
 
   addSolutionToFirestore(

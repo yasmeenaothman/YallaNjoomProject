@@ -25,7 +25,7 @@ class BravoDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 40, left: 20, right: 30),
             width: 325,
-            height: isPronunciationWidget || lastExample ? 150.h : 258.h,
+            height: (isPronunciationWidget || lastExample) ? 150.h : 258.h,
             decoration: BoxDecoration(
               color: theme.primaryColor,
               borderRadius: BorderRadius.circular(20),
@@ -49,7 +49,7 @@ class BravoDialog extends StatelessWidget {
                                   ? 'الإجابة صحيحة'
                                   : 'النطق صحيح',
                             ),
-                      if (!isPronunciationWidget || !lastExample)
+                      if (!isPronunciationWidget && !lastExample)
                         widget ?? SizedBox(),
                     ],
                   )),

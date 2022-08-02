@@ -229,8 +229,6 @@ class NumbersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    print(
-        'nnnnnnnnnnnnnnnnnn${Provider.of<FirestoreProvider>(context, listen: false).numOfStar}');
     return Consumer<FirestoreProvider>(
       builder: (context, provider, x) => ScaffoldWithBackground(
         body: Directionality(

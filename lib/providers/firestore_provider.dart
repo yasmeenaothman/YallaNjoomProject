@@ -131,7 +131,6 @@ import 'package:yalla_njoom/models/user_model.dart';
 import 'package:collection/collection.dart';
 
 import '../helpers/firestore_helper.dart';
-import '../helpers/shared_preference_helper.dart';
 import '../models/game.dart';
 import '../models/language.dart';
 import '../models/voice_model.dart';
@@ -152,8 +151,7 @@ class FirestoreProvider extends ChangeNotifier {
   bool isSongPlaying = false;
   bool isKidRecordVoice = false;
   // int numOfExampleSol = 0;
-  int numOfStar = 0;
-  List<int> allStarNum = [];
+  // int numOfStar = 0;
   //late File imageFile;
   //List<String> listOfStarAndLockedForSelectedLetter = [];
   /// new ////
@@ -201,9 +199,13 @@ class FirestoreProvider extends ChangeNotifier {
   addUser(userMap) async {
     await FirestoreHelper.firestoreHelper.addUserToFirestore(userMap);
     initUsersCodes();
-    addAllLetterToSharedPreference();
+    // addAllNumbersToFirestore();
+    // addAllLettersToFirestore();
+
     print('adduser$userMap');
     initUser(userMap);
+    addSolution();
+    getAllSolutionsForUser();
   }
 
   initUser(Map userMap) {
@@ -212,15 +214,10 @@ class FirestoreProvider extends ChangeNotifier {
         : ParentModel.fromMap(userMap);
     print('inituser$userMap');
     if (userMap[FirestoreHelper.isParentKey] == false) {
-      // /// this for one time
-      // addAllGamesToFirestore();
-      // addExamplesToFirestore();
-
       /// this for one time
       getAllLettersFromFirestore();
       getAllNumbersFromFirestore();
-      addSolution();
-      getAllStarNumFRomSharedPreference();
+      getAllVoicesForUser();
       getAllSolutionsForUser();
       getAllExamplesFromFirestore();
       getAllOPenGamesForUser();
@@ -235,54 +232,66 @@ class FirestoreProvider extends ChangeNotifier {
     initUser(childModel.toMap());
   }
 
-  addVoice(voiceMap) async {
-    await FirestoreHelper.firestoreHelper.addVoiceToFirestore(voiceMap);
-    await getAllVoicesForUser(voiceMap["code"]);
-    //generateNumOfStar(selectedLanguage);
+  updateNumOfStars(int stars, String exampleId) async {
+    await FirestoreHelper.firestoreHelper
+        .updateNumOfStars(stars, exampleId, userModel!.code!);
+    getAllSolutionsForUser();
+    notifyListeners();
+  }
 
-    //TODO: you should refactor this line there repeat
-    await getFromSharedPreference(selectedLanguage.name!);
-    numOfStar = allVoices
+  Future<int> getNumOfStars(String exampleId) async {
+    int num = await FirestoreHelper.firestoreHelper
+        .getNumOfStars(exampleId, userModel!.code!);
+    notifyListeners();
+    return num;
+  }
+
+  addVoice(voiceMap) async {
+    int stars = await getNumOfStars(selectedLanguage.exampleId);
+    await FirestoreHelper.firestoreHelper
+        .addVoiceToFirestore(voiceMap, userModel!.code!);
+    await getAllVoicesForUser();
+    allVoices
                 .firstWhere(
                     (element) => element.langId == selectedLanguage.name)
                 .percentageMatch! >=
             0.80
-        ? numOfStar + 2
-        : numOfStar + 1;
-    await setOnSharedPreference(selectedLanguage, numOfStar);
+        ? updateNumOfStars(
+            stars + 2, selectedLanguage.exampleId) //numOfStar + 2
+        : updateNumOfStars(stars + 1, selectedLanguage.exampleId);
     notifyListeners();
+    print('nummmmmmmmmmmmm${getNumOfStars(selectedLanguage.exampleId)}');
     print('تم اضافة الصوت بنجاح');
   }
 
-  getAllVoicesForUser(userCode) async {
-    allVoices =
-        await FirestoreHelper.firestoreHelper.getAllVoicesForUser(userCode);
+  getAllVoicesForUser() async {
+    allVoices = await FirestoreHelper.firestoreHelper
+        .getAllVoicesForUser(userModel!.code!);
     notifyListeners();
   }
 
-  updateVoice(
-      String voiceId, double percentMatch, double oldPercentMatch) async {
-    await FirestoreHelper.firestoreHelper.updateVoice(voiceId, percentMatch);
-    await getAllVoicesForUser(userModel!.code);
-    await getFromSharedPreference(selectedLanguage.name!);
+  updateVoice(Voice voice, double oldPercentMatch) async {
+    int stars = await getNumOfStars(selectedLanguage.exampleId);
+    await FirestoreHelper.firestoreHelper
+        .addVoiceToFirestore(voice.toMap(), userModel!.code!);
+    await getAllVoicesForUser();
     oldPercentMatch < 0.80
-        ? numOfStar = allVoices
+        ? stars = allVoices
                     .firstWhere(
                         (element) => element.langId == selectedLanguage.name)
                     .percentageMatch! >=
                 0.80
-            ? numOfStar + 1
-            : numOfStar
-        : numOfStar;
-    await setOnSharedPreference(
-        selectedLanguage, numOfStar); //selectedLanguage as Letter
+            ? stars + 1
+            : stars
+        : stars;
+    updateNumOfStars(stars, selectedLanguage.exampleId);
+    print(
+        'nummmmmmmmmmmmm${getNumOfStars(selectedLanguage.exampleId)}'); //selectedLanguage as Letter
     notifyListeners();
     print('تم تعديل الصوت');
   }
 
   addSolution() async {
-    //await setNumOfExampleSol();
-    // solutionMap["numOfSolutions"] = numOfExampleSol;
     for (var element in letters) {
       await FirestoreHelper.firestoreHelper.addSolutionToFirestore(
           Solution(exampleId: element.exampleId).toMap(), userModel!.code!);
@@ -294,16 +303,6 @@ class FirestoreProvider extends ChangeNotifier {
 
     ///
     await getAllSolutionsForUser();
-
-    ///solutionMap["code"]
-    /*await getFromSharedPreference(selectedLanguage.name!);
-    allSolutions
-                .firstWhere(
-                    (element) => element.exampleId == selectedLanguage.shape)
-                .numOfSolutions ==
-            3
-        ? await setOnSharedPreference(selectedLanguage, numOfStar + 1)
-        : null;*/
     notifyListeners();
     print('تم اضافة الحل بنجاح');
   }
@@ -317,24 +316,17 @@ class FirestoreProvider extends ChangeNotifier {
   }
 
   updateSolution(Solution solution) async {
-    //await setNumOfExampleSol();
-    //solution.numOfSolutions = numOfExampleSol;
+    int stars = await getNumOfStars(selectedLanguage.exampleId);
     await FirestoreHelper.firestoreHelper
         .addSolutionToFirestore(solution.toMap(), userModel!.code!);
-
-    ///updateSolution(solution)
     await getAllSolutionsForUser();
-
-    ///
-    await getFromSharedPreference(selectedLanguage.name!);
     allSolutions
                 .firstWhere(
                     (element) => element.exampleId == selectedLanguage.shape)
                 .numOfSolutions ==
             3
-        ? await setOnSharedPreference(selectedLanguage as Letter, numOfStar + 1)
+        ? await updateNumOfStars(stars + 1, selectedLanguage.exampleId)
         : null;
-    //?setOnSharedPreference(selectedLanguage as Letter,int.parse(listOfStarAndLockedForSelectedLetter[1]) + 1)+1:null;
     print('تم تعديل عدد الحلول');
     notifyListeners();
   }
@@ -414,7 +406,7 @@ class FirestoreProvider extends ChangeNotifier {
     print('${examplesWithoutSelected.length} result .....');
     //examplesWithoutSelected= DummyData.dummyData.examples.getRange(0,DummyData.dummyData.examples.length).toList();
     // checkIfThereSolutionsToSelectedLang();
-    getFromSharedPreference(selectedLanguage.name!);
+
     notifyListeners();
   }
 
@@ -462,50 +454,6 @@ class FirestoreProvider extends ChangeNotifier {
   //       : numOfExampleSol = solution.numOfSolutions!;
   //   notifyListeners();
   // }
-
-  addAllLetterToSharedPreference() async {
-    for (var element in letters) {
-      //SharedPreferenceHelper.sharedHelper.putLetter(element.name!, [element.isLocked.toString(),'0']);
-      await SharedPreferenceHelper.sharedHelper.putLetter(element.name!, 0);
-    }
-    for (var element in numbers) {
-      await SharedPreferenceHelper.sharedHelper.putLetter(element.name!, 0);
-    }
-    notifyListeners();
-  }
-
-  getFromSharedPreference(String nameOfLetter) {
-    // this variable i think not useful
-    numOfStar = SharedPreferenceHelper.sharedHelper.getLetter(nameOfLetter)!;
-    notifyListeners();
-  }
-
-  getAllStarNumFRomSharedPreference() async {
-    //TODO: do same thing(update to coins) with num and vidio
-    allStarNum = letters
-        .map((e) => SharedPreferenceHelper.sharedHelper.getLetter(e.name!)!)
-        .toList();
-    allStarNum.addAll(numbers
-        .map((e) => SharedPreferenceHelper.sharedHelper.getLetter(e.name!)!)
-        .toList());
-
-    /*(userModel as ChildModel).coins = (userModel as ChildModel).coins! + allStarNum.reduce((value, element) => value+element);
-    updateChildInfo(userModel as ChildModel);*/
-
-    // updateKidCoins(
-    //     allStarNum.sum);
-
-    // //allStarNum.fold(0,(value, element) => value+element
-    //print('coins equal ${(userModel as ChildModel) .coins!}');
-  }
-
-  setOnSharedPreference(Language language, int stars) async {
-    //SharedPreferenceHelper.sharedHelper.putLetter(letter.name!, [letter.isLocked.toString(),stars.toString()]);
-    await SharedPreferenceHelper.sharedHelper.putLetter(language.name!, stars);
-    getAllStarNumFRomSharedPreference();
-    getFromSharedPreference(language.name!);
-    notifyListeners();
-  }
 
   setGameSelected(Game selectedGame) {
     this.selectedGame = selectedGame;
@@ -575,20 +523,18 @@ class FirestoreProvider extends ChangeNotifier {
   check(int index, context, List images) async {
     if (images[0][index] == images[1]) {
       await updateSolution(Solution(
-        /*solutionId: '1',
-              userCode: userModel!.code,*/
         exampleId: selectedLanguage.exampleId,
         numOfSolutions: allSolutions
                 .firstWhere((element) =>
                     element.exampleId == selectedLanguage.exampleId)
                 .numOfSolutions! +
             1,
+        numOfStars: allSolutions
+            .firstWhere(
+                (element) => element.exampleId == selectedLanguage.exampleId)
+            .numOfStars,
       ));
 
-      print(allSolutions
-          .firstWhere(
-              (element) => element.exampleId == selectedLanguage.exampleId)
-          .numOfSolutions);
       allSolutions
                   .firstWhere((element) =>
                       element.exampleId == selectedLanguage.exampleId)

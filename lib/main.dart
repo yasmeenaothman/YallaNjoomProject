@@ -103,7 +103,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:yalla_njoom/helpers/shared_preference_helper.dart';
 import 'package:yalla_njoom/screens/test.dart';
 
 import 'providers/firestore_provider.dart';
@@ -132,7 +131,6 @@ import 'screens/videos_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreferenceHelper.sharedHelper.initSharedPreferences();
   runApp(
     ChangeNotifierProvider<FirestoreProvider>(
       create: (context) => FirestoreProvider(),
