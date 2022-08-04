@@ -84,6 +84,7 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import '../models/dummy_data.dart';
+import '../models/example.dart';
 import '../models/my_flutter_app.dart';
 import '../providers/firestore_provider.dart';
 import '../widgets/default_circular_avatar.dart';
@@ -144,9 +145,17 @@ class LettersScreen extends StatelessWidget {
                               },
                               child: DefaultStackWidget(
                                 imagePath: provider.lettersExample
-                                    .firstWhere((element) =>
-                                        provider.letters[index].exampleId ==
-                                        element.exampleId)
+                                    .firstWhere(
+                                      (element) =>
+                                          provider.letters[index].exampleId ==
+                                          element.exampleId,
+                                      orElse: () => Example(
+                                          exampleId: '',
+                                          img1: '',
+                                          img2: '',
+                                          img3: '',
+                                          isLetterExample: true),
+                                    )
                                     .img1!,
                                 btn: DefaultElevatedButton(
                                   onPressed: () {

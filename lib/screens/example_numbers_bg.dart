@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:yalla_njoom/screens/numbers_screen.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
@@ -20,6 +21,7 @@ class ExampleNumbers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
     images = generateImageList(provider: provider, isLetter: false);
     return ScaffoldWithBackground(
       body: Padding(
@@ -37,8 +39,9 @@ class ExampleNumbers extends StatelessWidget {
                 )),
             SizedBox(height: 250.h),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
               width: 306.w,
-              height: 65.h,
+              height: 80.h,
               decoration: BoxDecoration(
                 color: theme.colorScheme.secondary,
                 boxShadow: [
@@ -52,7 +55,9 @@ class ExampleNumbers extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'هيا نضغط على عنصر الذي يشمل ${provider.selectedLanguage.name!} ',
+                  'هيا نضغط على العنصر الذي يشمل ${provider.selectedLanguage.name!} ',
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
                   style: theme.textTheme.headline1,
                 ),
               ),

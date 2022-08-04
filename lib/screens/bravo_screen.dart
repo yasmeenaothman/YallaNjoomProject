@@ -230,12 +230,14 @@ class _BravoScreenState extends State<BravoScreen>
             height: 30.h,
           ),
           Visibility(
-            visible: provider.allSolutions
-                    .firstWhere((element) =>
-                        element.exampleId ==
-                        provider.selectedLanguage.exampleId)
-                    .numOfSolutions !=
-                3,
+            visible: provider.selectedLanguage == null
+                ? true
+                : provider.allSolutions
+                        .firstWhere((element) =>
+                            element.exampleId ==
+                            provider.selectedLanguage.exampleId)
+                        .numOfSolutions !=
+                    3,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -245,23 +247,27 @@ class _BravoScreenState extends State<BravoScreen>
             ),
           ),
           Visibility(
-            visible: provider.allSolutions
-                    .firstWhere((element) =>
-                        element.exampleId ==
-                        provider.selectedLanguage.exampleId)
-                    .numOfSolutions !=
-                3,
+            visible: provider.selectedLanguage == null
+                ? true
+                : provider.allSolutions
+                        .firstWhere((element) =>
+                            element.exampleId ==
+                            provider.selectedLanguage.exampleId)
+                        .numOfSolutions !=
+                    3,
             child: SizedBox(
               height: 40.h,
             ),
           ),
           Visibility(
-            visible: provider.allSolutions
-                    .firstWhere((element) =>
-                        element.exampleId ==
-                        provider.selectedLanguage.exampleId)
-                    .numOfSolutions !=
-                3,
+            visible: provider.selectedLanguage == null
+                ? true
+                : provider.allSolutions
+                        .firstWhere((element) =>
+                            element.exampleId ==
+                            provider.selectedLanguage.exampleId)
+                        .numOfSolutions !=
+                    3,
             child: GestureDetector(
               onTap: onPressed,
               child: Image.asset(

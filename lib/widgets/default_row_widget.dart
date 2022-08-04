@@ -179,7 +179,9 @@ class DefaultRowWidget extends StatelessWidget {
         numOfStar < 2
             ? null
             : nextIndex != -1
-                ? provider!.letters[nextIndex].isLocked = false
+                ? isLetter!
+                    ? provider!.letters[nextIndex].isLocked = false
+                    : provider!.numbers[nextIndex].isLocked = false
                 : null;
         return const Icon(
           MyFlutterApp.starFill,

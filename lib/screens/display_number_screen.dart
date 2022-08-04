@@ -103,6 +103,7 @@
 // //             ),
 import 'dart:io';
 
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -110,6 +111,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/example_numbers_bg.dart';
+import 'package:yalla_njoom/screens/numbers_screen.dart';
 
 import '../helpers/my_methods.dart';
 import '../models/my_flutter_app.dart';
@@ -175,104 +177,154 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                       children: [
                         Padding(
                           padding: EdgeInsets.only(top: 77.h, right: 20.w),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              DefaultCirculeAvatar(
-                                onTap: () async {
-                                  await provider.playAudio(isSound: true);
-                                },
-                                iconData: MyFlutterApp.volumeMedium,
-                                iconColor: const Color(0xFF034C1B),
-                                bgColor: const Color(0xFFDBECC2),
-                              ),
-                              recorder.isRecording
-                                  ? GestureDetector(
-                                      onTap: checkRecording,
-                                      child: Container(
-                                        height: 40.h,
-                                        width: 80.w,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFF84FFB5),
-                                          shape: BoxShape.rectangle,
-                                          borderRadius:
-                                              BorderRadius.circular(33),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: const Color(0x4D074785),
-                                                offset: Offset(3.w, 6.h),
-                                                blurRadius: 9.r),
-                                          ],
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: DefaultCirculeAvatar(
+                                      onTap: () async {
+                                        await provider.audioPlayer.stop();
+                                        await provider.setIsSoundPlaying(false);
+                                        AppRouter.router
+                                            .pushNamedWithReplacementFunction(
+                                                NumbersScreen.routeName);
+                                      },
+                                      iconData: MyFlutterApp.cancel,
+                                      iconColor: const Color(0xFF034C1B),
+                                      bgColor: const Color(0xFFDBECC2),
+                                    )),
+                                DefaultCirculeAvatar(
+                                  onTap: () async {
+                                    await provider.playAudio(isSound: true);
+                                  },
+                                  iconData: MyFlutterApp.volumeMedium,
+                                  iconColor: const Color(0xFF034C1B),
+                                  bgColor: const Color(0xFFDBECC2),
+                                ),
+                                recorder.isRecording
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 10.h, bottom: 10.h),
+                                        child: GestureDetector(
+                                          onTap: checkRecording,
+                                          child: Container(
+                                            height: 40.h,
+                                            width: 80.w,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFF84FFB5),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                                  BorderRadius.circular(33),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color:
+                                                        const Color(0x4D074785),
+                                                    offset: Offset(3.w, 6.h),
+                                                    blurRadius: 9.r),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.stop,
+                                                  color:
+                                                      const Color(0xFF074785),
+                                                  size: 18.r,
+                                                ),
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                StreamBuilder<
+                                                    RecordingDisposition>(
+                                                  stream: recorder.onProgress,
+                                                  builder: (context, snapshot) {
+                                                    final duration =
+                                                        snapshot.hasData
+                                                            ? snapshot
+                                                                .data!.duration
+                                                            : Duration.zero;
+                                                    String twoDigits(int n) =>
+                                                        n.toString().padLeft(1);
+                                                    final twoDigitMinutes =
+                                                        twoDigits(duration
+                                                            .inMinutes
+                                                            .remainder(60));
+                                                    final twoDigitSeconds =
+                                                        twoDigits(duration
+                                                            .inSeconds
+                                                            .remainder(60));
+                                                    return Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 5.h),
+                                                      child: Text(
+                                                        '$twoDigitMinutes:$twoDigitSeconds',
+                                                        style: TextStyle(
+                                                          fontSize: 18.sp,
+                                                          fontFamily: 'Tajawal',
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: const Color(
+                                                              0xFF074785),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.stop,
-                                              color: const Color(0xFF074785),
-                                              size: 18.r,
-                                            ),
-                                            SizedBox(
-                                              width: 5.w,
-                                            ),
-                                            StreamBuilder<RecordingDisposition>(
-                                              stream: recorder.onProgress,
-                                              builder: (context, snapshot) {
-                                                final duration = snapshot
-                                                        .hasData
-                                                    ? snapshot.data!.duration
-                                                    : Duration.zero;
-                                                String twoDigits(int n) =>
-                                                    n.toString().padLeft(1);
-                                                final twoDigitMinutes =
-                                                    twoDigits(duration.inMinutes
-                                                        .remainder(60));
-                                                final twoDigitSeconds =
-                                                    twoDigits(duration.inSeconds
-                                                        .remainder(60));
-                                                return Padding(
-                                                  padding:
-                                                      EdgeInsets.only(top: 5.h),
-                                                  child: Text(
-                                                    '$twoDigitMinutes:$twoDigitSeconds',
-                                                    style: TextStyle(
-                                                      fontSize: 18.sp,
-                                                      fontFamily: 'Tajawal',
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: const Color(
-                                                          0xFF074785),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
+                                      )
+                                    : Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 10.h, bottom: 10.h),
+                                        child: DefaultCirculeAvatar(
+                                          onTap: checkRecording,
+                                          iconData: MyFlutterApp.micNone,
+                                          iconColor: const Color(0xFF034C1B),
+                                          bgColor: const Color(0xFFDBECC2),
                                         ),
                                       ),
-                                    )
-                                  : Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 10.h, bottom: 10.h),
-                                      child: DefaultCirculeAvatar(
-                                        onTap: checkRecording,
-                                        iconData: MyFlutterApp.micNone,
-                                        iconColor: const Color(0xFF034C1B),
-                                        bgColor: const Color(0xFFDBECC2),
-                                      ),
-                                    ),
-                              DefaultCirculeAvatar(
-                                onTap: () {
-                                  AppRouter.router
-                                      .pushNamedWithReplacementFunction(
-                                          ExampleNumbers.routeName);
-                                },
-                                iconData: MyFlutterApp.arrowRight_2,
-                                iconColor: const Color(0xFF034C1B),
-                                bgColor: const Color(0xFFDBECC2),
-                              ),
-                            ],
+                                DefaultCirculeAvatar(
+                                  onTap: () {
+                                    return provider.allSolutions
+                                                .firstWhere((element) =>
+                                                    element.exampleId ==
+                                                    provider.selectedLanguage
+                                                        .exampleId)
+                                                .numOfSolutions ==
+                                            3
+                                        ? AppRouter.router
+                                            .pushNamedWithReplacementFunction(
+                                                BravoScreen.routeName, [
+                                            true,
+                                            true,
+                                            () {},
+                                            () {
+                                              AppRouter.router
+                                                  .pushNamedWithReplacementFunction(
+                                                      DisplayNumberScreen
+                                                          .routeName);
+                                            }
+                                          ])
+                                        : AppRouter.router
+                                            .pushNamedWithReplacementFunction(
+                                                ExampleNumbers.routeName);
+                                    /* AppRouter.router
+                                        .pushNamedWithReplacementFunction(
+                                            ExampleNumbers.routeName);*/
+                                  },
+                                  iconData: MyFlutterApp.arrowRight_2,
+                                  iconColor: const Color(0xFF034C1B),
+                                  bgColor: const Color(0xFFDBECC2),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -287,10 +339,20 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                       curve: Curves.easeIn,
                     )),
                     child: Center(
-                        child: Image.asset(
+                      child: Text(
+                        ArabicNumbers()
+                            .convert(provider.selectedLanguage.shape!),
+                        style: TextStyle(
+                            fontSize: 220.sp,
+                            fontWeight: FontWeight.w900,
+                            color: const Color(0xFF034C1B),
+                            fontFamily: 'Urdu',
+                            height: 0.0),
+                      ), /*Image.asset(
                       provider.selectedLanguage.shape!,
                       color: const Color(0xFF034C1B),
-                    )), //widget.imageUrl
+                    )*/
+                    ), //widget.imageUrl
                   )
                 ],
               ),

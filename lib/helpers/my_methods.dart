@@ -22,20 +22,38 @@ generateNumber() {
 }
 
 chooseLetterRandomly(
-    {required bool isFirstChoice, required FirestoreProvider provider}) {
-  int index = Random().nextInt(provider.letterExamplesWithoutSelected.length);
+    {required bool isFirstChoice,
+    required FirestoreProvider provider,
+    required bool isLetter}) {
+  int index = Random().nextInt((isLetter
+          ? provider.letterExamplesWithoutSelected
+          : provider.numberExamplesWithoutSelected)
+      .length);
   print(
       '////////////////////////////////////////////${provider.letterExamplesWithoutSelected.length}');
   return isFirstChoice
-      ? provider.letterExamplesWithoutSelected[index].img1
-      : provider.letterExamplesWithoutSelected[index].img2;
+      ? (isLetter
+              ? provider.letterExamplesWithoutSelected[index]
+              : provider.numberExamplesWithoutSelected[index])
+          .img1
+      : (isLetter
+              ? provider.letterExamplesWithoutSelected[index]
+              : provider.numberExamplesWithoutSelected[index])
+          .img2;
 }
 
 List generateImageList(
     {required FirestoreProvider provider, required bool isLetter}) {
   String imageForSelectedLang = '';
-  Example example = provider.lettersExample.firstWhere(
-      (element) => provider.selectedLanguage.exampleId == element.exampleId);
+  Example example =
+      (isLetter ? provider.lettersExample : provider.numbersExample).firstWhere(
+          (element) => provider.selectedLanguage.exampleId == element.exampleId,
+          orElse: () => Example(
+              exampleId: '',
+              img1: '',
+              img2: '',
+              img3: '',
+              isLetterExample: true));
   switch (provider.allSolutions
       .firstWhere(
           (element) => element.exampleId == provider.selectedLanguage.exampleId)
@@ -53,8 +71,10 @@ List generateImageList(
   }
   List<String> images = [
     imageForSelectedLang,
-    chooseLetterRandomly(isFirstChoice: true, provider: provider),
-    chooseLetterRandomly(isFirstChoice: false, provider: provider),
+    chooseLetterRandomly(
+        isFirstChoice: true, provider: provider, isLetter: isLetter),
+    chooseLetterRandomly(
+        isFirstChoice: false, provider: provider, isLetter: isLetter),
   ];
   images.shuffle();
   return [images, imageForSelectedLang];

@@ -111,7 +111,7 @@
 //                         .animate(animation),
 //                 child: LetterCardWidget(
 //                     //TODO: use imagePath from examples of this letter
-//                     letter: provider.selectedLanguage.shape!,
+//                     letter: provider.selectedLanguageshape!,
 //                     imagePath: 'assets/images/lion.png'),
 //               )
 //             ],

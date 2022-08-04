@@ -35,7 +35,6 @@ class Language {
 
 class Letter extends Language {
   String? song;
-  // TODO: here i think this need refactoring but later i will do
   Letter({
     required String name,
     required this.song,
@@ -43,20 +42,18 @@ class Letter extends Language {
     required String id_example,
     required bool isLocked,
     required String shape,
-  }) //required String imageUrl,
-  : super(
+  }) : super(
             name: name,
             sound: sound,
             exampleId: id_example,
             isLocked: isLocked,
-            shape: shape); //imageUrl: imageUrl,
+            shape: shape);
   Letter.fromMap(Map map)
       : song = map["song"],
         super(
           name: map["name"],
           sound: map["audio"],
           exampleId: map["id"],
-          //imageUrl: map["imageUrl"],
           isLocked: map["isLocked"],
           shape: map["shape"],
           soundRecordedPath: map["soundRecordedPath"],
@@ -81,15 +78,14 @@ class Number extends Language {
     required String id_example,
     required bool isLocked,
     required String shape,
-    required String imageUrl,
-  }) //required String imageUrl,
-  : super(
+    required this.imageUrl,
+  }) : super(
           name: name,
           sound: sound,
           exampleId: id_example,
           isLocked: isLocked,
           shape: shape,
-        ); //imageUrl: imageUrl,
+        );
   Number.fromMap(Map map)
       : imageUrl = map["imageUrl"],
         super(
@@ -100,4 +96,12 @@ class Number extends Language {
           shape: map["shape"],
           soundRecordedPath: map["soundRecordedPath"],
         );
+  @override
+  toMap() {
+    Map<String, dynamic> m = {
+      ...super.toMap(),
+      "imageUrl": imageUrl,
+    };
+    return m;
+  }
 }

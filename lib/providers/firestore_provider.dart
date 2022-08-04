@@ -100,7 +100,7 @@
 //   playAudio({required bool isSound}) async {
 //     //await convertSoundToByte();
 //     ByteData bytes = await rootBundle.load(isSound
-//         ? selectedLanguage.sound!
+//         ? selectedLanguagesound!
 //         : (selectedLanguage as Letter).song!); //load audio from assets
 //     audiobytes =
 //         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
@@ -286,7 +286,7 @@ class FirestoreProvider extends ChangeNotifier {
         : stars;
     updateNumOfStars(stars, selectedLanguage.exampleId);
     print(
-        'nummmmmmmmmmmmm${getNumOfStars(selectedLanguage.exampleId)}'); //selectedLanguage as Letter
+        'nummmmmmmmmmmmm${getNumOfStars(selectedLanguage.exampleId)}'); //selectedlanguage as Letter
     notifyListeners();
     print('تم تعديل الصوت');
   }
@@ -448,7 +448,7 @@ class FirestoreProvider extends ChangeNotifier {
 
   // checkIfThereSolutionsToSelectedLang() {
   //   Solution? solution = allSolutions.firstWhereOrNull(
-  //       (element) => element.exampleId == selectedLanguage.shape);
+  //       (element) => element.exampleId == selectedLanguageshape);
   //   solution == null
   //       ? numOfExampleSol = 0
   //       : numOfExampleSol = solution.numOfSolutions!;
@@ -484,6 +484,8 @@ class FirestoreProvider extends ChangeNotifier {
 
   getAllNumbersFromFirestore() async {
     numbers = await FirestoreHelper.firestoreHelper.getAllNumbers();
+    numbers.sort((a, b) => int.parse(a.shape!).compareTo(int.parse(b.shape!)));
+    notifyListeners();
   }
 
   checkGame(Function function) {
@@ -547,7 +549,9 @@ class FirestoreProvider extends ChangeNotifier {
               () {},
               () {
                 AppRouter.router.pushNamedWithReplacementFunction(
-                    LetterCardScreen.routeName);
+                    selectedLanguage is Letter
+                        ? LetterCardScreen.routeName
+                        : DisplayNumberScreen.routeName);
               }
             ])
           : AppRouter.router
