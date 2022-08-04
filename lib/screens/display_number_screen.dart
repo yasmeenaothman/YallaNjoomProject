@@ -182,20 +182,24 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: DefaultCirculeAvatar(
-                                      onTap: () async {
-                                        await provider.audioPlayer.stop();
-                                        await provider.setIsSoundPlaying(false);
-                                        AppRouter.router
-                                            .pushNamedWithReplacementFunction(
-                                                NumbersScreen.routeName);
-                                      },
-                                      iconData: MyFlutterApp.cancel,
-                                      iconColor: const Color(0xFF034C1B),
-                                      bgColor: const Color(0xFFDBECC2),
-                                    )),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 25.w),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: DefaultCirculeAvatar(
+                                        onTap: () async {
+                                          await provider.audioPlayer.stop();
+                                          await provider
+                                              .setIsSoundPlaying(false);
+                                          AppRouter.router
+                                              .pushNamedWithReplacementFunction(
+                                                  NumbersScreen.routeName);
+                                        },
+                                        iconData: MyFlutterApp.cancel,
+                                        iconColor: const Color(0xFF034C1B),
+                                        bgColor: const Color(0xFFDBECC2),
+                                      )),
+                                ),
                                 DefaultCirculeAvatar(
                                   onTap: () async {
                                     await provider.playAudio(isSound: true);
