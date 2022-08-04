@@ -120,6 +120,7 @@
 //     );
 //   }
 // }
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -235,7 +236,9 @@ class DefaultRowWidget extends StatelessWidget {
           height: 75.h,
           child: Center(
             child: Text(
-              language.shape!,
+              isLetter!
+                  ? language.shape!
+                  : ArabicNumbers().convert(language.shape),
               style: TextStyle(
                   fontSize: 55.sp,
                   color: Theme.of(context).primaryColor,

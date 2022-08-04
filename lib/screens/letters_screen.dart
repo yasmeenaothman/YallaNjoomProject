@@ -126,7 +126,7 @@ class LettersScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: ListView.separated(
-                          padding: EdgeInsets.only(top: 65.h, bottom: 65.h),
+                          padding: EdgeInsets.only(top: 75.h, bottom: 65.h),
                           itemBuilder: (context, index) {
                             indexValue = index;
                             indexValue++;

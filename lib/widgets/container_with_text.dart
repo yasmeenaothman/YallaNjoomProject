@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
 
 class ContainerWithText extends StatelessWidget {
   const ContainerWithText({
@@ -9,13 +11,14 @@ class ContainerWithText extends StatelessWidget {
   /// here only text name is different so you should make it on variable
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<FirestoreProvider>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(left: 60.w),
       child: Container(
         width: 206.w,
         padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 23.h),
         child: Text(
-          'هيا نضغط على حيوان يبدأ بحرف الألف',
+          'هيا نضغط على شيئ يبدأ ب${provider.selectedLanguage.name!}',
           softWrap: true,
           textDirection: TextDirection.rtl,
           //textAlign: TextAlign.center,
