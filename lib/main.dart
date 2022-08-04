@@ -104,6 +104,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/screens/test.dart';
+import 'package:yalla_njoom/screens/voice_screen.dart';
 
 import 'providers/firestore_provider.dart';
 import 'routers/app_router.dart';
@@ -172,7 +173,7 @@ class MyApp extends StatelessWidget {
         VideosScreen.routeName: (context) => const VideosScreen(),
         ParentsHomeScreen.routeName: (context) => const ParentsHomeScreen(),
         EditChildProfile.routeName: (context) => EditChildProfile(),
-        DisplayNumberScreen.routeName: (context) => DisplayNumberScreen()
+        DisplayNumberScreen.routeName: (context) => DisplayNumberScreen(),
       },
       onGenerateRoute: (routeSettings) {
         String? name = routeSettings.name;
@@ -181,7 +182,7 @@ class MyApp extends StatelessWidget {
           if (name == BravoScreen.routeName) {
             return BravoScreen(
               lastExample: (arguments as List)[0] as bool,
-              isPronunciationWidget: (arguments as List)[1] as bool,
+              isPronunciationWidget: arguments[1] as bool,
               onPressed: arguments[2] as Function(),
               onTab: arguments[3] as Function(),
             );
@@ -190,6 +191,8 @@ class MyApp extends StatelessWidget {
               isSum: (arguments as List)[0] as bool,
               isMix: arguments[1] as bool,
             );
+          } else if (name == VoiceScreen.routeName) {
+            return VoiceScreen(isLetter: (arguments as List)[0] as bool);
           } else {
             return const Scaffold(
               body: Text('ERROR 404!'),

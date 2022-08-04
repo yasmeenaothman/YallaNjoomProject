@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
+import 'package:yalla_njoom/routers/app_router.dart';
+import 'package:yalla_njoom/screens/voice_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 
 import '../widgets/scaffold_with_background.dart';
@@ -38,8 +42,10 @@ class ChildTrackerScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 25.w),
                     child: _buildMyDefaultButton(theme,
                         color: theme.primaryColor,
-                        text: 'متابعة قراءات الحروف',
-                        onPressed: () {}),
+                        text: 'متابعة قراءات الحروف', onPressed: () {
+                      AppRouter.router.pushNamedWithReplacementFunction(
+                          VoiceScreen.routeName, [true]);
+                    }),
                   ),
                 ]),
             SizedBox(
@@ -49,8 +55,10 @@ class ChildTrackerScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 25.w),
               child: _buildMyDefaultButton(theme,
                   color: const Color(0xFFFFA4AC),
-                  text: 'متابعة قراءات الأرقام',
-                  onPressed: () {}),
+                  text: 'متابعة قراءات الأرقام', onPressed: () {
+                AppRouter.router.pushNamedWithReplacementFunction(
+                    VoiceScreen.routeName, [false]);
+              }),
             )
           ],
         ),

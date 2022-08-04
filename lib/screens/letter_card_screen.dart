@@ -162,6 +162,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
   late String fileRecPath = '';
   bool isRecorderReady = false;
   late FirestoreProvider provider;
+  Duration recordLength = Duration.zero;
   @override
   void initState() {
     controller =
@@ -258,6 +259,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                                       final duration = snapshot.hasData
                                           ? snapshot.data!.duration
                                           : Duration.zero;
+                                      recordLength = duration;
                                       String twoDigits(int n) =>
                                           n.toString().padLeft(1);
                                       final twoDigitMinutes = twoDigits(
@@ -345,6 +347,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
     debugPrint(
         'Recorder Audio: ${audioFile.path}'); // TODO: this will store in firestore
     debugPrint('تم تسجيل الصوت بنجاح');
+
     //TODO: here we need to make matching  and show the result of matching to the kid
     double result =
         matchTwoAudios(provider.selectedLanguage.sound!, fileRecPath);
@@ -382,11 +385,15 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                 ? null
                 : provider.updateVoice(
                     Voice(
+                        length: recordLength.inSeconds.toString(),
+                        isLetter: true,
                         langId: provider.selectedLanguage.name,
                         voicePath: fileRecPath,
                         percentageMatch: result),
                     voice.percentageMatch!)
             : provider.addVoice(Voice(
+                    length: recordLength.inSeconds.toString(),
+                    isLetter: true,
                     langId: provider.selectedLanguage.name,
                     voicePath: fileRecPath,
                     percentageMatch: result)

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,19 +11,26 @@ import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 
+import '../helpers/firestorage_helper.dart';
 import '../widgets/default_elevated_button.dart';
 
-class EditChildProfile extends StatelessWidget {
+class EditChildProfile extends StatefulWidget {
   EditChildProfile({
     Key? key,
   }) : super(key: key);
 
   static String routeName = 'EditChildProfile';
+
+  @override
+  State<EditChildProfile> createState() => _EditChildProfileState();
+}
+
+class _EditChildProfileState extends State<EditChildProfile> {
   TextEditingController? controller;
+  String? imageUrl;
+  File? file;
+
   // EditChildProfile({Key? key, required this.childModel}) : super(key: key);
-  // ChildModel childModel;
-  // static String routeName = 'EditChildProfile';
-  // TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -43,11 +52,34 @@ class EditChildProfile extends StatelessWidget {
                   height: 88.h,
                 ),
                 //TODO:make the image.network because it token from firebase
-                Image.asset(
-                  (provider.userModel as ChildModel).imageUrl!,
-                  height: 127.h,
-                  width: 127.w,
-                ),
+                GestureDetector(
+                    onTap: () async {
+                      file = await FirestorageHelper.firestorageHelper
+                          .selectFile();
+                      if (file != null) {
+                        imageUrl = await FirestorageHelper.firestorageHelper
+                            .uploadImage(file!);
+                        setState(() {});
+                      }
+                    },
+                    child: Container(
+                      height: 127.h,
+                      width: 127.w,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(color: theme.primaryColor, width: 3)),
+                      child: file != null
+                          ? Image.file(
+                              file!,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              (provider.userModel as ChildModel).imageUrl!,
+                              fit: BoxFit.cover,
+                            ),
+                    )),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -98,7 +130,9 @@ class EditChildProfile extends StatelessWidget {
                   onPressed: () {
                     ChildModel childModel = ChildModel(
                         name: controller!.text,
-                        imageUrl: 'assets/images/kid_img.png',
+                        imageUrl: imageUrl == null
+                            ? (provider.userModel as ChildModel).imageUrl
+                            : imageUrl,
                         code: (provider.userModel as ChildModel).code);
                     Provider.of<FirestoreProvider>(context, listen: false)
                         .updateChildInfo(childModel);

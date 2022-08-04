@@ -20,7 +20,6 @@ class DrawerWidget extends StatelessWidget {
   final String coins = '120';
 
   final bool isParent;
-  final bool isFemale = false;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -32,7 +31,7 @@ class DrawerWidget extends StatelessWidget {
             color: theme.primaryColor,
             child: Center(
               child: Column(children: [
-                _buildCircleAvatar(),
+                _buildCircleAvatar(provider, theme),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -135,10 +134,23 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-  CircleAvatar _buildCircleAvatar() {
-    return CircleAvatar(
-      radius: 50.r,
-      child: Image.asset('assets/images/${isFemale ? 'girl.png' : 'boy.png'}'),
+  _buildCircleAvatar(FirestoreProvider provider, theme) {
+    return Container(
+      width: 100.w,
+      height: 100.h,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+      ),
+      child: isParent
+          ? Image.asset(
+              'assets/images/boy.png',
+              fit: BoxFit.cover,
+            )
+          : Image.network(
+              (provider.userModel as ChildModel).imageUrl!,
+              fit: BoxFit.cover,
+            ),
     );
   }
 }

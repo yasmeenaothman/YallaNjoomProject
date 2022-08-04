@@ -184,6 +184,9 @@ class FirestoreProvider extends ChangeNotifier {
 
   List<dynamic> parentsChildren = [];
   List<dynamic> searchResutl = [];
+  ChildModel? childPressed;
+  List<Voice> childPressedLettersVoices = [];
+  List<Voice> childPressedNumbersVoices = [];
 
   initUsersCodes() async {
     QuerySnapshot<Map<String, dynamic>> allUsersQuerySnapshot =
@@ -204,7 +207,9 @@ class FirestoreProvider extends ChangeNotifier {
 
     print('adduser$userMap');
     initUser(userMap);
-    addSolution();
+    if (!userMap[FirestoreHelper.isParentKey]) {
+      addSolution();
+    }
     getAllSolutionsForUser();
   }
 
@@ -441,6 +446,7 @@ class FirestoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  playChildrenVoice() {}
   Voice? checkIfThereVoiceToSelectedLang() {
     return allVoices
         .firstWhereOrNull((element) => element.langId == selectedLanguage.name);
@@ -626,5 +632,26 @@ class FirestoreProvider extends ChangeNotifier {
         .map((e) => ChildModel.fromMap(e.data()))
         .toList();
     notifyListeners();
+  }
+
+  setChildPressedByParent({required childCode}) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirestoreHelper.firestoreHelper.getUserByCode(childCode);
+    childPressed = ChildModel.fromMap(querySnapshot.docs[0].data());
+    getChildPressedVoices(childCode: childCode);
+  }
+
+  getChildPressedVoices({required childCode}) async {
+    List<Voice>? childPressedVoices =
+        await FirestoreHelper.firestoreHelper.getAllVoicesForUser(childCode);
+    if (childPressedVoices.isNotEmpty) {
+      childPressedLettersVoices = [];
+      childPressedNumbersVoices = [];
+      childPressedVoices
+          .map((e) => e.isLetter
+              ? childPressedLettersVoices.add(e)
+              : childPressedNumbersVoices.add(e))
+          .toList();
+    }
   }
 }

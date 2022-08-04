@@ -7,17 +7,21 @@ class ImageWithBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.antiAlias,
       height: 40.h,
       width: 40.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
+        shape: BoxShape.circle,
         border: Border.all(
 
             ///this color will take from theme (primary color)
             color: const Color(0xFF074785),
             width: 2),
       ),
-      child: Image.asset(imageUrl),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

@@ -7,16 +7,16 @@ import 'package:yalla_njoom/widgets/image_with_border.dart';
 
 class DefaultChildCard extends StatelessWidget {
   ChildModel childModel;
-  DefaultChildCard({Key? key, required this.childModel}) : super(key: key);
+  final Function() onTap;
+  DefaultChildCard({Key? key, required this.childModel, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: GestureDetector(
-        onTap: () {
-          AppRouter.router.pushNamedFunction(ChildTrackerScreen.routeName);
-        },
+        onTap: onTap,
         child: Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 18.w),

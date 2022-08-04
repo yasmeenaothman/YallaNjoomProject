@@ -14,6 +14,7 @@ import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 import '../models/dummy_data.dart';
 import '../models/my_flutter_app.dart';
 import '../widgets/default_child_card.dart';
+import 'child_tracker_screen.dart';
 
 class ParentsHomeScreen extends StatefulWidget {
   const ParentsHomeScreen({
@@ -152,7 +153,16 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
       child: ListView.separated(
         itemBuilder: (context, index) {
           return DefaultChildCard(
-              childModel: firestoreProvider.parentsChildren[index]);
+            childModel: firestoreProvider.parentsChildren[index],
+            onTap: () {
+              setChildPressed(
+                  childCode:
+                      (firestoreProvider.parentsChildren[index] as ChildModel)
+                          .code,
+                  provider: firestoreProvider);
+              AppRouter.router.pushNamedFunction(ChildTrackerScreen.routeName);
+            },
+          );
         },
         separatorBuilder: (context, index) => SizedBox(
           height: 20.h,
@@ -167,6 +177,15 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
       child: ListView.separated(
           itemBuilder: (context, index) {
             return DefaultChildCard(
+                onTap: () {
+                  setChildPressed(
+                      childCode:
+                          (firestoreProvider.searchResutl[index] as ChildModel)
+                              .code,
+                      provider: firestoreProvider);
+                  AppRouter.router
+                      .pushNamedFunction(ChildTrackerScreen.routeName);
+                },
                 childModel: firestoreProvider.searchResutl[index]);
           },
           separatorBuilder: (context, index) => SizedBox(
@@ -174,6 +193,10 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
               ),
           itemCount: firestoreProvider.searchResutl.length),
     );
+  }
+
+  setChildPressed({required childCode, required FirestoreProvider provider}) {
+    provider.setChildPressedByParent(childCode: childCode);
   }
 
   Column _buildNoChildWidget(ThemeData theme, String text) {

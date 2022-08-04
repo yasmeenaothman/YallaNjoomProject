@@ -139,6 +139,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
 
   final recorder = FlutterSoundRecorder();
 
+  Duration recordLength = Duration.zero;
   late String fileRecPath = '';
 
   bool isRecorderReady = false;
@@ -252,6 +253,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                                                             ? snapshot
                                                                 .data!.duration
                                                             : Duration.zero;
+                                                    recordLength = duration;
                                                     String twoDigits(int n) =>
                                                         n.toString().padLeft(1);
                                                     final twoDigitMinutes =
@@ -372,11 +374,13 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
     if (!isRecorderReady) return;
 
     final path = await recorder.stopRecorder();
+
     final audioFile = File(path!);
     fileRecPath = audioFile.path;
     debugPrint(
         'Recorder Audio: ${audioFile.path}'); // TODO: this will store in firestore
     debugPrint('تم تسجيل الصوت بنجاح');
+
     //TODO: here we need to make matching  and show the result of matching to the kid
     double result =
         matchTwoAudios(provider.selectedLanguage.sound!, fileRecPath);
@@ -416,13 +420,18 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                     Voice(
                         langId: provider.selectedLanguage.name,
                         voicePath: fileRecPath,
-                        percentageMatch: result),
+                        percentageMatch: result,
+                        isLetter: false,
+                        length: recordLength.inSeconds.toString()),
                     voice.percentageMatch!)
             : provider.addVoice(Voice(
                     langId: provider.selectedLanguage.name,
                     voicePath: fileRecPath,
-                    percentageMatch: result)
+                    percentageMatch: result,
+                    isLetter: false,
+                    length: recordLength.inSeconds.toString())
                 .toMap());
+
         //TODO: sure from this widget by wafaa
         AppRouter.router
             .pushNamedWithReplacementFunction(BravoScreen.routeName, [
@@ -437,6 +446,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                 DisplayNumberScreen.routeName);
           }
         ]);
+        debugPrint('Duration$recordLength');
         debugPrint('نطقك صحيح');
       } catch (e) {
         print(e);
