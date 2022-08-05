@@ -75,7 +75,6 @@
 //     );
 //   }
 // }
-import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +82,6 @@ import 'package:yalla_njoom/models/solution.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
-import '../models/dummy_data.dart';
 import '../models/example.dart';
 import '../models/my_flutter_app.dart';
 import '../providers/firestore_provider.dart';

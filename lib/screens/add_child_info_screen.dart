@@ -15,7 +15,6 @@ import '../models/user_model.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/default_circular_avatar.dart';
 import '../widgets/default_elevated_button.dart';
-import 'child_home_screen.dart';
 
 class AddChildInfoScreen extends StatelessWidget {
   static const String routeName = 'AddChildInfoScreen';
@@ -75,9 +74,16 @@ class AddChildInfoScreen extends StatelessWidget {
                     print('current user$currentUser');
                     if (currentUser != null) {
                       if (!currentUser.isParent) {
+                        // firestoreProvider.addChildToParent(
+                        //     firestoreProvider.userModel!.code!, {
+                        //   ...currentUser.toMap(),
+                        //   FirestoreHelper.userNameKey: childName,
+                        //   FirestoreHelper.nameSearchKey:
+                        //       setSearchParam(childName!),
+                        // });
                         firestoreProvider.addChildToParent(
                             firestoreProvider.userModel!.code!, {
-                          ...currentUser.toMap(),
+                          FirestoreHelper.userCodeKey: currentUser.code,
                           FirestoreHelper.userNameKey: childName,
                           FirestoreHelper.nameSearchKey:
                               setSearchParam(childName!),

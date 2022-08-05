@@ -115,7 +115,6 @@
 //   }
 // }
 
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -187,7 +186,7 @@ class FirestoreProvider extends ChangeNotifier {
   ChildModel? childPressed;
   List<Voice> childPressedLettersVoices = [];
   List<Voice> childPressedNumbersVoices = [];
-
+  ChildModel? parentUser;
   initUsersCodes() async {
     QuerySnapshot<Map<String, dynamic>> allUsersQuerySnapshot =
         await FirestoreHelper.firestoreHelper.getAllUsers();
@@ -595,12 +594,60 @@ class FirestoreProvider extends ChangeNotifier {
     }
   }
 
+  // getParentsChildren(String code) async {
+  //   QuerySnapshot<Map<String, dynamic>> parentsChildrenSnapShot =
+  //       await FirestoreHelper.firestoreHelper.getParentsChildren(code);
+  //   parentsChildren = parentsChildrenSnapShot.docs
+  //       .map((e) => ChildModel.fromMap(e.data()))
+  //       .toList();
+  //   notifyListeners();
+  // }
+
   getParentsChildren(String code) async {
     QuerySnapshot<Map<String, dynamic>> parentsChildrenSnapShot =
         await FirestoreHelper.firestoreHelper.getParentsChildren(code);
-    parentsChildren = parentsChildrenSnapShot.docs
-        .map((e) => ChildModel.fromMap(e.data()))
-        .toList();
+    List parentChildModels =
+        parentsChildrenSnapShot.docs.map((e) => e.data()).toList();
+    parentsChildren = await Future.wait(parentChildModels.map((e) async {
+      var querySnapshot = await FirestoreHelper.firestoreHelper
+          .getUserByCode(e[FirestoreHelper.userCodeKey]);
+      Map map = querySnapshot.docs[0].data();
+      return ChildModel.fromMap({
+        ...map,
+        FirestoreHelper.userNameKey: e[FirestoreHelper.userNameKey]
+      });
+    }));
+    //   parentChildModels.map((e) {
+    // var querySnapshot = await FirestoreHelper.firestoreHelper.getUserByCode(e);
+    //   Map map = querySnapshot.docs[0].data();
+    //   parentUser = ChildModel.fromMap(
+    //     {
+    //       FirestoreHelper.userNameKey: name,
+    //       ...map,
+    //     },
+    //   );
+    //     getUserByCode(
+    //         e[FirestoreHelper.userCodeKey], e[FirestoreHelper.userNameKey]);
+    //     return parentUser;
+    //   }).toList();
+    /**
+     * [{name: wa, code:1222, searchKey:[w,wa]}
+     * {name: wa, code:1222, searchKey:[w,wa]}]
+     */
+
+    // parentsChildrenSnapShot.docs.map((e) {
+    //   print(e.data()[FirestoreHelper.userCodeKey]);
+    //   FirestoreHelper.firestoreHelper
+    //       .getUserByCode(e.data()[FirestoreHelper.userCodeKey])
+    //       .then((value) {
+    //     parentsChildren.add(ChildModel.fromMap({
+    //       ...value.docs[0].data(),
+    //       FirestoreHelper.nameSearchKey: e.data()[FirestoreHelper.nameSearchKey]
+    //     }));
+    //     print(parentsChildren[0].name);
+    //   });
+    // }).toList();
+    // print(parentsChildren.length);
     notifyListeners();
   }
 

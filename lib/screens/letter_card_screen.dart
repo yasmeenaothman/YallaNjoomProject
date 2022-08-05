@@ -125,7 +125,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -133,8 +132,6 @@ import 'package:yalla_njoom/screens/bravo_screen.dart';
 import 'package:yalla_njoom/screens/examples_screen.dart';
 import 'package:yalla_njoom/screens/letters_screen.dart';
 import 'package:yalla_njoom/screens/music_screen.dart';
-import 'package:yalla_njoom/screens/parents_home_screen.dart';
-
 import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
 import 'package:yalla_njoom/widgets/letter_cart_widget.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
@@ -335,7 +332,8 @@ class _LetterCardScreenState extends State<LetterCardScreen>
   // Recording Methods
   Future record() async {
     if (!isRecorderReady) return;
-    await recorder.startRecorder(toFile: 'audio');
+    await recorder.startRecorder(
+        toFile: '${provider.selectedLanguage.name}${provider.userModel!.code}');
   }
 
   Future stop() async {

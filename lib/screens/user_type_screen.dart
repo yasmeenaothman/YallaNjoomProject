@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/helpers/firestorage_helper.dart';
-import 'package:yalla_njoom/helpers/firestore_helper.dart';
 import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';

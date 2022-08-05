@@ -126,7 +126,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../models/dummy_data.dart';
 import '../models/language.dart';
 import '../models/my_flutter_app.dart';
 import '../providers/firestore_provider.dart';

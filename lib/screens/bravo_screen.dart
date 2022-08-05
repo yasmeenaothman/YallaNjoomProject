@@ -125,17 +125,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/providers/firestore_provider.dart';
-import 'package:yalla_njoom/screens/child_home_screen.dart';
-import 'package:yalla_njoom/screens/letter_card_screen.dart';
-import 'package:yalla_njoom/screens/parents_home_screen.dart';
-
 import 'package:yalla_njoom/widgets/bravo_dialog.dart';
 import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
 
 import '../models/my_flutter_app.dart';
-import '../routers/app_router.dart';
 
 class BravoScreen extends StatefulWidget {
   static const String routeName = 'BravoScreen';

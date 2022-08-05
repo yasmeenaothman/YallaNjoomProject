@@ -170,19 +170,12 @@
 //     );
 //   }
 // }
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:store_redirect/store_redirect.dart';
-import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
-import '../models/game.dart';
 import '../models/my_flutter_app.dart';
 import '../providers/firestore_provider.dart';
 import '../routers/app_router.dart';

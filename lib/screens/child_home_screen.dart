@@ -2,7 +2,6 @@ import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import '../models/dummy_data.dart';
 import '../providers/firestore_provider.dart';

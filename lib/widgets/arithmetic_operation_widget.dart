@@ -2,19 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:yalla_njoom/helpers/firestore_helper.dart';
-import 'package:yalla_njoom/models/user_model.dart';
-import 'package:yalla_njoom/routers/app_router.dart';
-import 'package:yalla_njoom/screens/parents_home_screen.dart';
-import 'package:yalla_njoom/screens/user_type_screen.dart';
-import 'package:yalla_njoom/widgets/confirm_button_widget.dart';
-import 'package:yalla_njoom/widgets/default_elevated_button.dart';
-import 'package:yalla_njoom/widgets/user_code_dialog.dart';
 
-import '../helpers/my_methods.dart';
-import '../providers/firestore_provider.dart';
-import 'custom_dialog.dart';
+import 'default_elevated_button.dart';
 
 class ArthOperationWidget extends StatefulWidget {
   final Function onPressed;

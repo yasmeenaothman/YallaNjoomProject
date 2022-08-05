@@ -7,7 +7,6 @@ import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import '../models/dummy_data.dart';
 import '../models/my_flutter_app.dart';
 import '../routers/app_router.dart';
-import '../widgets/container_with_image.dart';
 import '../widgets/default_circular_avatar.dart';
 import '../widgets/default_stack_widget.dart';
 import '../widgets/scaffold_with_background.dart';

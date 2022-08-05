@@ -1,11 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:yalla_njoom/helpers/firestore_helper.dart';
 import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
@@ -15,7 +12,7 @@ import '../helpers/firestorage_helper.dart';
 import '../widgets/default_elevated_button.dart';
 
 class EditChildProfile extends StatefulWidget {
-  EditChildProfile({
+  const EditChildProfile({
     Key? key,
   }) : super(key: key);
 
@@ -63,23 +60,38 @@ class _EditChildProfileState extends State<EditChildProfile> {
                       }
                     },
                     child: Container(
-                      height: 127.h,
-                      width: 127.w,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: theme.primaryColor, width: 3)),
-                      child: file != null
-                          ? Image.file(
-                              file!,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.network(
-                              (provider.userModel as ChildModel).imageUrl!,
-                              fit: BoxFit.cover,
-                            ),
-                    )),
+                        height: 127.h,
+                        width: 127.w,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: file == null
+                                    ? NetworkImage(
+                                        (provider.userModel as ChildModel)
+                                            .imageUrl!,
+                                      )
+                                    : FileImage(file!) as ImageProvider),
+                            border: Border.all(
+                              color: theme.primaryColor,
+                              width: 3,
+                            )),
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: theme.primaryColor.withOpacity(0.5),
+                          size: 50.r,
+                        )
+                        //  file != null
+                        //     ? Image.file(
+                        //         file!,
+                        //         fit: BoxFit.cover,
+                        //       )
+                        //     : Image.network(
+                        //         (provider.userModel as ChildModel).imageUrl!,
+                        //         fit: BoxFit.cover,
+                        //       ),
+                        )),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -130,9 +142,8 @@ class _EditChildProfileState extends State<EditChildProfile> {
                   onPressed: () {
                     ChildModel childModel = ChildModel(
                         name: controller!.text,
-                        imageUrl: imageUrl == null
-                            ? (provider.userModel as ChildModel).imageUrl
-                            : imageUrl,
+                        imageUrl: imageUrl ??
+                            (provider.userModel as ChildModel).imageUrl,
                         code: (provider.userModel as ChildModel).code);
                     Provider.of<FirestoreProvider>(context, listen: false)
                         .updateChildInfo(childModel);

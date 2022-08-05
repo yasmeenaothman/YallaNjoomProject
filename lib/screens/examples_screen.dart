@@ -1,15 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
-import 'package:yalla_njoom/screens/bravo_screen.dart';
 import 'package:yalla_njoom/screens/letter_card_screen.dart';
-import 'package:yalla_njoom/screens/letters_screen.dart';
-import 'package:yalla_njoom/widgets/toast_dialog_widget.dart';
 
 import '../helpers/my_methods.dart';
-import '../models/solution.dart';
 import '../providers/firestore_provider.dart';
 import '../widgets/container_with_image.dart';
 import '../widgets/container_with_text.dart';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yalla_njoom/models/user_model.dart';
-import 'package:yalla_njoom/routers/app_router.dart';
-import 'package:yalla_njoom/screens/child_tracker_screen.dart';
 import 'package:yalla_njoom/widgets/image_with_border.dart';
 
 class DefaultChildCard extends StatelessWidget {

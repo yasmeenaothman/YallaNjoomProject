@@ -215,14 +215,12 @@ import 'package:provider/provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/display_number_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
-import '../models/dummy_data.dart';
 import '../models/my_flutter_app.dart';
 import '../models/solution.dart';
 import '../providers/firestore_provider.dart';
 import '../widgets/default_circular_avatar.dart';
 import '../widgets/default_row_widget.dart';
 import '../widgets/default_stack_widget.dart';
-import '../widgets/drawer_widget.dart';
 import '../widgets/scaffold_with_background.dart';
 import 'child_home_screen.dart';
 

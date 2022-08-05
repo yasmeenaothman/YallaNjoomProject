@@ -178,7 +178,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                       children: [
                         Padding(
                           padding: EdgeInsets.only(top: 77.h, right: 20.w),
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -367,7 +367,8 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
 
   Future record() async {
     if (!isRecorderReady) return;
-    await recorder.startRecorder(toFile: 'audio');
+    await recorder.startRecorder(
+        toFile: '${provider.selectedLanguage.name}${provider.userModel!.code}');
   }
 
   Future stop() async {
