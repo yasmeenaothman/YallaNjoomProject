@@ -103,6 +103,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:yalla_njoom/screens/test.dart';
 import 'package:yalla_njoom/screens/voice_screen.dart';
 
 import 'providers/firestore_provider.dart';
@@ -155,6 +156,9 @@ class MyApp extends StatelessWidget {
       navigatorKey: AppRouter.router.routerKey,
       routes: {
         '/': (context) => FirebaseConfiguration(),
+        TestScreen.routeName: (context) => TestScreen(
+              title: '',
+            ),
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
         AddChildInfoScreen.routeName: (context) => AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),

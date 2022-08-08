@@ -144,7 +144,8 @@ class _EditChildProfileState extends State<EditChildProfile> {
                         name: controller!.text,
                         imageUrl: imageUrl ??
                             (provider.userModel as ChildModel).imageUrl,
-                        code: (provider.userModel as ChildModel).code);
+                        code: (provider.userModel as ChildModel).code,
+                        coins: (provider.userModel as ChildModel).coins);
                     Provider.of<FirestoreProvider>(context, listen: false)
                         .updateChildInfo(childModel);
 

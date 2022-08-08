@@ -28,6 +28,12 @@ class _VoiceScreenState extends State<VoiceScreen> {
   Duration lengthOfAudio = Duration.zero;
 
   @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     audioPlayer.onPlayerComplete.listen((event) => setState(() {
@@ -108,6 +114,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
             GestureDetector(
               onTap: () async {
                 await audioPlayer.setSourceDeviceFile(voice.voicePath!);
+
                 isPlaying = true;
                 await audioPlayer.resume();
                 voicePressedIndex = index;

@@ -122,6 +122,7 @@
 //         ],
 //       );
 // }
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -130,6 +131,12 @@ import 'package:yalla_njoom/widgets/bravo_dialog.dart';
 import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
 
 import '../models/my_flutter_app.dart';
+
+enum BravoType {
+  fullBravo,
+  finalBravo,
+  pronunciationPravo,
+}
 
 class BravoScreen extends StatefulWidget {
   static const String routeName = 'BravoScreen';
@@ -224,14 +231,14 @@ class _BravoScreenState extends State<BravoScreen>
             height: 30.h,
           ),
           Visibility(
-            visible: provider.selectedLanguage == null
-                ? true
-                : provider.allSolutions
-                        .firstWhere((element) =>
-                            element.exampleId ==
-                            provider.selectedLanguage.exampleId)
-                        .numOfSolutions !=
-                    3,
+            visible: widget.lastExample ? false : true,
+            // ? true
+            // : provider.allSolutions
+            //         .firstWhere((element) =>
+            //             element.exampleId ==
+            //             provider.selectedLanguage.exampleId)
+            //         .numOfSolutions !=
+            //     3,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -241,27 +248,29 @@ class _BravoScreenState extends State<BravoScreen>
             ),
           ),
           Visibility(
-            visible: provider.selectedLanguage == null
-                ? true
-                : provider.allSolutions
-                        .firstWhere((element) =>
-                            element.exampleId ==
-                            provider.selectedLanguage.exampleId)
-                        .numOfSolutions !=
-                    3,
+            visible: widget.lastExample ? false : true,
+            //  provider.selectedLanguage == null
+            //     ? true
+            //     : provider.allSolutions
+            //             .firstWhere((element) =>
+            //                 element.exampleId ==
+            //                 provider.selectedLanguage.exampleId)
+            //             .numOfSolutions !=
+            //         3,
             child: SizedBox(
               height: 40.h,
             ),
           ),
           Visibility(
-            visible: provider.selectedLanguage == null
-                ? true
-                : provider.allSolutions
-                        .firstWhere((element) =>
-                            element.exampleId ==
-                            provider.selectedLanguage.exampleId)
-                        .numOfSolutions !=
-                    3,
+            visible: widget.lastExample ? false : true,
+            // provider.selectedLanguage == null
+            //     ? true
+            //     : provider.allSolutions
+            //             .firstWhere((element) =>
+            //                 element.exampleId ==
+            //                 provider.selectedLanguage.exampleId)
+            //             .numOfSolutions !=
+            //         3,
             child: GestureDetector(
               onTap: onPressed,
               child: Image.asset(

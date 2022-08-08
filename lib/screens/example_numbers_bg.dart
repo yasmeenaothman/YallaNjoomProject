@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -71,20 +72,20 @@ class ExampleNumbers extends StatelessWidget {
                     onTap: () {
                       provider.check(0, context, images);
                     },
-                    child: circularBorder(
-                      theme,
-                      images[0][0],
-                    )),
+                    child: Image.asset(
+                        images[0][0])), //circularBorder(theme, images[0][0],)),
                 GestureDetector(
                     onTap: () {
                       provider.check(1, context, images);
                     },
-                    child: circularBorder(theme, images[0][1])),
+                    child: Image.asset(
+                        images[0][1])), //circularBorder(theme, images[0][1])),
                 GestureDetector(
                     onTap: () {
                       provider.check(2, context, images);
                     },
-                    child: circularBorder(theme, images[0][2])),
+                    child: Image.asset(
+                        images[0][2])), //circularBorder(theme, images[0][2])),
               ],
             )
           ],

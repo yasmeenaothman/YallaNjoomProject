@@ -1,100 +1,163 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
+import 'package:flutter/services.dart';
+import 'package:google_speech/speech_client_authenticator.dart';
+import 'package:google_speech/google_speech.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:yalla_njoom/providers/firestore_provider.dart';
+import 'dart:io';
+import 'dart:async';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+import '../helpers/firestore_helper.dart';
+import '../models/voice_model.dart';
+
+class TestScreen extends StatefulWidget {
+  TestScreen({Key? key, required this.title}) : super(key: key);
+  static const String routeName = 'TestScreen';
+  final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _TestScreenState createState() => _TestScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
-  String _lastWords = '';
-  int id = -1;
-  bool? resultState;
-  late List lettersPron;
+class _TestScreenState extends State<TestScreen> {
+  bool is_Transcribing = false;
+  String content = '';
+
+  void transcribe() async {
+    setState(() {
+      is_Transcribing = true;
+    });
+    final serviceAccount = ServiceAccount.fromString(
+        '${(await rootBundle.loadString('assets/testjson.json'))}');
+    final speechToText = SpeechToText.viaServiceAccount(serviceAccount);
+
+    final config = RecognitionConfig(
+        encoding: AudioEncoding.LINEAR16,
+        model: RecognitionModel.command_and_search,
+        enableAutomaticPunctuation: false,
+        audioChannelCount: 2,
+        sampleRateHertz: 48000,
+        languageCode: 'ar-PS');
+
+    final audio = await _getAudioContent('test.wav');
+    await speechToText.recognize(config, audio).then((value) {
+      setState(() {
+        print(value.results);
+        content = value.results.map((e) {
+          print('dgldf;ogkfdo4e$e');
+          return e.alternatives.first.transcript;
+        }).join('\n');
+        print('content$content');
+      });
+    }).whenComplete(() {
+      setState(() {
+        is_Transcribing = false;
+      });
+    });
+  }
+
+  Future<List<int>> _getAudioContent(String name) async {
+    //final directory = await getApplicationDocumentsDirectory();
+    //final path = directory.path + '/$name';
+//'/storage/emulated/0/Download/letters.wav'
+    return File('/storage/emulated/0/Download/letters.wav')
+        .readAsBytesSync()
+        .toList();
+  }
+
   @override
   void initState() {
-    _initSpeech();
-    lettersPron = [
-      letterMap(['ألف', 'أليف', 'الف']),
-      letterMap(['باء', 'ب']),
-      letterMap(['جيم', 'جي']),
-      letterMap(['ح', 'حاء']),
-    ];
-    print(lettersPron);
+    setPermissions();
     super.initState();
   }
 
-  /// This has to happen only once per app
-  void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
-  }
-
-  letterMap(List pros) => {'letterId': ++id, 'letterpros': pros};
-
-  /// Each time to start a speech recognition session
-  void _startListening() async {
-    await _speechToText.listen(
-        onResult: _onSpeechResult,
-        localeId: 'ar',
-        listenFor: Duration(seconds: 5));
-  }
-
-  /// Manually stop the active speech recognition session
-  /// Note that there are also timeouts that each platform enforces
-  /// and the SpeechToText plugin supports setting timeouts on the
-  /// listen method.
-  void _stopListening() async {
-    await _speechToText.stop();
-    resultState = (lettersPron[0]['letterpros'] as List).contains(_lastWords);
-    print(resultState);
-    setState(() {});
-  }
-
-  /// This is the callback that the SpeechToText plugin calls when
-  /// the platform returns recognized words.
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      _lastWords = result.recognizedWords;
-    });
+  void setPermissions() async {
+    await Permission.manageExternalStorage.request();
+    await Permission.storage.request();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       appBar: AppBar(
-        title: Text('Speech Demo'),
+        toolbarHeight: 80,
+        backgroundColor: Color.fromARGB(255, 8, 148, 94),
+        elevation: 0,
+        centerTitle: true,
+        title: Text('Transcribe Your Audio'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                'Recognized words:',
-                style: TextStyle(fontSize: 20.0),
-              ),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(50),
+              topLeft: Radius.circular(50),
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: Text(_lastWords),
-              ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 70,
+                ),
+                Container(
+                  height: 200,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.all(5.0),
+                  child: content == ''
+                      ? Text(
+                          'Your text will appear here',
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      : Text(
+                          content,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: is_Transcribing
+                      ? Expanded(
+                          child: LoadingIndicator(
+                            indicatorType: Indicator.ballPulse,
+                            colors: [Colors.red, Colors.green, Colors.blue],
+                          ),
+                        )
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 10,
+                            primary: Color.fromARGB(255, 108, 96, 225),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          onPressed: is_Transcribing ? () {} : transcribe,
+                          child: is_Transcribing
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'Transcribe',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                        ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed:
-            // If not yet listening for speech start, otherwise stop
-            _speechToText.isNotListening ? _startListening : _stopListening,
-        tooltip: 'Listen',
-        child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
       ),
     );
   }

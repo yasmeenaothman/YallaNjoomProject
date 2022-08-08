@@ -17,9 +17,8 @@ class DrawerWidget extends StatelessWidget {
     this.isParent = true,
   }) : super(key: key);
 
-  final String coins = '120';
-
   final bool isParent;
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -56,7 +55,9 @@ class DrawerWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildDrawerTextWidget(theme, text: 'الرصيد: $coins'),
+                          _buildDrawerTextWidget(theme,
+                              text:
+                                  'الرصيد: ${(provider.userModel! as ChildModel).coins}'),
                           SizedBox(width: 10.w),
                           Image.asset('assets/images/coin.png'),
                         ],

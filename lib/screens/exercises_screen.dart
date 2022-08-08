@@ -205,6 +205,7 @@
 //   }
 // }
 
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -319,7 +320,7 @@ class ExercisesScreen extends StatelessWidget {
                         check(0, context);
                       },
                       child: Text(
-                        '${choices[0]}',
+                        ArabicNumbers().convert('${choices[0]}'),
                         style: TextStyle(
                             fontFamily: 'Tajawal',
                             fontSize: 24.sp,
@@ -334,7 +335,7 @@ class ExercisesScreen extends StatelessWidget {
                         check(1, context);
                       },
                       child: Text(
-                        '${choices[1]}',
+                        ArabicNumbers().convert('${choices[1]}'),
                         style: TextStyle(
                             fontFamily: 'Tajawal',
                             fontSize: 24.sp,
@@ -349,7 +350,7 @@ class ExercisesScreen extends StatelessWidget {
                         check(2, context);
                       },
                       child: Text(
-                        '${choices[2]}',
+                        ArabicNumbers().convert('${choices[2]}'),
                         style: TextStyle(
                             fontFamily: 'Tajawal',
                             fontSize: 24.sp,

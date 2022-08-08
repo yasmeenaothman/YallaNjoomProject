@@ -118,7 +118,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
             height: 20.h,
           ),
           searchQuery.isNotEmpty
-              ? firestoreProvider.searchResutl.isNotEmpty
+              ? firestoreProvider.searchResult.isNotEmpty
                   ? resultExist(firestoreProvider)
                   : Center(
                       child: _buildNoChildWidget(
@@ -180,18 +180,18 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
                 onTap: () {
                   setChildPressed(
                       childCode:
-                          (firestoreProvider.searchResutl[index] as ChildModel)
+                          (firestoreProvider.searchResult[index] as ChildModel)
                               .code,
                       provider: firestoreProvider);
                   AppRouter.router
                       .pushNamedFunction(ChildTrackerScreen.routeName);
                 },
-                childModel: firestoreProvider.searchResutl[index]);
+                childModel: firestoreProvider.searchResult[index]);
           },
           separatorBuilder: (context, index) => SizedBox(
                 height: 20.h,
               ),
-          itemCount: firestoreProvider.searchResutl.length),
+          itemCount: firestoreProvider.searchResult.length),
     );
   }
 

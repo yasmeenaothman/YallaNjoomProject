@@ -7,6 +7,7 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/do_u_have_acc_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
+import 'package:yalla_njoom/screens/test.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import 'package:yalla_njoom/widgets/pin_code_widget.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';

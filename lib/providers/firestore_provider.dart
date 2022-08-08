@@ -164,7 +164,6 @@ class FirestoreProvider extends ChangeNotifier {
   Game? selectedGame;
   List<Game> openGames = [];
 
-  /// ////
   AudioPlayer audioPlayer = AudioPlayer();
 
   /// /// ///
@@ -180,9 +179,9 @@ class FirestoreProvider extends ChangeNotifier {
   //List<Example> examplesWithoutSelected= DummyData.dummyData.examples.getRange(0,DummyData.dummyData.examples.length).toList();
   Uint8List? audiobytes;
   late Language selectedLanguage;
-
+  bool isPause = false;
   List<dynamic> parentsChildren = [];
-  List<dynamic> searchResutl = [];
+  List<dynamic> searchResult = [];
   ChildModel? childPressed;
   List<Voice> childPressedLettersVoices = [];
   List<Voice> childPressedNumbersVoices = [];
@@ -218,7 +217,8 @@ class FirestoreProvider extends ChangeNotifier {
         : ParentModel.fromMap(userMap);
     print('inituser$userMap');
     if (userMap[FirestoreHelper.isParentKey] == false) {
-      /// this for one time
+      addAllLettersToFirestore();
+      addAllNumbersToFirestore();
       getAllLettersFromFirestore();
       getAllNumbersFromFirestore();
       getAllVoicesForUser();
@@ -255,14 +255,17 @@ class FirestoreProvider extends ChangeNotifier {
     await FirestoreHelper.firestoreHelper
         .addVoiceToFirestore(voiceMap, userModel!.code!);
     await getAllVoicesForUser();
-    allVoices
-                .firstWhere(
-                    (element) => element.langId == selectedLanguage.name)
-                .percentageMatch! >=
-            0.80
-        ? updateNumOfStars(
-            stars + 2, selectedLanguage.exampleId) //numOfStar + 2
-        : updateNumOfStars(stars + 1, selectedLanguage.exampleId);
+    if (allVoices
+            .firstWhere((element) => element.langId == selectedLanguage.name)
+            .percentageMatch! >=
+        0.80) {
+      updateNumOfStars(stars + 2, selectedLanguage.exampleId);
+      updateKidCoins(2);
+    } else {
+      updateNumOfStars(stars + 1, selectedLanguage.exampleId);
+      updateKidCoins(1);
+    }
+
     notifyListeners();
     print('nummmmmmmmmmmmm${getNumOfStars(selectedLanguage.exampleId)}');
     print('تم اضافة الصوت بنجاح');
@@ -279,15 +282,17 @@ class FirestoreProvider extends ChangeNotifier {
     await FirestoreHelper.firestoreHelper
         .addVoiceToFirestore(voice.toMap(), userModel!.code!);
     await getAllVoicesForUser();
-    oldPercentMatch < 0.80
-        ? stars = allVoices
-                    .firstWhere(
-                        (element) => element.langId == selectedLanguage.name)
-                    .percentageMatch! >=
-                0.80
-            ? stars + 1
-            : stars
-        : stars;
+    if (oldPercentMatch < 0.80) {
+      if (allVoices
+              .firstWhere((element) => element.langId == selectedLanguage.name)
+              .percentageMatch! >=
+          0.80) {
+        stars = stars + 1;
+        updateKidCoins(1);
+      }
+      stars = stars;
+    }
+
     updateNumOfStars(stars, selectedLanguage.exampleId);
     print(
         'nummmmmmmmmmmmm${getNumOfStars(selectedLanguage.exampleId)}'); //selectedlanguage as Letter
@@ -429,15 +434,28 @@ class FirestoreProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  playAudio({required bool isSound}) async {
+  playAudio({required bool isSound, bool isFromMusicSCr = false}) async {
     ByteData bytes = await rootBundle.load(isSound
         ? selectedLanguage.sound!
         : (selectedLanguage as Letter).song!); //load audio from assets
     audiobytes =
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
     if (isSound ? !isSoundPlaying : !isSongPlaying) {
-      await audioPlayer.play(BytesSource(audiobytes!));
-      isSound ? isSoundPlaying = true : isSongPlaying = true;
+      if (isFromMusicSCr) {
+        if (isSongPlaying) {
+          await audioPlayer.pause();
+          isPause = true;
+          isSongPlaying = false;
+          notifyListeners();
+        } else {
+          audioPlayer.resume();
+          isSongPlaying = true;
+          notifyListeners();
+        }
+      } else {
+        await audioPlayer.play(BytesSource(audiobytes!));
+        isSound ? isSoundPlaying = true : isSongPlaying = true;
+      }
     } else {
       await audioPlayer.stop();
       isSound ? isSoundPlaying = false : isSongPlaying = false;
@@ -541,41 +559,43 @@ class FirestoreProvider extends ChangeNotifier {
                 (element) => element.exampleId == selectedLanguage.exampleId)
             .numOfStars,
       ));
-
-      allSolutions
-                  .firstWhere((element) =>
-                      element.exampleId == selectedLanguage.exampleId)
-                  .numOfSolutions ==
-              3
-          ? AppRouter.router
-              .pushNamedWithReplacementFunction(BravoScreen.routeName, [
-              true,
-              true,
-              () {},
-              () {
-                AppRouter.router.pushNamedWithReplacementFunction(
-                    selectedLanguage is Letter
-                        ? LetterCardScreen.routeName
-                        : DisplayNumberScreen.routeName);
-              }
-            ])
-          : AppRouter.router
-              .pushNamedWithReplacementFunction(BravoScreen.routeName, [
-              false,
-              false,
-              () {
-                AppRouter.router.pushNamedWithReplacementFunction(
-                    selectedLanguage is Letter
-                        ? ExamplesScreen.routeName
-                        : ExampleNumbers.routeName);
-              },
-              () {
-                AppRouter.router.pushNamedWithReplacementFunction(
-                    selectedLanguage is Letter
-                        ? LetterCardScreen.routeName
-                        : DisplayNumberScreen.routeName);
-              },
-            ]);
+      if (allSolutions
+              .firstWhere(
+                  (element) => element.exampleId == selectedLanguage.exampleId)
+              .numOfSolutions ==
+          3) {
+        AppRouter.router
+            .pushNamedWithReplacementFunction(BravoScreen.routeName, [
+          true,
+          true,
+          () {},
+          () {
+            AppRouter.router.pushNamedWithReplacementFunction(
+                selectedLanguage is Letter
+                    ? LetterCardScreen.routeName
+                    : DisplayNumberScreen.routeName);
+          }
+        ]);
+        updateKidCoins(1);
+      } else {
+        AppRouter.router
+            .pushNamedWithReplacementFunction(BravoScreen.routeName, [
+          false,
+          false,
+          () {
+            AppRouter.router.pushNamedWithReplacementFunction(
+                selectedLanguage is Letter
+                    ? ExamplesScreen.routeName
+                    : ExampleNumbers.routeName);
+          },
+          () {
+            AppRouter.router.pushNamedWithReplacementFunction(
+                selectedLanguage is Letter
+                    ? LetterCardScreen.routeName
+                    : DisplayNumberScreen.routeName);
+          },
+        ]);
+      }
     } else {
       showDialog(
           context: context,
@@ -593,7 +613,6 @@ class FirestoreProvider extends ChangeNotifier {
           });
     }
   }
-
   // getParentsChildren(String code) async {
   //   QuerySnapshot<Map<String, dynamic>> parentsChildrenSnapShot =
   //       await FirestoreHelper.firestoreHelper.getParentsChildren(code);
@@ -617,37 +636,7 @@ class FirestoreProvider extends ChangeNotifier {
         FirestoreHelper.userNameKey: e[FirestoreHelper.userNameKey]
       });
     }));
-    //   parentChildModels.map((e) {
-    // var querySnapshot = await FirestoreHelper.firestoreHelper.getUserByCode(e);
-    //   Map map = querySnapshot.docs[0].data();
-    //   parentUser = ChildModel.fromMap(
-    //     {
-    //       FirestoreHelper.userNameKey: name,
-    //       ...map,
-    //     },
-    //   );
-    //     getUserByCode(
-    //         e[FirestoreHelper.userCodeKey], e[FirestoreHelper.userNameKey]);
-    //     return parentUser;
-    //   }).toList();
-    /**
-     * [{name: wa, code:1222, searchKey:[w,wa]}
-     * {name: wa, code:1222, searchKey:[w,wa]}]
-     */
 
-    // parentsChildrenSnapShot.docs.map((e) {
-    //   print(e.data()[FirestoreHelper.userCodeKey]);
-    //   FirestoreHelper.firestoreHelper
-    //       .getUserByCode(e.data()[FirestoreHelper.userCodeKey])
-    //       .then((value) {
-    //     parentsChildren.add(ChildModel.fromMap({
-    //       ...value.docs[0].data(),
-    //       FirestoreHelper.nameSearchKey: e.data()[FirestoreHelper.nameSearchKey]
-    //     }));
-    //     print(parentsChildren[0].name);
-    //   });
-    // }).toList();
-    // print(parentsChildren.length);
     notifyListeners();
   }
 
@@ -675,9 +664,21 @@ class FirestoreProvider extends ChangeNotifier {
     QuerySnapshot<Map<String, dynamic>> searchDocumentsSnapshot =
         await FirestoreHelper.firestoreHelper
             .getNamesDetailList(query, parentCode);
-    searchResutl = searchDocumentsSnapshot.docs
-        .map((e) => ChildModel.fromMap(e.data()))
-        .toList();
+    List searchResultChildModel =
+        searchDocumentsSnapshot.docs.map((e) => e.data()).toList();
+    // searchResult = searchDocumentsSnapshot.docs
+    //     .map((e) => ChildModel.fromMap(e.data()))
+    //     .toList();
+    // notifyListeners();
+    searchResult = await Future.wait(searchResultChildModel.map((e) async {
+      var querySnapshot = await FirestoreHelper.firestoreHelper
+          .getUserByCode(e[FirestoreHelper.userCodeKey]);
+      Map map = querySnapshot.docs[0].data();
+      return ChildModel.fromMap({
+        ...map,
+        FirestoreHelper.userNameKey: e[FirestoreHelper.userNameKey]
+      });
+    }));
     notifyListeners();
   }
 

@@ -66,7 +66,7 @@ class ChildModel extends UserModel {
       {required this.name,
       required this.imageUrl,
       required code,
-      this.coins = 20}) {
+      this.coins = 0}) {
     super.code = code;
     super.isParent = false;
   }

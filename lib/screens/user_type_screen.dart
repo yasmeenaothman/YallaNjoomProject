@@ -6,6 +6,7 @@ import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/child_home_screen.dart';
 import 'package:yalla_njoom/screens/parents_home_screen.dart';
+import 'package:yalla_njoom/screens/test.dart';
 import 'package:yalla_njoom/widgets/arithmetic_operation_widget.dart';
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 import 'package:yalla_njoom/widgets/user_code_dialog.dart';
@@ -79,7 +80,6 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                                           .getDefaultChildImageUrl(),
                                       code: code);
                                   fireStoreProvider.addUser(childModel.toMap());
-
                                   AppRouter.router
                                       .pushNamedWithReplacementFunction(
                                     ChildHomeScreen.routeName,

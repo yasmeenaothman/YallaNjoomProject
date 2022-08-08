@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "yalla-njoom-speech-to-text",
+  "private_key_id": "56e71c929f75789d7101abb3cb35ee496d6fdac7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCiEVYmSWsXXxv6\norj7YB00Rww4Qc/CsovWzwNYV9Nb1u9y0Luf/gmXqnMlIghvJPRnHwuItIH5tMiM\nUHjcaHyUZZ23fHuCrQsj3/xrpeOWL8mvSwMeXGe8F///fQebaqTyRcqyQto58Nwv\nBEE1ZQRfiI98qRzBBHRohblBfF3Uo9byg8Ok0iifqb7htHwPLuU3J3Jlq7LtSCly\nDVjaDkeYBPM1uqaFOYXGI8NvSC/LB3sFM0j4CgFIl5l/WGCR0qkYdRP/uH67k+/9\nidaMSXLAh1MxlicpHZvuVj+reXGLb63Oh0gTxr6007AeaP4xh+XTtp1DXNHjYWhN\nVNMP3kNHAgMBAAECggEAJdh2japHX8XN+tFU8R6Ys0SEDf8QTR70mMzuswqPSLsA\nX4duyQXBp7EeAmXYIlw21n3ha6L7VxxoWJvSHWYo8V5pXhern/BY0Z/Uii7K3p96\nMX0K1WQutTXFihvgUuKscgbqNoZ1/2HHiRMtRxK32rdBCpNTK5+mr2HKyQgJwUXC\nHm5UNic3hfBLEQnKMrLA4ojKRrRZxEVHRW2iFznYZa0lnYo3OEsFvSkEy0jcvrWz\nVVK7SprtqesTsA/guUHHKie9F0zdlZUSxWB4k35L1xsjClha4/he3oGA9AmfXPxn\nSlrU3ok9nrffjxX4wk/269HbN6S7nccFSf5+t7CgwQKBgQDPbWCMFooiTQLVRl3M\nJqpGFmaDdO1/hiUW61GQTTPMfnEh6oU3qLtvNEjOxCpnE4w+p29NEOsjn/9OtJg6\nyAQDIltNZBL9fzhBVpD6NQWN6+I8BHl6CVOFV27sZRoKs+Wfpm+N5Rx97QtA5yvC\nK5vq1bGgBmwGwQpu6Wqxh9epbQKBgQDIBMunWvhwn96y/EccGDWbbSM2JEmANLPO\nxHoV0U3XT4xm/qpybri8GoHukxFWkwqGL1yp6jpts/UR/9FlvGIcupGO9FZVs/Mp\ndYmwg9i21u/cVkWr+zOgLS25a+7vXOViN5SYb7vZEdP4zSkHsbx0CYPeKpug8D8a\nSxgnUOcDAwKBgQCNpFLZVkrdQVk96d8DGSQM2B8IhT/oZOHO1MHNl+pXKcB3OH3f\nlAjp1vogtzN9T4vk/NCz/2mR2h+szwVknlCfE0blggC1ubngZAx7ztkMIJdMBIIv\nI081Lo9APYma5V1Xt39Vla3vD38vwqvO25iMs3+nlrsNoaROOHXy5KAPwQKBgBz/\nPPsFIDFLrABsvG5hQBxJRSqLNjCk81BNgZl6H3vQZ31i/Bjc3mE+wolwvrm7VXJA\nmYF0mIXg6e1zFctW9S5PCd0cpQuFrAHdrVlus9NF874Qr8cQAtr80b0o3ZnL8OE9\nR4iV4jjE8eMG8yTPao+z9W8W5Dr/uVY5fsXsX6E7AoGAa4pEe0CcIDxsrSQdF2tG\nF14BTFGKXMidoyPBb2Ski67Y9q1SWV7VYSzaqVTgiC0gJOoUB217hFvG1I3IrWsz\n+muSSCfssnWzk1Y3bLBG3XqxTBWFx4Tj9kSqDtjzR6uEvZgs51LIfdzmIGXT7gFh\nZGog9uDmTxxH+iS6ScDp7CY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "yallanjoom-stt@yalla-njoom-speech-to-text.iam.gserviceaccount.com",
+  "client_id": "102476626880585860599",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/yallanjoom-stt%40yalla-njoom-speech-to-text.iam.gserviceaccount.com"
+}
