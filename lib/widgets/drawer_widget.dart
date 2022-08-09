@@ -92,7 +92,7 @@ class DrawerWidget extends StatelessWidget {
                       );
                     },
                     child: _buildListTile(theme,
-                        icon: MyFlutterApp.logout, text: 'تعديل'),
+                        icon: MyFlutterApp.edit, text: 'تعديل'),
                   ),
                 GestureDetector(
                   onTap: () {

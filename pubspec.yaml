@@ -53,6 +53,9 @@ dependencies:
   speech_to_text: ^5.6.0
   store_redirect: ^2.0.1
   youtube_player_flutter: ^8.1.0
+  phlox_animations: ^2.1.1
+  loading_animation_widget: ^1.2.0+2
+  bouncing_widget: ^2.0.0
 dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_test:
@@ -133,6 +136,10 @@ flutter:
     - family: MyFlutterApp14
       fonts:
         - asset: assets/fonts/MyFlutterApp14.ttf
+    - family: MyFlutterApp15
+      fonts:
+        - asset: assets/fonts/MyFlutterApp15.ttf
+
     - family: 'UrdType'
       fonts:
         - asset: assets/fonts/UrdType.ttf

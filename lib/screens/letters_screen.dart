@@ -77,6 +77,7 @@
 import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/models/solution.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
@@ -98,13 +99,17 @@ class LettersScreen extends StatelessWidget {
   static const String routeName = 'LettersScreen';
   int indexValue = 0;
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return Consumer<FirestoreProvider>(
       builder: (context, provider, x) => ScaffoldWithBackground(
         body: provider.letters.isEmpty
-            ? const Center(child: CircularProgressIndicator())
+            ?  Center(child: LoadingAnimationWidget.twistingDots(
+            leftDotColor: theme.primaryColor,
+            rightDotColor: const Color(0xFFFFA4AC),
+            size: 50))
             : Directionality(
                 textDirection: TextDirection.ltr,
                 child: Padding(
@@ -141,8 +146,8 @@ class LettersScreen extends StatelessWidget {
                                       e);
                                   provider.selectedLanguage.isLocked
                                       ? null
-                                      : AppRouter.router
-                                          .pushNamedFunction(
+                                      :  AppRouter.router
+                                          .pushNamedWithReplacementFunction(
                                               LetterCardScreen.routeName);
                                 },
                                 child: DefaultStackWidget(
@@ -167,7 +172,7 @@ class LettersScreen extends StatelessWidget {
                                       provider.selectedLanguage.isLocked
                                           ? null
                                           : AppRouter.router
-                                              .pushNamedFunction(
+                                              .pushNamedWithReplacementFunction(
                                                   LetterCardScreen.routeName);
                                     },
                                     //const Color(0xFFFFA4AC) number color

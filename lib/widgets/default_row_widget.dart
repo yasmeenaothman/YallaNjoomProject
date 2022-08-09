@@ -240,7 +240,7 @@ class DefaultRowWidget extends StatelessWidget {
                   : ArabicNumbers().convert(language.shape),
               style: TextStyle(
                   fontSize: 55.sp,
-                  color: Theme.of(context).primaryColor,
+                  color: isLetter!?Theme.of(context).primaryColor:Colors.black,
                   fontFamily: 'UrdType',
                   height: 1.0),
             ),

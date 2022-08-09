@@ -1,6 +1,7 @@
 import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 import '../models/dummy_data.dart';
@@ -25,7 +26,10 @@ class ChildHomeScreen extends StatelessWidget {
     return Consumer<FirestoreProvider>(
       builder: (context, provider, x) => ScaffoldWithBackground(
         drawer: provider.userModel == null
-            ? const Center(child: CircularProgressIndicator())
+            ?  Center(child: LoadingAnimationWidget.twistingDots(
+            leftDotColor: theme.primaryColor,
+            rightDotColor: const Color(0xFFFFA4AC),
+            size: 50))
             : const DrawerWidget(
                 isParent: false,
               ),

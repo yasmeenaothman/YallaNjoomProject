@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:phlox_animations/phlox_animations.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/voice_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
@@ -39,11 +40,15 @@ class ChildTrackerScreen extends StatelessWidget {
                   Positioned(
                     left: -20.w,
                     bottom: -5.h,
-                    child: Image.asset(
-                      'assets/images/star_star.png',
-                      fit: BoxFit.cover,
-                      height: 195.6.h,
-                      width: 198.4.w,
+                    child: PhloxAnimations(
+                       duration: const Duration(seconds: 1),
+                      fromY: 30,
+                      child: Image.asset(
+                        'assets/images/star_star.png',
+                        fit: BoxFit.cover,
+                        height: 195.6.h,
+                        width: 198.4.w,
+                      ),
                     ),
                   ),
                   Padding(

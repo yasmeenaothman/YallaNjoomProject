@@ -102,6 +102,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/screens/test.dart';
 import 'package:yalla_njoom/screens/voice_screen.dart';
@@ -251,8 +252,11 @@ class FirebaseConfiguration extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return const SplashScreen();
         }
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return  Scaffold(
+          body: Center(child: LoadingAnimationWidget.twistingDots(
+              leftDotColor: Theme.of(context).primaryColor,
+              rightDotColor: const Color(0xFFFFA4AC),
+              size: 30)),
         );
       },
       future: Firebase.initializeApp(),

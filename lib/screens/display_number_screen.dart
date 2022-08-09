@@ -462,7 +462,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                                           await provider.audioPlayer.stop();
                                           await provider
                                               .setIsSoundPlaying(false);
-                                          AppRouter.router.pop();
+                                          AppRouter.router.pushNamedWithReplacementFunction(NumbersScreen.routeName);
                                         },
                                         iconData: MyFlutterApp.cancel,
                                         iconColor: const Color(0xFF034C1B),
@@ -704,7 +704,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                 .pushNamedWithReplacementFunction(ExampleNumbers.routeName);
           },
           () {
-            AppRouter.router.pop();
+            AppRouter.router.pushNamedWithReplacementFunction(DisplayNumberScreen.routeName);
           }
         ]);
         debugPrint('نطقك صحيح');

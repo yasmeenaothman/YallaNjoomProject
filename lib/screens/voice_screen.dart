@@ -20,18 +20,40 @@ class VoiceScreen extends StatefulWidget {
   State<VoiceScreen> createState() => _VoiceScreenState();
 }
 
-class _VoiceScreenState extends State<VoiceScreen> {
+class _VoiceScreenState extends State<VoiceScreen>   with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
   final audioPlayer = AudioPlayer();
 
   bool isPlaying = false;
   int voicePressedIndex = 0;
   Duration lengthOfAudio = Duration.zero;
 
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+    controller.repeat(reverse: true,);
+
+
+    super.initState();
+  }
+
   @override
   void dispose() {
     audioPlayer.dispose();
+    controller.dispose();
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +113,9 @@ class _VoiceScreenState extends State<VoiceScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Image.asset('assets/images/unhappy_star.png'),
+    RotationTransition(
+    turns: Tween<double>(begin: -0.05, end: 0.05).animate(animation),
+    child: Image.asset('assets/images/unhappy_star.png')),
         SizedBox(
           height: 10.h,
         ),

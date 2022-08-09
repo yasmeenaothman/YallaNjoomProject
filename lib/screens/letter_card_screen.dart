@@ -422,7 +422,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                           onTap: () async {
                             await consumerProvider.audioPlayer.stop();
                             await consumerProvider.setIsSoundPlaying(false);
-                            AppRouter.router.pop();
+                            AppRouter.router.pushNamedWithReplacementFunction(LettersScreen.routeName);
                           },
                         )),
                     SizedBox(height: 17.h),
@@ -624,7 +624,8 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                 .pushNamedWithReplacementFunction(ExamplesScreen.routeName);
           },
           () {
-            AppRouter.router.pop();
+
+            AppRouter.router.pushNamedWithReplacementFunction(LetterCardScreen.routeName);
           }
         ]);
         debugPrint('نطقك صحيح');

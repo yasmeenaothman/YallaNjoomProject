@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:yalla_njoom/helpers/firestore_helper.dart';
 import 'package:yalla_njoom/models/user_model.dart';
 import 'package:yalla_njoom/providers/firestore_provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/add_child_info_screen.dart';
 import 'package:yalla_njoom/widgets/drawer_widget.dart';
-
 import 'package:yalla_njoom/widgets/scaffold_with_background.dart';
 
-import '../models/dummy_data.dart';
 import '../models/my_flutter_app.dart';
 import '../widgets/default_child_card.dart';
 import 'child_tracker_screen.dart';
@@ -26,8 +22,32 @@ class ParentsHomeScreen extends StatefulWidget {
   State<ParentsHomeScreen> createState() => _ParentsHomeScreenState();
 }
 
-class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
+class _ParentsHomeScreenState extends State<ParentsHomeScreen>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
   String searchQuery = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+    controller.repeat(reverse: true,);
+
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +223,9 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Image.asset('assets/images/unhappy_star.png'),
+        RotationTransition(
+            turns: Tween<double>(begin: -0.05, end: 0.05).animate(animation),
+            child: Image.asset('assets/images/unhappy_star.png')),
         SizedBox(
           height: 10.h,
         ),
@@ -222,8 +244,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
       child: FittedBox(
         child: FloatingActionButton(
           onPressed: () {
-            AppRouter.router
-                .pushNamedFunction(AddChildInfoScreen.routeName);
+            AppRouter.router.pushNamedFunction(AddChildInfoScreen.routeName);
           },
           backgroundColor: theme.primaryColor,
           child: const Icon(

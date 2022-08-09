@@ -17,6 +17,7 @@ class MyFlutterApp {
   static const _kFontFam12 = 'MyFlutterApp12';
   static const _kFontFam13 = 'MyFlutterApp13';
   static const _kFontFam14 = 'MyFlutterApp14';
+  static const _kFontFam15 = 'MyFlutterApp15';
 
   static const String? _kFontPkg = null;
 
@@ -48,4 +49,6 @@ class MyFlutterApp {
       IconData(0xe800, fontFamily: _kFontFam13, fontPackage: _kFontPkg);
   static const IconData left =
       IconData(0xe800, fontFamily: _kFontFam14, fontPackage: _kFontPkg);
+  static const IconData edit =
+      IconData(0xe800, fontFamily: _kFontFam15, fontPackage: _kFontPkg);
 }

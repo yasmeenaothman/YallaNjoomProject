@@ -1,10 +1,12 @@
 import 'package:animation_list/animation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/display_number_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
+
 import '../models/my_flutter_app.dart';
 import '../models/solution.dart';
 import '../providers/firestore_provider.dart';
@@ -19,6 +21,7 @@ class NumbersScreen extends StatelessWidget {
   static const String routeName = 'NumbersScreen';
   int indexValue = 0;
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -26,7 +29,12 @@ class NumbersScreen extends StatelessWidget {
       builder: (context, provider, x) {
         return ScaffoldWithBackground(
           body: provider.numbers.isEmpty
-              ? const Center(child: CircularProgressIndicator())
+              ?  Center(
+                  child: LoadingAnimationWidget.twistingDots(
+                      leftDotColor: theme.primaryColor,
+                      rightDotColor: const Color(0xFFFFA4AC),
+                      size: 50),
+                )
               : Directionality(
                   textDirection: TextDirection.ltr,
                   child: Padding(
@@ -37,8 +45,7 @@ class NumbersScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: DefaultCirculeAvatar(
-                            onTap: () => AppRouter.router
-                                .pop(),
+                            onTap: () => AppRouter.router.pop(),
                             iconData: MyFlutterApp.cancel,
                           ),
                         ),
@@ -47,8 +54,11 @@ class NumbersScreen extends StatelessWidget {
                         ),
                         Expanded(
                             child: provider.allSolutions.length != 38
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ?  Center(
+                                    child:LoadingAnimationWidget.twistingDots(
+                                        leftDotColor: theme.primaryColor,
+                                        rightDotColor: const Color(0xFFFFA4AC),
+                                        size: 50))
                                 : AnimationList(
                                     padding: EdgeInsets.only(top: 20.h),
                                     children: provider.numbers.map((e) {
@@ -63,12 +73,11 @@ class NumbersScreen extends StatelessWidget {
                                                       provider.numbers.length
                                                   ? indexValue
                                                   : -1;
-                                              provider.setSelectedLanguage(
-                                                  e);
+                                              provider.setSelectedLanguage(e);
                                               provider.selectedLanguage.isLocked
                                                   ? null
                                                   : AppRouter.router
-                                                      .pushNamedFunction(
+                                                      .pushNamedWithReplacementFunction(
                                                           DisplayNumberScreen
                                                               .routeName,
                                                           'assets/images/one.png'); //TODO: search solution for this image
@@ -77,22 +86,24 @@ class NumbersScreen extends StatelessWidget {
                                               imagePath: e.imageUrl!,
                                               btn: DefaultElevatedButton(
                                                 onPressed: () {
-                                                  provider.setSelectedLanguage(
-                                                     e);
+                                                  provider
+                                                      .setSelectedLanguage(e);
                                                   provider.selectedLanguage
                                                           .isLocked
                                                       ? null
                                                       : AppRouter.router
-                                                          .pushNamedFunction(
+                                                          .pushNamedWithReplacementFunction(
                                                               DisplayNumberScreen
                                                                   .routeName,
                                                               'assets/images/one.png'); //TODO: search solution for this image
                                                 },
                                                 //const Color(0xFFFFA4AC) number color
-                                                bgColor: const Color(
-                                                    0xFFFFA4AC), // letter color
+                                                bgColor:
+                                                    const Color(0xFFFFA4AC),
+                                                // letter color
                                                 child: DefaultRowWidget(
-                                                  language: e, //DummyData.dummyData
+                                                  language:
+                                                      e, //DummyData.dummyData
                                                   nextIndex: indexValue <
                                                           provider
                                                               .numbers.length
@@ -104,8 +115,7 @@ class NumbersScreen extends StatelessWidget {
                                                       .firstWhere(
                                                         (element) =>
                                                             element.exampleId ==
-                                                            e
-                                                                .exampleId,
+                                                            e.exampleId,
                                                         orElse: () => Solution(
                                                             exampleId: 'أ'),
                                                       )

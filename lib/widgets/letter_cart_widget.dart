@@ -50,10 +50,10 @@ class LetterCardWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    letter,
+                  letter,
                     style: TextStyle(
                         fontFamily: 'Urdu',
-                        height: 0.7.h,
+                        height: letter == 'أ'?1.3.h:0.7.h,
                         fontSize: 191.sp,
                         color: Colors.white),
                   ),
