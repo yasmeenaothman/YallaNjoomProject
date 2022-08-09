@@ -462,9 +462,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                                           await provider.audioPlayer.stop();
                                           await provider
                                               .setIsSoundPlaying(false);
-                                          AppRouter.router
-                                              .pushNamedWithReplacementFunction(
-                                                  NumbersScreen.routeName);
+                                          AppRouter.router.pop();
                                         },
                                         iconData: MyFlutterApp.cancel,
                                         iconColor: const Color(0xFF034C1B),
@@ -582,15 +580,11 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                                             true,
                                             () {},
                                             () {
-                                              AppRouter.router
-                                                  .pushNamedWithReplacementFunction(
-                                                      DisplayNumberScreen
-                                                          .routeName);
+                                              AppRouter.router.pop();
                                             }
                                           ])
-                                        : AppRouter.router
-                                            .pushNamedWithReplacementFunction(
-                                                ExampleNumbers.routeName);
+                                        : AppRouter.router.pushNamedFunction(
+                                            ExampleNumbers.routeName);
                                     /* AppRouter.router
                                         .pushNamedWithReplacementFunction(
                                             ExampleNumbers.routeName);*/
@@ -710,8 +704,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                 .pushNamedWithReplacementFunction(ExampleNumbers.routeName);
           },
           () {
-            AppRouter.router.pushNamedWithReplacementFunction(
-                DisplayNumberScreen.routeName);
+            AppRouter.router.pop();
           }
         ]);
         debugPrint('نطقك صحيح');

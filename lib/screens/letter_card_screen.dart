@@ -422,10 +422,8 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                           onTap: () async {
                             await consumerProvider.audioPlayer.stop();
                             await consumerProvider.setIsSoundPlaying(false);
-                            AppRouter.router.pushNamedWithReplacementFunction(
-                                LettersScreen.routeName);
+                            AppRouter.router.pop();
                           },
-                          iconData: MyFlutterApp.cancel,
                         )),
                     SizedBox(height: 17.h),
                     DefaultCirculeAvatar(
@@ -437,8 +435,8 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                     SizedBox(height: 10.h),
                     DefaultCirculeAvatar(
                       onTap: () async {
-                        AppRouter.router.pushNamedWithReplacementFunction(
-                            MusicScreen.routeName);
+                        AppRouter.router
+                            .pushNamedFunction(MusicScreen.routeName);
                         await consumerProvider.playAudio(isSound: false);
                       },
                       iconData: MyFlutterApp.music,
@@ -519,13 +517,11 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                                 true,
                                 () {},
                                 () {
-                                  AppRouter.router
-                                      .pushNamedWithReplacementFunction(
-                                          LetterCardScreen.routeName);
+                                  AppRouter.router.pop();
                                 }
                               ])
-                            : AppRouter.router.pushNamedWithReplacementFunction(
-                                ExamplesScreen.routeName);
+                            : AppRouter.router
+                                .pushNamedFunction(ExamplesScreen.routeName);
                       },
                       iconData: MyFlutterApp.arrowRight_2,
                     ),
@@ -628,8 +624,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                 .pushNamedWithReplacementFunction(ExamplesScreen.routeName);
           },
           () {
-            AppRouter.router
-                .pushNamedWithReplacementFunction(LetterCardScreen.routeName);
+            AppRouter.router.pop();
           }
         ]);
         debugPrint('نطقك صحيح');

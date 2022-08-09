@@ -156,9 +156,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: AppRouter.router.routerKey,
       routes: {
         '/': (context) => FirebaseConfiguration(),
-        TestScreen.routeName: (context) => TestScreen(
-              title: '',
-            ),
+        TestScreen.routeName: (context) => TestScreen(),
         EnterYourCodeScreen.routeName: (context) => const EnterYourCodeScreen(),
         AddChildInfoScreen.routeName: (context) => AddChildInfoScreen(),
         UserTypeScreen.routeName: (context) => const UserTypeScreen(),

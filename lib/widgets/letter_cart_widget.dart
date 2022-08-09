@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LetterCardWidget extends StatelessWidget {
   const LetterCardWidget(
@@ -37,7 +38,7 @@ class LetterCardWidget extends StatelessWidget {
             children: [
               Expanded(
                   child: Image.asset(
-                'assets/images/lion.png',
+                imagePath,
                 width: 168.w,
                 height: 165.h,
               )),

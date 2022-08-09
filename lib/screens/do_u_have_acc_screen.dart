@@ -26,7 +26,7 @@ class DoYouHaveAccScreen extends StatelessWidget {
             spaceBeforeWidget: 20.h,
             widget: ConfirmButtonWidget(
               confirmButtonFun: () {
-                AppRouter.router.pushNamedWithReplacementFunction(
+                AppRouter.router.pushNamedFunction(
                     EnterYourCodeScreen.routeName);
               },
               confirmButtonText: 'نعم',

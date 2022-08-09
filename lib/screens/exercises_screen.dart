@@ -254,9 +254,7 @@ class ExercisesScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.w, 20.h, 0, 0),
             child: DefaultCirculeAvatar(
               onTap: () {
-                AppRouter.router.pushNamedWithReplacementFunction(
-                  OperationScreen.routeName,
-                );
+                AppRouter.router.pop();
               },
             ),
           ),
@@ -385,8 +383,7 @@ class ExercisesScreen extends StatelessWidget {
               ExercisesScreen.routeName, [isSum, isMix]);
         },
         () {
-          AppRouter.router
-              .pushNamedWithReplacementFunction(OperationScreen.routeName);
+          AppRouter.router.pop();
         }
       ]);
     } else {

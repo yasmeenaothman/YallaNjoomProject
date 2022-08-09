@@ -207,8 +207,7 @@ class _VideosScreenState extends State<VideosScreen> {
           Align(
               alignment: Alignment.centerRight,
               child: DefaultCirculeAvatar(
-                onTap: () => AppRouter.router.pushNamedWithReplacementFunction(
-                    ChildHomeScreen.routeName),
+                onTap: () => AppRouter.router.pop(),
                 iconData: MyFlutterApp.cancel,
               )),
           SizedBox(

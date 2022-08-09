@@ -17,13 +17,17 @@ class MusicScreen extends StatefulWidget {
   State<MusicScreen> createState() => _MusicScreenState();
 }
 
-class _MusicScreenState extends State<MusicScreen> {
+class _MusicScreenState extends State<MusicScreen>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
   Duration? duration = Duration.zero;
   int currentPosition = 0;
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+
     FirestoreProvider provider =
         Provider.of<FirestoreProvider>(context, listen: false);
     provider.audioPlayer.onPlayerStateChanged.listen((event) {
@@ -36,6 +40,22 @@ class _MusicScreenState extends State<MusicScreen> {
         currentPosition = event.inMilliseconds;
       });
     });
+
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+    controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    FirestoreProvider provider =
+        Provider.of<FirestoreProvider>(context, listen: false);
+    controller.dispose();
+    provider.audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,8 +73,7 @@ class _MusicScreenState extends State<MusicScreen> {
                 onTap: () async {
                   await provider.audioPlayer.stop();
                   await provider.setIsSongPlaying(false);
-                  AppRouter.router.pushNamedWithReplacementFunction(
-                      LettersScreen.routeName);
+                  AppRouter.router.pop();
                 },
               ),
               SizedBox(
@@ -64,14 +83,25 @@ class _MusicScreenState extends State<MusicScreen> {
                 padding: EdgeInsets.only(left: 43.w),
                 child: Row(
                   children: [
-                    Image.asset(
-                      provider.lettersExample
-                          .firstWhere((element) =>
-                              provider.selectedLanguage.exampleId ==
-                              element.exampleId)
-                          .img2!,
-                      fit: BoxFit.fill,
+                    RotationTransition(
+                      turns: Tween<double>(begin: -0.05, end: 0.05)
+                          .animate(animation),
+                      child: Image.asset(
+                          provider.lettersExample
+                              .firstWhere((element) =>
+                                  provider.selectedLanguage.exampleId ==
+                                  element.exampleId)
+                              .img2!,
+                          fit: BoxFit.fill),
                     ),
+                    // Image.asset(
+                    //   provider.lettersExample
+                    //       .firstWhere((element) =>
+                    //           provider.selectedLanguage.exampleId ==
+                    //           element.exampleId)
+                    //       .img2!,
+                    //   fit: BoxFit.fill,
+                    // ),
                     Text(
                       provider.selectedLanguage.shape!,
                       style: TextStyle(

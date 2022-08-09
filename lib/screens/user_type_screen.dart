@@ -80,8 +80,8 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                                           .getDefaultChildImageUrl(),
                                       code: code);
                                   fireStoreProvider.addUser(childModel.toMap());
-                                  AppRouter.router
-                                      .pushNamedWithReplacementFunction(
+                                  AppRouter.router.pop();
+                                  AppRouter.router.pushNamedFunction(
                                     ChildHomeScreen.routeName,
                                   );
                                 },
@@ -147,8 +147,9 @@ class _UserTypeScreenState extends State<UserTypeScreen>
 
                                                 fireStoreProvider
                                                     .getParentsChildren(code);
+                                                AppRouter.router.pop();
                                                 AppRouter.router
-                                                    .pushNamedWithReplacementFunction(
+                                                    .pushNamedFunction(
                                                   ParentsHomeScreen.routeName,
                                                 );
                                               },

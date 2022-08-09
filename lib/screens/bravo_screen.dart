@@ -132,12 +132,6 @@ import 'package:yalla_njoom/widgets/default_circular_avatar.dart';
 
 import '../models/my_flutter_app.dart';
 
-enum BravoType {
-  fullBravo,
-  finalBravo,
-  pronunciationPravo,
-}
-
 class BravoScreen extends StatefulWidget {
   static const String routeName = 'BravoScreen';
 
@@ -164,12 +158,6 @@ class _BravoScreenState extends State<BravoScreen>
   late FirestoreProvider provider;
 
   @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
@@ -177,6 +165,12 @@ class _BravoScreenState extends State<BravoScreen>
     animation = CurvedAnimation(parent: controller, curve: Curves.easeOutExpo);
     controller.forward();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override

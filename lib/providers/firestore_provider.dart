@@ -217,8 +217,8 @@ class FirestoreProvider extends ChangeNotifier {
         : ParentModel.fromMap(userMap);
     print('inituser$userMap');
     if (userMap[FirestoreHelper.isParentKey] == false) {
-      addAllLettersToFirestore();
-      addAllNumbersToFirestore();
+      // addAllLettersToFirestore();
+      // addAllNumbersToFirestore();
       getAllLettersFromFirestore();
       getAllNumbersFromFirestore();
       getAllVoicesForUser();
@@ -570,10 +570,7 @@ class FirestoreProvider extends ChangeNotifier {
           true,
           () {},
           () {
-            AppRouter.router.pushNamedWithReplacementFunction(
-                selectedLanguage is Letter
-                    ? LetterCardScreen.routeName
-                    : DisplayNumberScreen.routeName);
+            AppRouter.router.pop();
           }
         ]);
         updateKidCoins(1);
@@ -589,10 +586,7 @@ class FirestoreProvider extends ChangeNotifier {
                     : ExampleNumbers.routeName);
           },
           () {
-            AppRouter.router.pushNamedWithReplacementFunction(
-                selectedLanguage is Letter
-                    ? LetterCardScreen.routeName
-                    : DisplayNumberScreen.routeName);
+            AppRouter.router.pop();
           },
         ]);
       }

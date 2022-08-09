@@ -698,7 +698,7 @@ class DummyData {
         name: 'عمليةالجمع',
         bgColor: const Color(0xFF074785),
         pressFun: () {
-          AppRouter.router.pushNamedWithReplacementFunction(
+          AppRouter.router.pushNamedFunction(
               ExercisesScreen.routeName, [true, false]);
         }),
     TypeEducation(
@@ -706,7 +706,7 @@ class DummyData {
         name: 'عملية الطرح',
         bgColor: const Color(0xFFFFA4AC),
         pressFun: () {
-          AppRouter.router.pushNamedWithReplacementFunction(
+          AppRouter.router.pushNamedFunction(
               ExercisesScreen.routeName, [false, false]);
         }),
     TypeEducation(
@@ -714,7 +714,7 @@ class DummyData {
         name: 'مسائل عامة',
         bgColor: const Color(0xFF2FB0FD),
         pressFun: () {
-          AppRouter.router.pushNamedWithReplacementFunction(
+          AppRouter.router.pushNamedFunction(
               ExercisesScreen.routeName, [false, true]);
         }),
   ];
@@ -725,7 +725,7 @@ class DummyData {
         bgColor: const Color(0xFF074785),
         pressFun: () {
           AppRouter.router
-              .pushNamedWithReplacementFunction(LettersScreen.routeName);
+              .pushNamedFunction(LettersScreen.routeName);
         }),
     TypeEducation(
         image: 'assets/images/numbers.png',
@@ -733,7 +733,7 @@ class DummyData {
         bgColor: const Color(0xFFFFA4AC),
         pressFun: () {
           AppRouter.router
-              .pushNamedWithReplacementFunction(NumbersScreen.routeName);
+              .pushNamedFunction(NumbersScreen.routeName);
         }),
     TypeEducation(
         image: 'assets/images/operations.png',
@@ -741,7 +741,7 @@ class DummyData {
         bgColor: const Color(0xFF2FB0FD),
         pressFun: () {
           AppRouter.router
-              .pushNamedWithReplacementFunction(OperationScreen.routeName);
+              .pushNamedFunction(OperationScreen.routeName);
         }),
     TypeEducation(
         image: 'assets/images/video.png',
@@ -749,7 +749,7 @@ class DummyData {
         bgColor: const Color(0xFFF1854F),
         pressFun: () {
           AppRouter.router
-              .pushNamedWithReplacementFunction(VideosScreen.routeName);
+              .pushNamedFunction(VideosScreen.routeName);
         }),
     TypeEducation(
         image: 'assets/images/games.png',
@@ -757,7 +757,7 @@ class DummyData {
         bgColor: const Color(0xFFFFA4AC),
         pressFun: () {
           AppRouter.router
-              .pushNamedWithReplacementFunction(GamesScreen.routeName);
+              .pushNamedFunction(GamesScreen.routeName);
         }),
   ];
 /*List<String> giveImagesToShow() {

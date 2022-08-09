@@ -55,8 +55,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
                   alignment: Alignment.centerRight,
                   child: DefaultCirculeAvatar(
                     onTap: () => AppRouter.router
-                        .pushNamedWithReplacementFunction(
-                            ChildTrackerScreen.routeName),
+                        .pop(),
                     iconData: MyFlutterApp.cancel,
                   )),
               SizedBox(

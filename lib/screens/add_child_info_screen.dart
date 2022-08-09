@@ -37,8 +37,7 @@ class AddChildInfoScreen extends StatelessWidget {
                 height: 50.h,
               ),
               DefaultCirculeAvatar(
-                onTap: () => AppRouter.router.pushNamedWithReplacementFunction(
-                    ParentsHomeScreen.routeName),
+                onTap: () => AppRouter.router.pop(),
                 iconData: MyFlutterApp.cancel,
               ),
               SizedBox(
@@ -89,8 +88,7 @@ class AddChildInfoScreen extends StatelessWidget {
                               setSearchParam(childName!),
                         });
 
-                        AppRouter.router.pushNamedWithReplacementFunction(
-                            ParentsHomeScreen.routeName);
+                        AppRouter.router.pop();
                       }
                     } else {
                       showDialog(
@@ -111,9 +109,8 @@ class AddChildInfoScreen extends StatelessWidget {
                                     },
                                     confirmButtonText: 'حاول مرة أخرى',
                                     cancelButtonFun: () {
-                                      AppRouter.router
-                                          .pushNamedWithReplacementFunction(
-                                              ParentsHomeScreen.routeName);
+                                      AppRouter.router.pop();
+                                      AppRouter.router.pop();
                                     },
                                     cancelButtonText: 'إلغاء',
                                   ),

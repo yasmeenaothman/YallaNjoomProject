@@ -223,7 +223,7 @@ class _ParentsHomeScreenState extends State<ParentsHomeScreen> {
         child: FloatingActionButton(
           onPressed: () {
             AppRouter.router
-                .pushNamedWithReplacementFunction(AddChildInfoScreen.routeName);
+                .pushNamedFunction(AddChildInfoScreen.routeName);
           },
           backgroundColor: theme.primaryColor,
           child: const Icon(

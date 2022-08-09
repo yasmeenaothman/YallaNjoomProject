@@ -4,6 +4,8 @@ import 'package:yalla_njoom/routers/app_router.dart';
 import 'package:yalla_njoom/screens/voice_screen.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
 
+import '../models/my_flutter_app.dart';
+import '../widgets/default_circular_avatar.dart';
 import '../widgets/scaffold_with_background.dart';
 
 class ChildTrackerScreen extends StatelessWidget {
@@ -16,8 +18,19 @@ class ChildTrackerScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            Padding(
+              padding:  EdgeInsets.only(right: 20.w,top: 25.h),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: DefaultCirculeAvatar(
+                  onTap: () => AppRouter.router
+                      .pop(),
+                  iconData: MyFlutterApp.cancel,
+                ),
+              ),
+            ),
             SizedBox(
-              height: 260.h,
+              height: 200.h,
             ),
             Stack(
                 clipBehavior: Clip.none,
@@ -38,7 +51,7 @@ class ChildTrackerScreen extends StatelessWidget {
                     child: _buildMyDefaultButton(theme,
                         color: theme.primaryColor,
                         text: 'متابعة قراءات الحروف', onPressed: () {
-                      AppRouter.router.pushNamedWithReplacementFunction(
+                      AppRouter.router.pushNamedFunction(
                           VoiceScreen.routeName, [true]);
                     }),
                   ),
@@ -51,7 +64,7 @@ class ChildTrackerScreen extends StatelessWidget {
               child: _buildMyDefaultButton(theme,
                   color: const Color(0xFFFFA4AC),
                   text: 'متابعة قراءات الأرقام', onPressed: () {
-                AppRouter.router.pushNamedWithReplacementFunction(
+                AppRouter.router.pushNamedFunction(
                     VoiceScreen.routeName, [false]);
               }),
             )

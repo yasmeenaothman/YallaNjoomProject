@@ -33,8 +33,7 @@ class ExampleNumbers extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: DefaultCirculeAvatar(
                   onTap: () => AppRouter.router
-                      .pushNamedWithReplacementFunction(
-                          NumbersScreen.routeName),
+                      .pop(),
                   iconData: MyFlutterApp.cancel,
                 )),
             SizedBox(height: 250.h),

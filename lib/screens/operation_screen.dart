@@ -25,8 +25,7 @@ class OperationScreen extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: DefaultCirculeAvatar(
                   onTap: () => AppRouter.router
-                      .pushNamedWithReplacementFunction(
-                          ChildHomeScreen.routeName),
+                      .pop(),
                   iconData: MyFlutterApp.cancel,
                 ),
               ),

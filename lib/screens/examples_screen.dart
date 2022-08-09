@@ -27,8 +27,7 @@ class ExamplesScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.w, 20.h, 0, 0),
             child: DefaultCirculeAvatar(
               onTap: () {
-                AppRouter.router.pushNamedWithReplacementFunction(
-                    LetterCardScreen.routeName);
+                AppRouter.router.pop();
               },
             ),
           ),
