@@ -7,7 +7,7 @@
    
    <application
       android:requestLegacyExternalStorage="true"
-        android:label="yalla_njoom"
+        android:label="يلا نجوم"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

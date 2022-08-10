@@ -136,7 +136,7 @@ class _VoiceScreenState extends State<VoiceScreen>   with TickerProviderStateMix
             // if (!isLocked)
             GestureDetector(
               onTap: () async {
-                await audioPlayer.setSourceDeviceFile(voice.voicePath!);
+                await audioPlayer.setSourceUrl(voice.voicePath!);
 
                 isPlaying = true;
                 await audioPlayer.resume();

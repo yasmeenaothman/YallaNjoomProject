@@ -23,23 +23,30 @@ class _MusicScreenState extends State<MusicScreen>
   late Animation<double> animation;
   Duration? duration = Duration.zero;
   int currentPosition = 0;
-
+  late FirestoreProvider provider ;
   @override
   void initState() {
     // TODO: implement initState
+    provider =Provider.of<FirestoreProvider>(context,listen: false);
 
-    FirestoreProvider provider =
-        Provider.of<FirestoreProvider>(context, listen: false);
     provider.audioPlayer.onPlayerStateChanged.listen((event) {
-      setState(() {
-        provider.isSongPlaying = event == PlayerState.playing;
-      });
+      if (this.mounted) {
+        setState(() {
+          // Your state change code goes here
+          provider.isSongPlaying = event == PlayerState.playing;
+        });
+      }
     });
     provider.audioPlayer.onPositionChanged.listen((event) {
-      setState(() {
-        currentPosition = event.inMilliseconds;
-      });
+
+      if (this.mounted) {
+        setState(() {
+          // Your state change code goes here
+          currentPosition = event.inMilliseconds;
+        });
+      }
     });
+
 
     controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
@@ -51,8 +58,6 @@ class _MusicScreenState extends State<MusicScreen>
 
   @override
   void dispose() {
-    FirestoreProvider provider =
-        Provider.of<FirestoreProvider>(context, listen: false);
     controller.dispose();
     provider.audioPlayer.dispose();
     super.dispose();
@@ -71,8 +76,8 @@ class _MusicScreenState extends State<MusicScreen>
               ),
               DefaultCirculeAvatar(
                 onTap: () async {
+                  provider.setIsSongPlaying(false);
                   await provider.audioPlayer.stop();
-                  await provider.setIsSongPlaying(false);
                   AppRouter.router.pop();
                 },
               ),

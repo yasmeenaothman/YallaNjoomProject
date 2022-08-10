@@ -39,6 +39,7 @@ class _EditChildProfileState extends State<EditChildProfile> {
     return Consumer<FirestoreProvider>(builder: (context, provider, x) {
       return SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: Container(

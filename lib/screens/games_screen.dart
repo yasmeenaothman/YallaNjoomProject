@@ -183,16 +183,30 @@ import '../widgets/default_circular_avatar.dart';
 import '../widgets/default_elevated_button.dart';
 import '../widgets/user_code_dialog.dart';
 
-class GamesScreen extends StatelessWidget {
+class GamesScreen extends StatefulWidget {
   GamesScreen({Key? key}) : super(key: key);
   static const String routeName = 'GamesScreen';
+
+  @override
+  State<GamesScreen> createState() => _GamesScreenState();
+}
+
+class _GamesScreenState extends State<GamesScreen> {
   late BuildContext _buildContext;
+  late FirestoreProvider provider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
+    provider.audioPlayer.stop();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     _buildContext = context;
     ThemeData theme = Theme.of(context);
-    return Consumer<FirestoreProvider>(
-      builder: (context, provider, x) => ScaffoldWithBackground(
+    provider.playEncourageAudio('assets/audio/اختر اللعبة التي تحبها.mp3');
+    return  ScaffoldWithBackground(
           body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
         child: Column(
@@ -201,8 +215,11 @@ class GamesScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.centerRight,
                 child: DefaultCirculeAvatar(
-                  onTap: () => AppRouter.router
-                      .pop(),
+                  onTap: () {
+                    provider.audioPlayer.dispose();
+                     AppRouter.router
+                      .pop();
+                  },
                   iconData: MyFlutterApp.cancel,
                 )),
             SizedBox(
@@ -235,8 +252,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ],
         ),
-      )),
-    );
+      ));
   }
 
   _buildGameContainer(
@@ -356,6 +372,7 @@ class GamesScreen extends StatelessWidget {
         barrierDismissible: true,
         barrierColor: const Color(0xBF000000),
         builder: (ctx) {
+          provider.playEncourageAudio('assets/audio/تحتاج لمزيد.mp3');
           return Column(
             children: [
               SizedBox(

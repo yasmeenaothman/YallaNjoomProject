@@ -384,6 +384,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
   Duration recordLength = Duration.zero;
   @override
   void initState() {
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
@@ -638,6 +639,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
           barrierDismissible: false,
           barrierColor: Colors.black,
           builder: (ctx) {
+            provider.playEncourageAudio('assets/audio/حاول مرة أخرى .mp3');
             return Column(
               children: [
                 SizedBox(

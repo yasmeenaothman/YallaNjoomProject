@@ -23,6 +23,7 @@ class ExampleNumbers extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     provider = Provider.of<FirestoreProvider>(context, listen: false);
     images = generateImageList(provider: provider, isLetter: false);
+    provider.playEncourageAudio('assets/audio/الضغط ع الرقم.mp3');
     return ScaffoldWithBackground(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -32,8 +33,11 @@ class ExampleNumbers extends StatelessWidget {
             Align(
                 alignment: Alignment.centerLeft,
                 child: DefaultCirculeAvatar(
-                  onTap: () => AppRouter.router
-                      .pop(),
+                  onTap: () {
+                    provider.audioPlayer.dispose();
+                    return AppRouter.router
+                      .pop();
+                  },
                   iconData: MyFlutterApp.cancel,
                 )),
             SizedBox(height: 250.h),

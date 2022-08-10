@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:yalla_njoom/widgets/default_elevated_button.dart';
+
+import '../providers/firestore_provider.dart';
 
 class UserCodeDialog extends StatefulWidget {
   const UserCodeDialog(
@@ -23,9 +26,10 @@ class _UserCodeDialogState extends State<UserCodeDialog>
   late AnimationController textController;
   late AnimationController imageController;
   late Animation<double> animation;
-
+  late FirestoreProvider provider;
   @override
   void initState() {
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
     textController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     imageController = AnimationController(
@@ -40,6 +44,7 @@ class _UserCodeDialogState extends State<UserCodeDialog>
 
   @override
   void dispose() {
+    provider.audioPlayer.dispose();
     textController.dispose();
     imageController.dispose();
     super.dispose();

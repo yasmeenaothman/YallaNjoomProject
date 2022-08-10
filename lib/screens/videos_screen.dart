@@ -180,7 +180,14 @@ class VideosScreen extends StatefulWidget {
 
 class _VideosScreenState extends State<VideosScreen> {
   late YoutubePlayerController controller;
-
+  late FirestoreProvider provider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
+    provider.audioPlayer.stop();
+    super.initState();
+  }
   @override
   void deactivate() {
     controller.pause();
@@ -196,8 +203,7 @@ class _VideosScreenState extends State<VideosScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    FirestoreProvider provider =
-        Provider.of<FirestoreProvider>(context, listen: false);
+    provider.playEncourageAudio('assets/audio/شاهد الفيديو .mp3');
     return ScaffoldWithBackground(
         body: Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
@@ -207,7 +213,10 @@ class _VideosScreenState extends State<VideosScreen> {
           Align(
               alignment: Alignment.centerRight,
               child: DefaultCirculeAvatar(
-                onTap: () => AppRouter.router.pop(),
+                onTap: () {
+                  provider.audioPlayer.dispose();
+                   AppRouter.router.pop();
+                },
                 iconData: MyFlutterApp.cancel,
               )),
           SizedBox(

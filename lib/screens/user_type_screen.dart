@@ -29,9 +29,10 @@ class _UserTypeScreenState extends State<UserTypeScreen>
     with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
-
+  FirestoreProvider? provider;
   @override
   void initState() {
+    provider=Provider.of<FirestoreProvider>(context,listen: false);
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     animation = CurvedAnimation(parent: controller, curve: Curves.linear);
@@ -42,13 +43,16 @@ class _UserTypeScreenState extends State<UserTypeScreen>
   @override
   void dispose() {
     controller.dispose();
+    provider!.audioPlayer.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    provider!.playEncourageAudio('assets/audio/هل انت طفل.mp3');
     return Consumer<FirestoreProvider>(
         builder: (context, fireStoreProvider, x) {
+
       return ScaffoldWithBackground(
         body: Center(
           child: Column(
@@ -61,6 +65,7 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                   text: 'طفل',
                   onTap: () async {
                     String code = await generateNewCode(context);
+                    provider!.playEncourageAudio('assets/audio/انتبه.mp3');
                     showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -103,6 +108,7 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                       context: context,
                       barrierDismissible: false,
                       builder: (ctx) {
+
                         return Column(
                           children: [
                             SizedBox(
@@ -130,6 +136,7 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                                       context: context,
                                       barrierDismissible: false,
                                       builder: (ctx) {
+                                        provider!.playEncourageAudio('assets/audio/انتبه.mp3');
                                         return Column(
                                           children: [
                                             SizedBox(

@@ -415,6 +415,8 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
 
   @override
   void initState() {
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
+    provider.audioPlayer.stop();
     imageController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
 

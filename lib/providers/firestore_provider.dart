@@ -544,8 +544,23 @@ class FirestoreProvider extends ChangeNotifier {
   bool isGameOpen(Game game) {
     return openGames.contains(game);
   }
-
+  playEncourageAudio(String audio) async {
+    ByteData bytes = await rootBundle.load(audio); //load audio from assets
+    audiobytes =
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    await audioPlayer.play(BytesSource(audiobytes!));
+    /*if(!isEncouragePlaying){
+      await audioPlayer.play(BytesSource(audiobytes!));
+      isEncouragePlaying = true;
+    }
+    else {
+      await audioPlayer.stop();
+      isEncouragePlaying= false;
+    }
+    notifyListeners();*/
+  }
   check(int index, context, List images) async {
+    audioPlayer.stop();
     if (images[0][index] == images[1]) {
       await updateSolution(Solution(
         exampleId: selectedLanguage.exampleId,
@@ -596,6 +611,7 @@ class FirestoreProvider extends ChangeNotifier {
           barrierDismissible: false,
           barrierColor: Colors.black,
           builder: (ctx) {
+            playEncourageAudio('assets/audio/حاول مرة أخرى .mp3');
             return Column(
               children: [
                 SizedBox(

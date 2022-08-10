@@ -159,6 +159,7 @@ class _BravoScreenState extends State<BravoScreen>
 
   @override
   void initState() {
+    provider = Provider.of<FirestoreProvider>(context, listen: false);
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
@@ -170,13 +171,20 @@ class _BravoScreenState extends State<BravoScreen>
   @override
   void dispose() {
     controller.dispose();
+    provider.audioPlayer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    provider = Provider.of<FirestoreProvider>(context, listen: false);
+    if (widget.lastExample) {
+      provider.playEncourageAudio('assets/audio/حللت كل الامثلة.mp3');
+    } else if (widget.isPronunciationWidget) {
+
+    } else {
+      provider.playEncourageAudio('assets/audio/ننتقل إلى المثال التالي.mp3');
+    }
     return SafeArea(
       child: Scaffold(
         body: Stack(

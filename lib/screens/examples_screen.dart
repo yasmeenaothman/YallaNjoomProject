@@ -19,6 +19,7 @@ class ExamplesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     provider = Provider.of<FirestoreProvider>(context, listen: false);
     images = generateImageList(provider: provider, isLetter: true);
+    provider.playEncourageAudio('assets/audio/نضغط ع حرف .mp3');
     return Scaffold(
       body: ContainerWithImage(
         imageName: 'assets/images/background_examples.png',
@@ -27,6 +28,7 @@ class ExamplesScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.w, 20.h, 0, 0),
             child: DefaultCirculeAvatar(
               onTap: () {
+                provider.audioPlayer.dispose();
                 AppRouter.router.pop();
               },
             ),
@@ -35,8 +37,9 @@ class ExamplesScreen extends StatelessWidget {
             height: 230.h,
           ),
           const ContainerWithText(),
+          SizedBox(height: 30.h,),
           GestureDetector(
-            child: Image.asset(images[0][0]), //'assets/images/happy.png'
+            child: Image.asset(images[0][0],height: 120.h,width: 120.h,), //'assets/images/happy.png'
             onTap: () {
               provider.check(0, context, images);
             },
@@ -45,12 +48,15 @@ class ExamplesScreen extends StatelessWidget {
             height: 10.h,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
                 child: GestureDetector(
                     child:
-                        Image.asset(images[0][1]), //'assets/images/carrot.png'
+                        Padding(
+                          padding:  EdgeInsets.only(top: 20),
+                          child: Image.asset(images[0][1],height: 120.h,width: 120.h,),
+                        ), //'assets/images/carrot.png'
                     onTap: () {
                       provider.check(1, context, images);
                       print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
@@ -62,7 +68,7 @@ class ExamplesScreen extends StatelessWidget {
                     provider.check(2, context, images);
                   },
                   child: Image.asset(
-                    images[0][2],
+                    images[0][2],height: 120.h,width: 120.h,
                   ),
                 ),
               ),
