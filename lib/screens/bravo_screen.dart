@@ -181,7 +181,7 @@ class _BravoScreenState extends State<BravoScreen>
     if (widget.lastExample) {
       provider.playEncourageAudio('assets/audio/حللت كل الامثلة.mp3');
     } else if (widget.isPronunciationWidget) {
-
+      provider.playEncourageAudio('assets/audio/النطق صحيح .mp3');
     } else {
       provider.playEncourageAudio('assets/audio/ننتقل إلى المثال التالي.mp3');
     }

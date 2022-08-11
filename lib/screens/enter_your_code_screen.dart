@@ -27,7 +27,8 @@ class EnterYourCodeScreen extends StatefulWidget {
 
 class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
   String userCode = '';
-  FirestoreProvider? provider;
+  late FirestoreProvider provider;
+  @override
   void initState() {
     // TODO: implement initState
     provider=Provider.of<FirestoreProvider>(context,listen: false);
@@ -36,12 +37,12 @@ class _EnterYourCodeScreenState extends State<EnterYourCodeScreen> {
   @override
   void dispose() async{
     // TODO: implement dispose
-    await provider!.audioPlayer.stop();
+     provider.audioPlayer.stop();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
-    provider!.playEncourageAudio('assets/audio/أدخل الرمز.mp3');
+    provider.playEncourageAudio('assets/audio/أدخل الرمز.mp3');
     ThemeData theme = Theme.of(context);
     return Consumer<FirestoreProvider>(builder: (context, provider, x) {
       return ScaffoldWithBackground(

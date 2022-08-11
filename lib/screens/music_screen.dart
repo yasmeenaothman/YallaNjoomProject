@@ -30,7 +30,7 @@ class _MusicScreenState extends State<MusicScreen>
     provider =Provider.of<FirestoreProvider>(context,listen: false);
 
     provider.audioPlayer.onPlayerStateChanged.listen((event) {
-      if (this.mounted) {
+      if (mounted) {
         setState(() {
           // Your state change code goes here
           provider.isSongPlaying = event == PlayerState.playing;
@@ -39,7 +39,7 @@ class _MusicScreenState extends State<MusicScreen>
     });
     provider.audioPlayer.onPositionChanged.listen((event) {
 
-      if (this.mounted) {
+      if (mounted) {
         setState(() {
           // Your state change code goes here
           currentPosition = event.inMilliseconds;

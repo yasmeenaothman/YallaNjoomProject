@@ -206,53 +206,55 @@ class _GamesScreenState extends State<GamesScreen> {
     _buildContext = context;
     ThemeData theme = Theme.of(context);
     provider.playEncourageAudio('assets/audio/اختر اللعبة التي تحبها.mp3');
-    return  ScaffoldWithBackground(
-          body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-                alignment: Alignment.centerRight,
-                child: DefaultCirculeAvatar(
-                  onTap: () {
-                    provider.audioPlayer.dispose();
-                     AppRouter.router
-                      .pop();
+    return  Consumer<FirestoreProvider>(
+      builder:(context,provider,x)=> ScaffoldWithBackground(
+            body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: DefaultCirculeAvatar(
+                    onTap: () {
+                      provider.audioPlayer.dispose();
+                       AppRouter.router
+                        .pop();
+                    },
+                    iconData: MyFlutterApp.cancel,
+                  )),
+              SizedBox(
+                height: 50.h,
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 15.w, bottom: 33.h),
+                child: Text(
+                  'اختر اللعبة التي تحبها',
+                  softWrap: true,
+                  textDirection: TextDirection.rtl,
+                  style: theme.textTheme.headline3!.copyWith(fontSize: 24.sp),
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return _buildGameContainer(
+                      theme,
+                      index,
+                      provider,
+                    );
                   },
-                  iconData: MyFlutterApp.cancel,
-                )),
-            SizedBox(
-              height: 50.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 15.w, bottom: 33.h),
-              child: Text(
-                'اختر اللعبة التي تحبها',
-                softWrap: true,
-                textDirection: TextDirection.rtl,
-                style: theme.textTheme.headline3!.copyWith(fontSize: 24.sp),
+                  itemCount: provider.games.length,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(width: 20.w);
+                  },
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return _buildGameContainer(
-                    theme,
-                    index,
-                    provider,
-                  );
-                },
-                itemCount: provider.games.length,
-                separatorBuilder: (context, index) {
-                  return SizedBox(width: 20.w);
-                },
-              ),
-            ),
-          ],
-        ),
-      ));
+            ],
+          ),
+        )),
+    );
   }
 
   _buildGameContainer(
