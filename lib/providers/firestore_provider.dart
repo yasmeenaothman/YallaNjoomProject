@@ -651,22 +651,25 @@ class FirestoreProvider extends ChangeNotifier {
   }
 
   addChildToParent(String parentCode, Map<String, dynamic> childInfo) async {
-    getParentsChildren(parentCode);
-    if (parentsChildren.isNotEmpty) {
-      for (ChildModel i in parentsChildren) {
-        if (i.code == childInfo[FirestoreHelper.userCodeKey]) {
-          return;
-        } else {
-          await FirestoreHelper.firestoreHelper
-              .addChildToParent(parentCode, childInfo);
-          notifyListeners();
-        }
-      }
-    } else {
-      await FirestoreHelper.firestoreHelper
-          .addChildToParent(parentCode, childInfo);
-      notifyListeners();
-    }
+    // getParentsChildren(parentCode);
+    // if (parentsChildren.isNotEmpty) {
+    //   for (ChildModel i in parentsChildren) {
+    //     if (i.code == childInfo[FirestoreHelper.userCodeKey]) {
+    //       return;
+    //     } else {
+    //       await FirestoreHelper.firestoreHelper
+    //           .addChildToParent(parentCode, childInfo);
+    //       notifyListeners();
+    //     }
+    //   }
+    // } else {
+    //   await FirestoreHelper.firestoreHelper
+    //       .addChildToParent(parentCode, childInfo);
+    //   notifyListeners();
+    // }
+    await FirestoreHelper.firestoreHelper
+        .addChildToParent(parentCode, childInfo);
+    notifyListeners();
     getParentsChildren(parentCode);
   }
 

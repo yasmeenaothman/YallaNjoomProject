@@ -169,6 +169,7 @@ class _UserTypeScreenState extends State<UserTypeScreen>
                                       context: context,
                                       barrierDismissible: false,
                                       builder: (ctx) {
+                                          provider!.playEncourageAudio('assets/audio/الإجابة خاطئة .mp3');
                                         return Column(
                                           children: [
                                             SizedBox(

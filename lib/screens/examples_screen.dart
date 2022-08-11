@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:yalla_njoom/routers/app_router.dart';
-import 'package:yalla_njoom/screens/letter_card_screen.dart';
 
 import '../helpers/my_methods.dart';
 import '../providers/firestore_provider.dart';
@@ -14,12 +13,20 @@ class ExamplesScreen extends StatelessWidget {
   static String routeName = 'ExamplesScreen';
   List images = [];
   late FirestoreProvider provider;
+
   ExamplesScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<FirestoreProvider>(context, listen: false);
     images = generateImageList(provider: provider, isLetter: true);
-    provider.playEncourageAudio('assets/audio/نضغط ع حرف .mp3');
+    provider.allSolutions
+                .firstWhere((element) =>
+                    element.exampleId == provider.selectedLanguage.exampleId)
+                .numOfSolutions ==
+            0
+        ? provider.playEncourageAudio('assets/audio/نضغط ع حرف .mp3')
+        : provider.audioPlayer.dispose();
     return Scaffold(
       body: ContainerWithImage(
         imageName: 'assets/images/background_examples.png',
@@ -37,9 +44,16 @@ class ExamplesScreen extends StatelessWidget {
             height: 230.h,
           ),
           const ContainerWithText(),
-          SizedBox(height: 30.h,),
+          SizedBox(
+            height: 30.h,
+          ),
           GestureDetector(
-            child: Image.asset(images[0][0],height: 120.h,width: 120.h,), //'assets/images/happy.png'
+            child: Image.asset(
+              images[0][0],
+              height: 120.h,
+              width: 120.h,
+            ),
+            //'assets/images/happy.png'
             onTap: () {
               provider.check(0, context, images);
             },
@@ -52,11 +66,14 @@ class ExamplesScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                    child:
-                        Padding(
-                          padding:  EdgeInsets.only(top: 20),
-                          child: Image.asset(images[0][1],height: 120.h,width: 120.h,),
-                        ), //'assets/images/carrot.png'
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Image.asset(
+                        images[0][1],
+                        height: 120.h,
+                        width: 120.h,
+                      ),
+                    ), //'assets/images/carrot.png'
                     onTap: () {
                       provider.check(1, context, images);
                       print('kkkkkkkkkkkkkkkkkkkkkkkkkkk 1');
@@ -68,7 +85,9 @@ class ExamplesScreen extends StatelessWidget {
                     provider.check(2, context, images);
                   },
                   child: Image.asset(
-                    images[0][2],height: 120.h,width: 120.h,
+                    images[0][2],
+                    height: 120.h,
+                    width: 120.h,
                   ),
                 ),
               ),

@@ -95,6 +95,7 @@ class AddChildInfoScreen extends StatelessWidget {
                           context: context,
                           barrierDismissible: false,
                           builder: (ctx) {
+
                             return Column(
                               children: [
                                 SizedBox(

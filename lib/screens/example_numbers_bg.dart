@@ -23,7 +23,10 @@ class ExampleNumbers extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     provider = Provider.of<FirestoreProvider>(context, listen: false);
     images = generateImageList(provider: provider, isLetter: false);
-    provider.playEncourageAudio('assets/audio/الضغط ع الرقم.mp3');
+    provider.allSolutions.firstWhere((element) =>
+    element.exampleId ==
+        provider.selectedLanguage.exampleId)
+        .numOfSolutions ==0 ?  provider.playEncourageAudio('assets/audio/الضغط ع الرقم.mp3'):provider. audioPlayer.dispose();
     return ScaffoldWithBackground(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
