@@ -140,7 +140,7 @@ void main() async {
         builder: (context, child) {
           return const MyApp();
         },
-        designSize: const Size(375, 812),
+        designSize:const Size(375, 812),
       ),
     ),
   );
@@ -153,6 +153,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: _buildThemeData(),
       navigatorKey: AppRouter.router.routerKey,
       routes: {

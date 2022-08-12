@@ -278,7 +278,7 @@ class ExercisesScreen extends StatelessWidget {
               /// note حاليا asset ولكن بالاساس بنحصل عليها من الفيربيس عشان كده netwok; خليها
               Expanded(
                   child: Image.asset(selectRandomlyExampleImage(
-                      result.isNegative ? example1 : example2))),
+                      result.isNegative ? example2 : example1))),
               SizedBox(
                 width: 11.w,
               ),
@@ -299,7 +299,7 @@ class ExercisesScreen extends StatelessWidget {
               ),
               Expanded(
                   child: Image.asset(selectRandomlyExampleImage(
-                      result.isNegative ? example2 : example1))),
+                      result.isNegative ? example1 : example2))),
             ],
           ),
           SizedBox(

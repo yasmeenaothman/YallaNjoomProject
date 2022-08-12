@@ -474,6 +474,7 @@ class _DisplayNumberScreenState extends State<DisplayNumberScreen>
                                 DefaultCirculeAvatar(
                                   onTap: () async {
                                     await provider.playAudio(isSound: true);
+                                    await provider.setIsSoundPlaying(false);///
                                   },
                                   iconData: MyFlutterApp.volumeMedium,
                                   iconColor: const Color(0xFF034C1B),

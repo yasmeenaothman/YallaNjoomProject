@@ -396,6 +396,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
 
   @override
   void dispose() {
+    provider.audioPlayer.dispose(); ///
     controller.dispose();
     recorder.closeRecorder();
     super.dispose();
@@ -421,7 +422,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                         alignment: Alignment.centerLeft,
                         child: DefaultCirculeAvatar(
                           onTap: () async {
-                            await consumerProvider.audioPlayer.stop();
+                            await consumerProvider.audioPlayer.dispose();///
                             await consumerProvider.setIsSoundPlaying(false);
                             AppRouter.router.pushNamedWithReplacementFunction(LettersScreen.routeName);
                           },
@@ -430,6 +431,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                     DefaultCirculeAvatar(
                       onTap: () async {
                         await consumerProvider.playAudio(isSound: true);
+                        await consumerProvider.setIsSoundPlaying(false);///
                       },
                       iconData: MyFlutterApp.volumeMedium,
                     ),
@@ -438,7 +440,7 @@ class _LetterCardScreenState extends State<LetterCardScreen>
                       onTap: () async {
                         AppRouter.router
                             .pushNamedFunction(MusicScreen.routeName);
-                        await consumerProvider.playAudio(isSound: false);
+                         await consumerProvider.playAudio(isSound: false);
                       },
                       iconData: MyFlutterApp.music,
                     ),

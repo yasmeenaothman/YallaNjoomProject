@@ -458,7 +458,7 @@ class FirestoreProvider extends ChangeNotifier {
       }
     } else {
       await audioPlayer.stop();
-      isSound ? isSoundPlaying = false : isSongPlaying = false;
+      isSound ? setIsSoundPlaying(false ): isSongPlaying = false;
     }
     notifyListeners();
   }

@@ -28,7 +28,7 @@ class _MusicScreenState extends State<MusicScreen>
   void initState() {
     // TODO: implement initState
     provider =Provider.of<FirestoreProvider>(context,listen: false);
-
+    //provider.playAudio(isSound: false);
     provider.audioPlayer.onPlayerStateChanged.listen((event) {
       if (mounted) {
         setState(() {
@@ -75,9 +75,9 @@ class _MusicScreenState extends State<MusicScreen>
                 height: 20.h,
               ),
               DefaultCirculeAvatar(
-                onTap: () async {
+                onTap: () async { ///
+                 // await provider.audioPlayer.dispose();
                   provider.setIsSongPlaying(false);
-                  await provider.audioPlayer.stop();
                   AppRouter.router.pop();
                 },
               ),

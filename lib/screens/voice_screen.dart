@@ -154,12 +154,12 @@ class _VoiceScreenState extends State<VoiceScreen>   with TickerProviderStateMix
                       ? Icons.pause_rounded
                       : Icons.arrow_left_rounded,
                   size: isPlaying && voicePressedIndex == index ? 32.r : 45.r,
-                  color: theme.primaryColor,
+                  color: widget.isLetter?theme.primaryColor:const Color(0xFFFFA4AC),
                 ),
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: theme.primaryColor,
+                        color:theme.primaryColor,
                         offset: Offset(0.w, 3.h),
                         blurRadius: 6.r)
                   ],
@@ -198,10 +198,10 @@ class _VoiceScreenState extends State<VoiceScreen>   with TickerProviderStateMix
                   ],
                 ),
                 decoration: BoxDecoration(
-                  color: theme.primaryColor,
+                  color: widget.isLetter?theme.primaryColor:const Color(0xFFFFA4AC),
                   boxShadow: [
                     BoxShadow(
-                        color: theme.primaryColor,
+                        color:theme.primaryColor,
                         offset: Offset(0.w, 3.h),
                         blurRadius: 6.r)
                   ],
